@@ -29,7 +29,9 @@
     import {reqLogin} from "../../api/user";
     import Nav from "../../components/Common/Nav";
     import Footer from "../../components/Common/Footer";
-    import axios from 'axios'
+    import axios from 'axios';
+    import {encrypt, decrypt} from '../../cryptoJS';
+
     export default {
         name: "Login",
         components: {Nav,Footer},
@@ -70,6 +72,10 @@
         },
         methods: {
             login(formName) {
+                var a = encrypt("恭喜发财");
+                var b = decrypt(a);
+                console.error("加密后--->" + a);
+                console.error("解密后--->" + b);
                 let _this = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
