@@ -4,7 +4,7 @@
     <HeadNav></HeadNav>
     <div class="content">
       <div class="title">
-        <a href="#">首页</a><span> / </span><span>个人中心</span>
+        <a href="/">首页</a><span> / </span><span>个人中心</span>
       </div>
       <div class="content_main">
         <div class="content_main_left">
@@ -13,8 +13,8 @@
               <div class="box-hd">订单中心</div>
               <div class="box-bd">
                 <ul class="uc-nav-list">
-                  <a href="/user/userOrder"><li>我的订单</li></a>
-                  <a href="/user/evaluate"><li>晒单评价</li></a>
+                  <router-link to= "/user/userOrder"><li>我的订单</li></router-link>
+                  <router-link to= "/user/evaluate"><li>晒单评价</li></router-link>
                 </ul>
               </div>
             </div>
@@ -22,11 +22,11 @@
               <div class="box-hd">个人中心</div>
               <div class="box-bd">
                 <ul class="uc-nav-list">
-                  <a href="/user/userCenter"><li>我的个人中心</li></a>
-                  <a href="/user/mesNotice"><li>消息通知</li></a>
-                  <a href="/cart" target="_blank"><li>购物车</li></a>
-                  <a href="/user/address"><li>收货地址</li></a>
-                  <a href="/user/coupon"><li>优惠券</li></a>
+                  <router-link to="/user/userCenter"><li>我的个人中心</li></router-link>
+                  <router-link to="/user/mesNotice"><li>消息通知</li></router-link>
+                  <router-link to="/cart" target="_blank"><li>购物车</li></router-link>
+                  <router-link to="/user/address"><li>收货地址</li></router-link>
+                  <router-link to="/user/coupon"><li>优惠券</li></router-link>
                 </ul>
               </div>
             </div>
@@ -34,8 +34,8 @@
               <div class="box-hd">售后服务</div>
               <div class="box-bd">
                 <ul class="uc-nav-list">
-                  <a href="/user/record"><li>服务记录</li></a>
-                  <a href="/user/applyService"><li>申请服务</li></a>
+                  <router-link to="/user/record"><li>服务记录</li></router-link>
+                  <router-link to="/user/applyService"><li>申请服务</li></router-link>
                 </ul>
               </div>
             </div>
@@ -43,8 +43,8 @@
               <div class="box-hd">账户管理</div>
               <div class="box-bd">
                 <ul class="uc-nav-list">
-                  <a href="/user/userInfo"><li>个人管理</li></a>
-                  <a href="/user/pwdManage"><li>修改密码</li></a>
+                  <router-link to="/user/userInfo"><li>个人管理</li></router-link>
+                  <router-link to="/user/pwdManage"><li>修改密码</li></router-link>
                 </ul>
               </div>
             </div>

@@ -71,6 +71,111 @@
             };
         },
         methods: {
+            // login(formName) {
+            //     // var a = encrypt(formName.password);
+            //     // var b = decrypt(a);
+            //     // console.error("加密后--->" + a);
+            //     // console.error("解密后--->" + b);
+            //     let _this = this;
+            //     this.$refs[formName].validate((valid) => {
+            //         if (valid) {
+            //             // let param = new URLSearchParams()
+            //             // param.append('account', this.ruleForm.account)
+            //             // param.append('password', this.ruleForm.password)
+            //             // axios({
+            //             //     method: 'POST',
+            //             //     url: 'api/login',
+            //             //     headers: {
+            //             //         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            //             //     },
+            //             //     data:{
+            //             //         'account': this.ruleForm.account,
+            //             //         'password': this.ruleForm.password
+            //             //     }
+            //             // }).then((response) => {
+            //             //     console.log("登录后返回的response："+response);
+            //             //     console.log(response.data);
+            //             //     let jwt = response.headers['authorization']
+            //             //     console.log("====jwt:=== "+jwt);
+            //             //     if(response.data.code == 200){
+            //             //         console.log("登录成功");
+            //             //         console.log(response);
+            //             //         // const jwt = response.headers['authorization']
+            //             //         // console.log("jwt: "+jwt);
+            //             //         // //把数据共享出去
+            //             //         // _this.$store.commit("SET_TOKEN", jwt)
+            //             //         // _this.$store.commit("SET_USERINFO", response.data.userInfo)
+            //             //         // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
+            //             //         // this.$router.push({path:'/devHome/appList'});
+            //             //     }else {
+            //             //         this.$message({
+            //             //             type: 'waring',
+            //             //             message: "登录失败"
+            //             //         })
+            //             //     }
+            //             // }).catch(err=>{
+            //             //     this.$message({
+            //             //         type: 'waring',
+            //             //         message: "登录失败"
+            //             //     })
+            //             // })
+            //             console.log("=====开始登录=======")
+            //             reqLogin({
+            //                 account: this.ruleForm.account,
+            //                 password: this.ruleForm.password
+            //             }).then((response) => {
+            //                 console.log("登录后的response："+response.data);
+            //                 let user  = response.data.user;
+            //                 console.log("=====user:==="+user+"=========");
+            //                 const jwt = response.headers['authorization']
+            //                 console.log("====jwt:=== "+jwt);
+            //                 if(response.data.code == 200){
+            //                     console.log("登录成功");
+            //                     console.log(response);
+            //                     const jwt = response.headers['authorization']
+            //                     console.log("====jwt:=== "+jwt);
+            //                     // //把数据共享出去
+            //                     _this.$store.commit("SET_TOKEN", jwt)
+            //                     console.log("===localStorage.getItem(\"token\")==="+localStorage.getItem("token")+"==");
+            //                     _this.$store.commit("SET_USERINFO", response.data.user);
+            //                     console.log("=====response.data.user====="+response.data.user.manage+"========")
+
+            //                     if(response.data.user.manage){
+            //                         this.$message({
+            //                             type: 'success',
+            //                             message: "登录成功！",
+            //                             duration: 1000
+            //                         })
+            //                         setTimeout(() => {
+            //                             this.$router.push({path:'/admin/home'});
+            //                         }, 1000);
+            //                     }else {
+            //                         this.$message({
+            //                             type: 'success',
+            //                             message: "登录成功！",
+            //                             duration: 1000
+            //                         })
+            //                         setTimeout(() => {
+            //                             this.$router.push({path:'/user/userCenter'});
+            //                         }, 1000);
+            //                     }
+            //                     // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
+            //                     // this.$router.push({path:'/devHome/appList'});
+            //                 }else {
+            //                     this.$message({
+            //                         type: 'waring',
+            //                         message: "登录失败"
+            //                     })
+            //                 }
+            //             }).catch(() => {
+            //                 // this.$message.error("登录失败")
+            //             })
+            //         } else {
+            //             //数据校验失败，不可以进行提交
+            //             this.$message.error("账号密码不符合要求，登录失败");
+            //         }
+            //     });
+            // },
             login(formName) {
                 // var a = encrypt(formName.password);
                 // var b = decrypt(a);
@@ -79,102 +184,11 @@
                 let _this = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        // let param = new URLSearchParams()
-                        // param.append('account', this.ruleForm.account)
-                        // param.append('password', this.ruleForm.password)
-                        // axios({
-                        //     method: 'POST',
-                        //     url: 'api/login',
-                        //     headers: {
-                        //         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                        //     },
-                        //     data:{
-                        //         'account': this.ruleForm.account,
-                        //         'password': this.ruleForm.password
-                        //     }
-                        // }).then((response) => {
-                        //     console.log("登陆后返回的response："+response);
-                        //     console.log(response.data);
-                        //     let jwt = response.headers['authorization']
-                        //     console.log("====jwt:=== "+jwt);
-                        //     if(response.data.code == 200){
-                        //         console.log("登录成功");
-                        //         console.log(response);
-                        //         // const jwt = response.headers['authorization']
-                        //         // console.log("jwt: "+jwt);
-                        //         // //把数据共享出去
-                        //         // _this.$store.commit("SET_TOKEN", jwt)
-                        //         // _this.$store.commit("SET_USERINFO", response.data.userInfo)
-                        //         // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
-                        //         // this.$router.push({path:'/devHome/appList'});
-                        //     }else {
-                        //         this.$message({
-                        //             type: 'waring',
-                        //             message: "登录失败"
-                        //         })
-                        //     }
-                        // }).catch(err=>{
-                        //     this.$message({
-                        //         type: 'waring',
-                        //         message: "登录失败"
-                        //     })
-                        // })
-                        console.log("=====开始登陆=======")
-                        reqLogin({
-                            account: this.ruleForm.account,
-                            password: this.ruleForm.password
-                        }).then((response) => {
-                            console.log("登陆后的response："+response.data);
-                            let user  = response.data.user;
-                            console.log("=====user:==="+user+"=========");
-                            const jwt = response.headers['authorization']
-                            console.log("====jwt:=== "+jwt);
-                            if(response.data.code == 200){
-                                console.log("登录成功");
-                                console.log(response);
-                                const jwt = response.headers['authorization']
-                                console.log("====jwt:=== "+jwt);
-                                // //把数据共享出去
-                                _this.$store.commit("SET_TOKEN", jwt)
-                                console.log("===localStorage.getItem(\"token\")==="+localStorage.getItem("token")+"==");
-                                _this.$store.commit("SET_USERINFO", response.data.user);
-                                console.log("=====response.data.user====="+response.data.user.manage+"========")
-
-                                if(response.data.user.manage){
-                                    this.$message({
-                                        type: 'success',
-                                        message: "登录成功！",
-                                        duration: 1000
-                                    })
-                                    setTimeout(() => {
-                                        this.$router.push({path:'/admin/home'});
-                                    }, 1000);
-                                }else {
-                                    this.$message({
-                                        type: 'success',
-                                        message: "登录成功！",
-                                        duration: 1000
-                                    })
-                                    setTimeout(() => {
-                                        this.$router.push({path:'/user/userCenter'});
-                                    }, 1000);
-                                }
-                                // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
-                                // this.$router.push({path:'/devHome/appList'});
-                            }else {
-                                this.$message({
-                                    type: 'waring',
-                                    message: "登录失败"
-                                })
-                            }
-                        }).catch(() => {
-                            // this.$message.error("登录失败")
+                        setTimeout(() => {
+                            this.$router.push({path: '/user/userCenter'});
                         })
-                    } else {
-                        //数据校验失败，不可以进行提交
-                        this.$message.error("账号密码不符合要求，登陆失败");
                     }
-                });
+                })
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();

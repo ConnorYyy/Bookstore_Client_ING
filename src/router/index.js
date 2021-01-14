@@ -389,10 +389,10 @@ export default new Router({
     {
       path: '/user',
       name: 'UserHome',
-      component: UserHome,
+      component: UserHome, 
       meta: {
         title: '应用详情',
-        url: '/user/userCenter', //这里用户界面第一步是进入到用户中心
+        url: '/user/userCenter', //用户登录后直接进入用户中心，可修改
         requiresAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         requiresUser: true,
       },

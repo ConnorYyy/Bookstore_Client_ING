@@ -4,11 +4,13 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    token: '',
-    userInfo: JSON.parse(sessionStorage.getItem("userInfo"))
-    // userInfo: null,
-
+  state: { //todo
+    token: '1',
+    // token: '',
+    userInfo: {
+      manage: false
+    }
+    // userInfo: JSON.parse(sessionStorage.getItem("userInfo")) 
   },
   mutations: {
     // set

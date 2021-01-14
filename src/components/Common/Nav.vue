@@ -12,9 +12,9 @@
           active-text-color="#FF4950"
           router>
           <el-menu-item index="/">首页</el-menu-item>
-          <el-submenu index="/">
-            <template slot="title">登陆|注册</template>
-            <el-menu-item index="/login">登陆</el-menu-item>
+          <el-submenu index="#">
+            <template slot="title">登录|注册</template>
+            <el-menu-item index="/login">登录</el-menu-item>
             <el-menu-item index="/register">注册</el-menu-item>
           </el-submenu>
           <el-menu-item index="/cart">购物车</el-menu-item>
