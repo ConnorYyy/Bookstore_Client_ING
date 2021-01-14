@@ -72,10 +72,10 @@
         },
         methods: {
             login(formName) {
-                var a = encrypt("恭喜发财");
-                var b = decrypt(a);
-                console.error("加密后--->" + a);
-                console.error("解密后--->" + b);
+                // var a = encrypt(formName.password);
+                // var b = decrypt(a);
+                // console.error("加密后--->" + a);
+                // console.error("解密后--->" + b);
                 let _this = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {

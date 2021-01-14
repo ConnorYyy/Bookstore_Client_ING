@@ -1,6 +1,6 @@
 import Vue from 'vue'; //
 import Router from 'vue-router'; //
-import Login from "../pages/Login/Login"; 
+import Login from "../pages/Login/Login"; //
 import Index from "../pages/Index/Index"; //
 import AxiosTest from "../components/AxiosTest";
 import UserHome from "../pages/UserHome/UserHome";
