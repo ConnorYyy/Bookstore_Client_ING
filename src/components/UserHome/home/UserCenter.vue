@@ -2,89 +2,44 @@
   <div class="content">
     <div class="info">
       <div class="user_card">
-        <el-image style="width: 160px; height: 160px;vertical-align: middle;border-radius: 50%;float: left;margin: 20px 10px"
-            :src="user.imgUrl"
-        fit="fill"></el-image>
+        <el-avatar shape="square" :size="100" :src="user.imgUrl"></el-avatar>
         <div class="user_card_info">
           <p style="font-size: 22px;color: #616161">{{user.name}}</p>
-          <p><span class="link" @click="gotoModUserInfo">修改个人信息></span></p>
         </div>
       </div>
       <div class="user_action">
-        <p> <span>账号安全:</span><span>普通</span></p>
-        <p> <span>绑定手机:</span><span>18370098989</span></p>
-        <p> <span>绑定邮箱:</span><span>{{user.account}}</span></p>
+        <p> <span>性别:</span><span>{{user.gender===null?'未知':(user.gender?'男':'女')}}</span></p>
+        <p> <span>身份:</span><span>{{user.manage?'管理者':'普通用户'}}</span></p>
+        <p> <span>id:</span><span>{{user.id}}</span></p>
+        <p> <span>邮箱:</span><span>{{user.account}}</span></p>
       </div>
     </div>
-    <div class="portal-sub">
-      <div class="info-list">
-        <el-image style="width: 120px; height: 120px;vertical-align: middle;border-radius: 50%;float: left;margin: 15px 10px"
-          :src="imgS1"
-          fit="fill"></el-image>
-        <div class="list_info">
-          <p> <span class="title">待支付的订单:</span> <span class="num">0</span></p>
-          <p> <span>查看待支付的订单></span></p>
-        </div>
-      </div>
-
-      <div class="info-list">
-        <el-image style="width: 120px; height: 120px;vertical-align: middle;border-radius: 50%;float: left;margin: 15px 10px"
-                  :src="imgS2"
-                  fit="fill"></el-image>
-        <div class="list_info">
-          <p> <span class="title">待收货的订单:</span> <span class="num">0</span></p>
-          <p> <span>查看待收货的订单></span></p>
-        </div>
-      </div>
-
-      <div class="info-list">
-        <el-image style="width: 120px; height: 120px;vertical-align: middle;border-radius: 50%;float: left;margin: 15px 10px"
-                  :src="imgS3"
-                  fit="fill"></el-image>
-        <div class="list_info">
-          <p> <span class="title">待评价的商品数:</span> <span class="num">0</span></p>
-          <p> <span>查看待评价商品></span></p>
-        </div>
-      </div>
-
-      <div class="info-list">
-        <el-image style="width: 120px; height: 120px;vertical-align: middle;border-radius: 50%;float: left;margin: 15px 10px"
-                  :src="imgS4"
-                  fit="fill"></el-image>
-        <div class="list_info">
-          <p> <span class="title">喜欢的商品:</span> <span class="num">0</span></p>
-          <p> <span>喜欢的商品></span></p>
-        </div>
-      </div>
-
-    </div>
-    <div id="myChart" v-show="false" :style="{width: '300px', height: '300px'}"></div>
+    <Address></Address>
   </div>
 </template>
 
 <script>
     // <!--用户中心-->
     import {reqGetUserInfo} from "../../../api/user";
-
+    import Address from "./Address";
     export default {
         name: "UserCenter",
+        components: {Address},
         data () {
             return {
-                msg: 'Welcome to Your Vue.js App',
-                imgS: require('../../../assets/image/head.jpg'),
                 imgS1: require('../../../assets/image/icon1.png'),
                 imgS2: require('../../../assets/image/icon2.png'),
                 imgS3: require('../../../assets/image/icon3.png'),
                 imgS4: require('../../../assets/image/icon4.png'),
                 user:{
-                    id: null,
-                    account: "",
-                    name: "",
-                    gender: "",
+                    id: '未定义',
+                    account: '未定义',
+                    name: '未定义',
+                    gender: '未定义',
                     enable: false,
-                    info: "",
-                    imgUrl: "",
-                    registerTime: null,
+                    info: '未定义',
+                    imgUrl: '/static/image/head.jpg',
+                    registerTime: '未定义'
                 }
             }
         },
@@ -97,11 +52,12 @@
             initUserCenter(){
                 reqGetUserInfo(this.$store.getters.getUser.account).then(response=>{
                     console.log(response);
-                    if(response.code==200){
-                        this.user = response.user;
+                    if(response.data.code==200){
+                        this.user = response.data.user;
+                        this.user.imgUrl = this.user.imgUrl || '/static/image/head.jpg';
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -111,13 +67,7 @@
                         type: "warning"
                     })
                 })
-            },
-            //操作表格
-            gotoModUserInfo(){
-                this.$router.push({
-                    path: "/user/userInfo",
-                })
-            },
+            }
         }
     }
 </script>
@@ -132,7 +82,7 @@
 
   .info{
     width: 940px;
-    height: 200px;
+    height: 150px;
     margin: 0px auto;
     background-color: #ffffff;
     border-bottom: 1px solid #d9d9d9;
@@ -140,22 +90,18 @@
 
   .user_card{
     width: 540px;
-    height: 200px;
     float: left;
   }
 
   .user_card_info{
-    margin: 75px 0px;
+    margin:  0px;
     width: 200px;
-    height: 100px;
     display: inline-block;
     line-height: 30px;
   }
   .user_action{
     float: left;
     width: 400px;
-    height: 200px;
-    padding-top: 65px;
   }
   .link{
     font-size: 14px;

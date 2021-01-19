@@ -57,9 +57,9 @@
             //得到出版社列表
             GetTopicBookList() {
                 reqGetTopicBookList(this.topicId).then(response => {
-                    if (response.code == 200) {
-                        this.TopicBookList = response.TopicBookList;
-                        this.bookTopic = response.bookTopic;
+                    if (response.data.code == 200) {
+                        this.TopicBookList = response.data.TopicBookList;
+                        this.bookTopic = response.data.bookTopic;
                     }
                     // console.log(response);
                 }).catch(err => {

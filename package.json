@@ -1,5 +1,5 @@
 {
-  "name": "CITICBookShop",
+  "name": "book_01",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "e <2630208698@qq.com>",
@@ -19,9 +19,8 @@
     "qs": "^6.9.4",
     "save": "^2.4.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.4.0",
-    "crypto-js": "^3.1.9"
+    "vue-router": "^3.0.7",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -61,7 +60,8 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "crypto-js": "^4.0.0"
   },
   "engines": {
     "node": ">= 6.0.0",

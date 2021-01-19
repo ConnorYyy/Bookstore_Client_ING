@@ -6,7 +6,7 @@
         <p class="noMesInfo" v-show="true">暂无数据</p>
       </div>
       <div class="tab_box">
-        <div class="order_list" v-for="order in orderList">
+        <div class="order_list" v-for="(order,index) in orderList" :key="index">
           <div class="order_summary">
             <p class="caption-info">
               {{order.orderTime}}
@@ -140,13 +140,13 @@
             getOrderList(page,pageSize){
                 let account= "133@qq.com";
                 reqUserGetOrderList(account,page,pageSize,this.orderStatus,this.beUserDelete).then(response=>{
-                    if(response.code==200){
-                        this.total = response.total;
+                    if(response.data.code==200){
+                        this.total = response.data.total;
                         console.log(this.total);
-                        this.orderList = response.orderDtoList;
+                        this.orderList = response.data.orderDtoList;
                     }else {
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }

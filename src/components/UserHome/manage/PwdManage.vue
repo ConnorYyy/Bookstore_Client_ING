@@ -29,15 +29,6 @@
     export default {
         name: "PwdManage",
         data() {
-            let validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入密码'));
-                } else if(value.length<3) {
-                    callback(new Error('密码长度不能小于8'));
-                }else {
-                    callback();
-                }
-            };
             let validateRePass = (rule, value, callback) => {
                 if (value !==this.ruleForm.newPassword){
                     callback(new Error('密码不一致'));
@@ -53,12 +44,15 @@
                 },
                 rules: {
                     oldPassword: [
-                        { required: true, message: '旧密码不能为空', trigger: 'blur' },
+                        { required: true, message: '旧密码不能为空！', trigger: 'blur' },
+                        { min: 8, message: '密码长度不能小于8位！', trigger: 'blur' }
                     ],
                     newPassword: [
-                        { validator: validatePass, trigger: 'blur' }
+                        { required: true, message: '请输入新密码！', trigger: 'blur' },
+                        { min: 8, message: '密码长度不能小于8位！', trigger: 'blur' }
                     ],
                     rePassword: [
+                        { required: true, message: '请再次输入新密码！', trigger: 'blur' },
                         { validator: validateRePass, trigger: 'blur' }
                     ]
                 }
@@ -71,11 +65,11 @@
                         console.log("=====this.ruleForm.oldPassword:========"+this.ruleForm.newPassword+"====")
                         //数据校验成功，可以进行提交操作
                         reqModUserPwd(this.$store.getters.getUser.account,this.ruleForm.oldPassword,this.ruleForm.newPassword).then((response)=>{
-                            if(response.code==200){
-                                console.log("=====注册成功=====");
+                            if(response.data.code==200){
+                                console.log("=====修改成功=====");
                                 this.$message({
                                     type: 'success',
-                                    message: response.message,
+                                    message: response.data.message,
                                     duration: 1000
                                 })
                                 setTimeout(() => {
@@ -84,7 +78,7 @@
                             }else{
                                 this.$message({
                                     type: 'waring',
-                                    message: response.message,
+                                    message: response.data.message,
                                     duration: 1000
                                 })
                             }
@@ -113,7 +107,7 @@
 
   .content{
     margin: 10px auto;
-    width:1000px;
+    width:90%;
     background-color: white;
     padding: 30px 20px;
   }
@@ -122,15 +116,14 @@
     font-family: 新宋体;
   }
   .box_info{
-    width: 960px;
-    /*background-color: #8acfd1;*/
+    width: 90%;
     margin: 10px auto;
   }
   .modify_box{
-    margin-top: 30px;
-    /*margin-left: 250px;*/
-    width: 400px;
-    height: 260px;
+    margin: 30px auto;
+    width: 50%;
+    min-width: 300px;
+    height: 100%;
     /*border: 1px solid #dfdfdf;*/
     text-align: center;
     padding: 15px;

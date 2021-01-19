@@ -94,16 +94,16 @@
             },
             getSortList() {
                 reqGetSortList().then(response => {
-                    this.sortList = response.sortResponseList;
+                    this.sortList = response.data.sortResponseList;
                 });
             },
             //得到图书列表
             getBookList(sortId,page,pageSize){
                 reqGetBookListBySort(sortId,page,pageSize).then(response=>{
-                    if(response.code==200){
-                        this.total = response.total;
+                    if(response.data.code==200){
+                        this.total = response.data.total;
                         console.log(this.total);
-                        this.bookList = response.bookList;
+                        this.bookList = response.data.bookList;
                     }
                     console.log(response);
                 }).catch(err=>{

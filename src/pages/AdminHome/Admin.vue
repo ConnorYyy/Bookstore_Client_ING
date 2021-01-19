@@ -13,11 +13,13 @@
                    active-text-color="#409eff"
                    :collapse="isCollapse"
                    router>
-          <el-menu-item index="/admin/home">
+
+          <el-menu-item index="/">
             <i class="el-icon-s-home"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-submenu index="2">
+
+          <el-submenu index="#1">
             <template slot="title">
               <i class="el-icon-tickets"></i>
               <span slot="title">图书</span>
@@ -27,41 +29,27 @@
               <el-menu-item index="/admin/addBook">添加图书</el-menu-item>
               <el-menu-item index="/admin/FirstSortList">图书分类</el-menu-item>
               <el-menu-item index="/admin/publish">出版社管理</el-menu-item>
-              <el-menu-item index="/admin/bookTopicSet">书单专题</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-setting"></i>
-              <span slot="title">订单</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/admin/orderList">订单列表</el-menu-item>
-              <el-menu-item index="/admin/orderSet">订单设置</el-menu-item>
-              <el-menu-item index="/admin/returnOrder">退货申请处理</el-menu-item>
-              <el-menu-item index="/admin/returnReason">退货原因设置</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-shopping-bag-1"></i>
-              <span slot="title">营销</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/admin/spikeSet">秒杀活动</el-menu-item>
-              <el-menu-item index="/admin/bookRecommend">人气推荐</el-menu-item>
-              <el-menu-item index="/admin/coupon">优惠券</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="5">
+
+          <el-menu-item index="/admin/orderList">
+            <i class="el-icon-setting"></i>
+            <span slot="title">订单管理</span>
+          </el-menu-item>
+          
+          <el-menu-item index="/admin/admininfo">
+            <i class="el-icon-user-solid"></i>
+            <span>个人信息</span>
+          </el-menu-item>
+
+          <el-submenu index="#2">
             <template slot="title">
               <i class="el-icon-lock"></i>
               <span slot="title">权限</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="/admin/userList">用户列表</el-menu-item>
-<!--              <el-menu-item index="/admin/rolesList">角色列表</el-menu-item>-->
-<!--              <el-menu-item index="/admin/menuList">菜单列表</el-menu-item>-->
+             <el-menu-item index="/admin/rolesList">角色列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -84,19 +72,11 @@
             </el-breadcrumb>
           </div>
 
-          <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item><a href="/">首页</a></el-dropdown-item>
-              <el-dropdown-item><a @click="logout">退出</a></el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <span>黄龙</span>
+          <span>{{this.getUser.user || '亲爱的管理员'}}</span>
         </el-header>
 
         <el-main>
           <div style="width: 100%">
-<!--            <a href="/admin/info">用户信息</a> <a href="/admin/update">修改信息</a>-->
             <router-view></router-view>
           </div>
         </el-main>
@@ -106,7 +86,9 @@
 </template>
 
 <script>
-    import {mapState,mapMutations,mapGetters} from 'vuex'
+    import {mapState,mapMutations,mapGetters} from 'vuex';
+    import {reqLogout} from "../../api/user";
+
     export default {
         name: "Admin",
         data() {
@@ -154,21 +136,43 @@
                     // matched = [{ path: "/admin", meta: { title: "首页" } }].concat(matched);
                     matched = matched;
                 }
+                matched[0].path="/";
                 this.breadList = matched;
+
                 console.log("this.breadList:"+this.breadList);
             },
 
-            logout(){
-                this.REMOVE_INFO();
-                this.$message({
-                    type: 'success',
-                    message: "退出成功！",
-                    duration: 1000
+            logout() {
+              this.$confirm("您确认要退出吗?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+              }).then(() => {
+                reqLogout().then(response=>{
+                  if (response.data.code == 200) {
+                    this.REMOVE_INFO();
+                    this.$message({
+                      message: response.data.message,
+                      type: "success",
+                      duration: 1000
+                    });
+                    setTimeout(() => {
+                        this.$router.push({path:'/'});
+                    }, 1000);
+                  } else {
+                    this.$message({
+                      message: response.data.message,
+                      type: "warning",
+                    });
+                  }
+                }).catch((err) => {
+                  console.log(err);
+                });
+              }).catch((err)=>{
+                console.log(err)
                 })
-                setTimeout(() => {
-                    this.$router.push({path:'/'});
-                }, 1000);
             },
+
             handleOpen(key, keyPath) {
                 // console.log(key, keyPath);
             },
@@ -189,10 +193,9 @@
                 this.isCollapse = !this.isCollapse;
             },
             ...mapMutations(['REMOVE_INFO']),
+            ...mapGetters(['getUser'])
         },
         computed: {
-            ...mapState(['active']),
-            ...mapGetters(['showActive'])
         }
     }
 </script>

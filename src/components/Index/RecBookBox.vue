@@ -55,12 +55,12 @@
                     case "recommend":
                         this.sortTitle = "精品推荐";
                         reqGetRecBookList("recommend").then(response=>{
-                            if(response.code==200){
-                                this.bookList = response.bookList;
+                            if(response.data.code==200){
+                                this.bookList = response.data.bookList;
                             }else{
                                 this.$message({
                                     type: 'warning',
-                                    message: response.message
+                                    message: response.data.message
                                 })
                             }
                         }).catch(err=>{
@@ -73,12 +73,12 @@
                     case "newProduct":
                         this.sortTitle = "新品推荐";
                         reqGetRecBookList("newProduct").then(response=>{
-                            if(response.code==200){
-                                this.bookList = response.bookList;
+                            if(response.data.code==200){
+                                this.bookList = response.data.bookList;
                             }else{
                                 this.$message({
                                     type: 'warning',
-                                    message: response.message
+                                    message: response.data.message
                                 })
                             }
                         }).catch(err=>{

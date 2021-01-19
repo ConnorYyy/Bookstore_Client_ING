@@ -5,9 +5,7 @@
         <span v-if="index==0" @mouseenter="enter(index)" style="margin-right: 20px;margin-left: 30px;font-size: 24px">{{item.sortName}}</span>
         <span v-else @mouseenter="enter(index)" style="margin-right: 20px;">{{item.sortName}}</span>
       </router-link>
-<!--      <a style="float: right;margin-right: 30px" href="#">>更多书单</a>-->
       <router-link :to="{path: '/search',query:{id:bookList[0].sortId,name:bookList[0].sortName}}" style="float: right;margin-right: 30px">>更多图书</router-link>
-
     </div>
     <div class="gallery-book_list" v-for="(book,index) in bookList" v-show="current==index" :key="index">
       <div class="gallery-book_card" v-for="(item) in book.bookList" :key="item.id">
@@ -53,9 +51,8 @@
                     "static/image/23.jpg"],
                 bookList:[ {
                     sortId: 1,
-                    sortName: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                    bookList: []
-                }],
+                    sortName: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）"
+                    }],
             };
         },
         methods: {
@@ -70,14 +67,14 @@
             getSortBookList(){
                 console.log("发送了获取分类图书的请求");
                 reqGetSortBookList(117).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         console.log(response);
-                        this.bookList = response.sortBookResList;
+                        this.bookList = response.data.sortBookResList;
                         console.log(this.bookList);
                     }else{
                         this.$message({
                             type: 'warning',
-                            message: response.message
+                            message: response.data.message
                         })
                     }
                 }).catch(err=>{

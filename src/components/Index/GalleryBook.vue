@@ -37,62 +37,15 @@
                     "static/image/23.jpg"],
                 bookList: [
                     {
-                        id: 1,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
+                        id: 11,
+                        bookName: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
                         author: "黄子平 著",
-                        price: 123.23
+                        price: 123.23,
+                        coverImg: "statics/image/20.jpg"
                     },
                     {
                         id: 12,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 13,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 14,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 15,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 16,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 17,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 18,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 19,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    },
-                    {
-                        id: 10,
-                        name: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
+                        bookName: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
                         author: "黄子平 著",
                         price: 123.23
                     }
@@ -102,12 +55,12 @@
         methods: {
             getBookList(){
                 reqGetRecBookList("newPut").then(response=>{
-                    if(response.code==200){
-                        this.bookList = response.bookList;
+                    if(response.data.code==200){
+                        this.bookList = response.data.bookList;
                     }else{
                         this.$message({
                             type: 'warning',
-                            message: response.message
+                            message: response.data.message
                         })
                     }
                 }).catch(err=>{

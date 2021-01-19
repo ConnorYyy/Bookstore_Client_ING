@@ -123,19 +123,19 @@
 
             getSortList() {
                 reqGetSortList().then(response => {
-                    if(response.code==200){
-                        this.sortList = response.sortResponseList;
+                    if(response.data.code==200){
+                        this.sortList = response.data.sortResponseList;
                     }
                     // console.log(this.sortList);
-                    // console.log("response.sortResponseList"+response.sortResponseList);
+                    // console.log("response.data.sortResponseList"+response.data.sortResponseList);
                 });
             },
 
             getBook(bookId){
                 reqGetBook(bookId).then(response=>{
-                    // console.log(response.book);
-                    this.book = response.book;
-                    // console.log("this.book.imgSrc:"+response.book.imgSrc);
+                    // console.log(response.data.book);
+                    this.book = response.data.book;
+                    // console.log("this.book.imgSrc:"+response.data.book.imgSrc);
                     let MarkdownIt = require("markdown-it");
                     let md = new MarkdownIt();
                     let result = md.render(this.book.description);
@@ -163,15 +163,15 @@
             addBookToCart(){
                 // console.log("=======this.book.id:===="+this.book.id+"=================")
                 reqAddCart(this.$store.getters.getUser.account,this.book.id,1).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success",
                             duration: 1000
                         });
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning",
                             duration: 1000
                         })

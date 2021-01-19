@@ -178,11 +178,11 @@
                 let id = this.$route.query.id;
                 this.loading=false;
                 reqAdminGetOrderDetail(id).then(response=>{
-                    if(response.code==200){
-                        console.log(response.orderDto);
-                        // this.order = response.orderDto;
+                    if(response.data.code==200){
+                        console.log(response.data.orderDto);
+                        // this.order = response.data.orderDto;
                         this.order = [];
-                        this.order.push(response.orderDto);
+                        this.order.push(response.data.orderDto);
                     }else {
                         this.$message({
                             message: "获取订单明细出错了！",
@@ -196,14 +196,14 @@
             deliverOrder(){
                 let id = this.$route.query.id;
                 reqDeliverOrder(id,this.finalDelivery,this.logisticsNum).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         })
                     }else {
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }

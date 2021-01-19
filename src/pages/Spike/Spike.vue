@@ -24,9 +24,6 @@
             </div>
           </div>
         </el-tab-pane>
-<!--        <el-tab-pane label="22:00即将开始" name="second">22:00即将开始</el-tab-pane>-->
-<!--        <el-tab-pane label="22:00即将开始" name="third">22:00即将开始</el-tab-pane>-->
-<!--        <el-tab-pane label="22:00即将开始" name="fourth">22:00即将开始</el-tab-pane>-->
       </el-tabs>
     </div>
 

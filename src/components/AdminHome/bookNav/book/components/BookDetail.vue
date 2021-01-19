@@ -10,7 +10,6 @@
       </div>
       <div class="first_tab" v-if="active===0">
         <el-form ref="book" :model="book" :rules="rules" label-width="80px">
-
           <el-form-item label="图书分类:">
             <el-cascader
               v-model="book.bookSort"
@@ -77,7 +76,6 @@
               :file-list="fileList"
               :headers="myHeader"
             >
-<!--              :auto-upload="false"-->
               <i class="el-icon-plus"></i>
             </el-upload>
             <el-dialog :visible.sync="dialogVisible">
@@ -277,29 +275,29 @@
                     console.log(this.fileList);
                     // this.$refs.book.submit();
                     reqAddBook(this.book).then(response=>{
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
                                 type: 'success',
-                                message: response.message
+                                message: response.data.message
                             })
                         }else{
                             this.$message({
                                 type: 'warning',
-                                message: response.message
+                                message: response.data.message
                             })
                         }
                     })
                 }else {
                     reqModifyBook(this.book).then(response=>{
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
                                 type: 'success',
-                                message: response.message
+                                message: response.data.message
                             })
                         }else{
                             this.$message({
                                 type: 'warning',
-                                message: response.message
+                                message: response.data.message
                             })
                         }
                     }).catch(err=>{
@@ -321,15 +319,15 @@
             handleRemove(file, fileList) {
                 if(this.isEdit){
                     reqDelBookImg(this.book.isbn,file.url).then(response=>{
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
                                 type: 'success',
-                                message: response.message
+                                message: response.data.message
                             })
                         }else{
                             this.$message({
                                 type: 'warning',
-                                message: response.message
+                                message: response.data.message
                             })
                         }
                     }).catch(err=>{
@@ -354,7 +352,8 @@
             //得到并设置图书分类的联级选择器
             getSortList() {
                 reqGetSortList().then(response => {
-                    let list = response.sortResponseList;
+                  if(response.data.code==200){
+                    let list = response.data.sortResponseList;
                     this.options = [];
                     for (let i = 0; i < list.length; i++) {
                         let children = [];
@@ -366,13 +365,21 @@
                         console.log(list[i]);
                         this.options.push({label: list[i].upperSort.sortName, value: list[i].upperSort.id, children: children});
                     }
+                  }else{
+                      this.$message({
+                          message: response.data.message,
+                          type: "warning"
+                      })
+                  }
+                }).catch(err=>{
+                  console.log(err);
                 });
             },
             //得到并设置出版的下拉选择器
             getPublishName(){
                 reqGetPublishNames().then(response=>{
                     console.log(response);
-                    this.publishList=response.publishList;
+                    this.publishList=response.data.publishList;
                     this.book.publish=this.publishList[0];
                 }).then(err=>{
                     console.log(err);
@@ -382,7 +389,7 @@
             //得到图书的相册集
             getBookImgPathList(){
                 reqGetBookImgPathList("1345222").then(response=>{
-                    let list = response.imgPaths;
+                    let list = response.data.imgPaths;
                     for (let i = 0; i < list.length; i++) {
                         this.fileList.push({name: list[i], url: list[i]});
                     }
@@ -400,17 +407,24 @@
             if(this.isEdit){
                 let id = this.$route.query.id;
                 reqGetBook(id).then(response=>{
-                    console.log(response.book);
-                    console.log(response.upperId);
-                    console.log(response.childId);
-                    this.book = response.book;
-                    this.book.bookSort = [];
-                    this.book.bookSort.push(response.upperId);
-                    this.book.bookSort.push(response.childId);
-                    let list = response.book.imgSrc;
-                    console.log(list.length);
-                    for (let i = 0; i < list.length; i++) {
-                        this.fileList.push({name: list[i], url: list[i]});
+                    if(response.data.code==200){
+                        console.log(response.data.book);
+                        console.log(response.data.upperId);
+                        console.log(response.data.childId);
+                        this.book = response.data.book;
+                        this.book.bookSort = [];
+                        this.book.bookSort.push(response.data.upperId);
+                        this.book.bookSort.push(response.data.childId);
+                        let list = response.data.book.imgSrc;
+                        console.log(list.length);
+                        for (let i = 0; i < list.length; i++) {
+                            this.fileList.push({name: list[i], url: list[i]});
+                        }
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        });
                     }
                 }).catch(err=>{
                     console.log(err);

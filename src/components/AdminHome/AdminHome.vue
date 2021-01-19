@@ -150,18 +150,18 @@
             //得到指定日期内的订单统计数据
             getOrderStatistic(beginDate,endDate){
                 reqGetOrderStatistic(beginDate,endDate).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.option.series[0].data= [];
                         this.option.series[1].data= [];
                         this.option.xAxis.data = [];
                         console.log(" this.option.series[0].data"+this.option.series[0].data);
-                        // console.log(response.orderStatistic);
+                        // console.log(response.data.orderStatistic);
                         let date = new Date(beginDate);
                         // console.log("=======date:====="+date+"==========");
                         for(let i=0;i<this.dateDiff(this.value[0],this.value[1]);i++){
                             this.option.xAxis.data.push((date.getMonth()+1).toString()+"/"+date.getDate());
                             let exist = false;
-                            for(let order of response.orderStatistic){
+                            for(let order of response.data.orderStatistic){
                                 let orderDate = new Date(order.orderTime);
                                 if(orderDate.getDate() == date.getDate()){
                                     exist = true;

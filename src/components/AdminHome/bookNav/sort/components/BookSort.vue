@@ -215,10 +215,10 @@
                 if(this.isFirst){
                     this.loading=false;
                     reqGetFirstSortList(page,pageSize).then(response=>{
-                        if(response.code==200){
-                            this.total = response.total;
+                        if(response.data.code==200){
+                            this.total = response.data.total;
                             console.log(this.total);
-                            this.tableData = response.bookSortList;
+                            this.tableData = response.data.bookSortList;
                         }
                         console.log(response);
                     }).catch(err=>{
@@ -229,10 +229,10 @@
                     console.log("跳转过来的upperName:"+upperName);
                     this.loading=false;
                     reqGetSecondSortList(upperName,page,pageSize).then(response=>{
-                        if(response.code==200){
-                            this.total = response.total;
+                        if(response.data.code==200){
+                            this.total = response.data.total;
                             console.log(this.total);
-                            this.tableData = response.bookSortList;
+                            this.tableData = response.data.bookSortList;
                         }
                         console.log(response);
                     }).catch(err=>{
@@ -289,14 +289,14 @@
                         console.log("删除一级分类")
                         reqDelFirstSort(row.sortName).then(response=>{
                             console.log(response);
-                            if(response.code==200){
+                            if(response.data.code==200){
                                 this.$message({
-                                    message: response.message,
+                                    message: response.data.message,
                                     type: "success"
                                 })
                             }else{
                                 this.$message({
-                                    message: response.message,
+                                    message: response.data.message,
                                     type: "warning"
                                 })
                             }
@@ -308,14 +308,14 @@
                         console.log("删除二级分类");
                         reqDelSecondSort(row.upperName,row.sortName).then(response=>{
                             console.log(response);
-                            if(response.code==200){
+                            if(response.data.code==200){
                                 this.$message({
-                                    message: response.message,
+                                    message: response.data.message,
                                     type: "success"
                                 })
                             }else{
                                 this.$message({
-                                    message: response.message,
+                                    message: response.data.message,
                                     type: "warning"
                                 })
                             }

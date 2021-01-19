@@ -204,9 +204,9 @@
             GetPublish(page,pageSize){
                 this.loading=false;
                 reqGetPublishList(page,pageSize).then(response=>{
-                    if(response.code==200){
-                        this.total = response.total;
-                        this.tableData = response.publishList;
+                    if(response.data.code==200){
+                        this.total = response.data.total;
+                        this.tableData = response.data.publishList;
                     }
                     console.log(response);
                 }).catch(err=>{
@@ -228,14 +228,14 @@
             handleShowChange(e,row,index){
                 reqModifyShow(row.id).then(response=>{
                     console.log(response);
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         })
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -253,14 +253,14 @@
                 }).then(() => {
                     reqDelPublish(row.id).then(response=>{
                         console.log(response);
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "success"
                             })
                         }else{
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "warning"
                             })
                         }

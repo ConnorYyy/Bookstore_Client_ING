@@ -1,10 +1,11 @@
 import ajax from "./ajax";
 
-const BASE_URL = 'http://localhost:8082/book'
 
 //添加出版社newProduct: true,
 //                 recommend
-export const reqAddBook = (book) => ajax(BASE_URL+'/addBook', {
+
+//添加书籍
+export const reqAddBook = (book) => ajax('/addBook', {  
   author: book.author,
   isbn: book.isbn,
   publish: book.publish,
@@ -21,7 +22,8 @@ export const reqAddBook = (book) => ajax(BASE_URL+'/addBook', {
   bookSort: book.bookSort
 }, 'POST')
 
-export const reqModifyBook = (book) => ajax(BASE_URL+'/modifyBook', {
+//修改书籍信息
+export const reqModifyBook = (book) => ajax('/modifyBook', {
   author: book.author,
   isbn: book.isbn,
   publish: book.publish,
@@ -40,27 +42,30 @@ export const reqModifyBook = (book) => ajax(BASE_URL+'/modifyBook', {
 }, 'POST')
 
 
-export const reqGetBookList = (page,pageSize)=>ajax(BASE_URL+'/getBookList',{page, pageSize})
-export const reqGetBook = (id)=>ajax(BASE_URL+'/getBook',{id})
-
-export const reqGetRecBookList = (sort)=>ajax(BASE_URL+'/getRecBookList',{sort})
-
-
-
-//删除
-export const reqDelBook = (bookId)=>ajax(BASE_URL+'/delBook',{bookId})
-export const reqDelBookImg = (bookId,url)=>ajax(BASE_URL+'/delOneImg',{bookId,url})
+//获取书籍列表
+export const reqGetBookList = (page,pageSize)=>ajax('/getBookList',{page, pageSize})
+//根据id获取书籍
+export const reqGetBook = (id)=>ajax('/getBook',{id})
 
 
-export const reqGetBookImgPathList = (isbn)=>ajax(BASE_URL+'/getImgPaths',{isbn})
+export const reqGetRecBookList = (sort)=>ajax('/getRecBookList',{sort})
 
 
-export const reqModifyPut = (bookId,put)=>ajax(BASE_URL+'/modifyPut',{bookId,put})
-export const reqModifyRec = (bookId,recommend)=>ajax(BASE_URL+'/modifyRec',{bookId,recommend})
-export const reqModifyNew = (bookId,newProduct)=>ajax(BASE_URL+'/modifyNew',{bookId,newProduct})
+
+//删除书籍
+export const reqDelBook = (bookId)=>ajax('/delBook',{bookId})
+export const reqDelBookImg = (bookId,url)=>ajax('/delOneImg',{bookId,url})
+
+
+export const reqGetBookImgPathList = (isbn)=>ajax('/getImgPaths',{isbn})
+
+
+export const reqModifyPut = (bookId,put)=>ajax('/modifyPut',{bookId,put})
+export const reqModifyRec = (bookId,recommend)=>ajax('/modifyRec',{bookId,recommend})
+export const reqModifyNew = (bookId,newProduct)=>ajax('/modifyNew',{bookId,newProduct})
 
 //getSortBookList
-export const reqGetSortBookList = (sortId)=>ajax(BASE_URL+'/getSortBookList',{sortId})
+export const reqGetSortBookList = (sortId)=>ajax('/getSortBookList',{sortId})
 
 //getSortBookListBySort
-export const reqGetBookListBySort = (sortId,page,pageSize)=>ajax(BASE_URL+'/getBookListBySort',{sortId,page, pageSize})
+export const reqGetBookListBySort = (sortId,page,pageSize)=>ajax('/getBookListBySort',{sortId,page, pageSize})

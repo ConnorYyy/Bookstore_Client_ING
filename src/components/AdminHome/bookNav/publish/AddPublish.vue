@@ -5,7 +5,7 @@
 <script>
   import PublishDetail from "./components/PublishDetail";
     export default {
-        name: "addPublish",
+        name: "AddPublish",
         components:{PublishDetail}
     }
 </script>

@@ -3,21 +3,23 @@
     <Nav></Nav>
     <div class="content">
       <div class="login_content">
-        <h2>登录</h2>
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
-          <el-form-item prop="account">
-            <el-input type="text" v-model="ruleForm.account" autocomplete="off" placeholder="请输入手机号或者邮箱"></el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input type="password" v-model="ruleForm.password" autocomplete="off" placeholder="请输入密码"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="login('ruleForm')" style="width: 100%">登录</el-button>
-          </el-form-item>
-          <el-form-item>
-            <span style="float:left;">没有账号？<a href="/register">去注册</a></span><span style="float: right">忘记密码</span>
-          </el-form-item>
-        </el-form>
+        <h2 style="margin: 10px auto">登录</h2>
+        <div style="margin: 20px auto;width: 350px">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm"
+            label-position="right" label-width="80px" :hide-required-asterisk="true" size="medium">
+            <el-form-item prop="account"  label="登录账号">
+              <el-input type="text" v-model="ruleForm.account" autocomplete="off" placeholder="请输入邮箱"></el-input>
+            </el-form-item>
+            <el-form-item prop="password" label="登录密码">
+              <el-input type="password" v-model="ruleForm.password" autocomplete="off" placeholder="请输入密码"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="login('ruleForm')" style="width: 100%; margin-bottom:22px">登录</el-button>
+          <div style="font-size: 15px">
+              <span style="float:left;">没有账号？<a href="/register">去注册</a></span>
+              <span style="float: right">忘记密码</span>
+          </div>
+        </div>
       </div>
     </div>
     <Footer></Footer>
@@ -36,25 +38,6 @@
         name: "Login",
         components: {Nav,Footer},
         data() {
-            var checkAccount = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('账号不能为空!'));
-                }
-                var phoneReg = /^1\d{10}$/;
-                var emailReg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
-                if (!phoneReg.test(value) && !emailReg.test(value)){
-                    callback(new Error('请输入正确的手机号或邮箱!'));
-                } else {
-                    callback();
-                }
-            };
-            var validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入密码!'));
-                } else {
-                    callback();
-                }
-            };
             return {
                 ruleForm: {
                     account: '',
@@ -62,120 +45,17 @@
                 },
                 rules: {
                     account: [
-                        { validator: checkAccount, trigger: 'blur' }
+                        { required: true, message: "请输入账号！", trigger: 'blur' },
+                        { type: 'email', required: true, message: '请输入正确格式邮箱！', trigger: 'blur'},
                     ],
                     password: [
-                        { validator: validatePass, trigger: 'blur' }
+                        { required: true, message: '请输入密码！', trigger: 'blur' },
+                        { min: 8, message: '密码长度不能小于8！', trigger: 'blur' }
                     ],
                 }
             };
         },
         methods: {
-            // login(formName) {
-            //     // var a = encrypt(formName.password);
-            //     // var b = decrypt(a);
-            //     // console.error("加密后--->" + a);
-            //     // console.error("解密后--->" + b);
-            //     let _this = this;
-            //     this.$refs[formName].validate((valid) => {
-            //         if (valid) {
-            //             // let param = new URLSearchParams()
-            //             // param.append('account', this.ruleForm.account)
-            //             // param.append('password', this.ruleForm.password)
-            //             // axios({
-            //             //     method: 'POST',
-            //             //     url: 'api/login',
-            //             //     headers: {
-            //             //         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            //             //     },
-            //             //     data:{
-            //             //         'account': this.ruleForm.account,
-            //             //         'password': this.ruleForm.password
-            //             //     }
-            //             // }).then((response) => {
-            //             //     console.log("登录后返回的response："+response);
-            //             //     console.log(response.data);
-            //             //     let jwt = response.headers['authorization']
-            //             //     console.log("====jwt:=== "+jwt);
-            //             //     if(response.data.code == 200){
-            //             //         console.log("登录成功");
-            //             //         console.log(response);
-            //             //         // const jwt = response.headers['authorization']
-            //             //         // console.log("jwt: "+jwt);
-            //             //         // //把数据共享出去
-            //             //         // _this.$store.commit("SET_TOKEN", jwt)
-            //             //         // _this.$store.commit("SET_USERINFO", response.data.userInfo)
-            //             //         // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
-            //             //         // this.$router.push({path:'/devHome/appList'});
-            //             //     }else {
-            //             //         this.$message({
-            //             //             type: 'waring',
-            //             //             message: "登录失败"
-            //             //         })
-            //             //     }
-            //             // }).catch(err=>{
-            //             //     this.$message({
-            //             //         type: 'waring',
-            //             //         message: "登录失败"
-            //             //     })
-            //             // })
-            //             console.log("=====开始登录=======")
-            //             reqLogin({
-            //                 account: this.ruleForm.account,
-            //                 password: this.ruleForm.password
-            //             }).then((response) => {
-            //                 console.log("登录后的response："+response.data);
-            //                 let user  = response.data.user;
-            //                 console.log("=====user:==="+user+"=========");
-            //                 const jwt = response.headers['authorization']
-            //                 console.log("====jwt:=== "+jwt);
-            //                 if(response.data.code == 200){
-            //                     console.log("登录成功");
-            //                     console.log(response);
-            //                     const jwt = response.headers['authorization']
-            //                     console.log("====jwt:=== "+jwt);
-            //                     // //把数据共享出去
-            //                     _this.$store.commit("SET_TOKEN", jwt)
-            //                     console.log("===localStorage.getItem(\"token\")==="+localStorage.getItem("token")+"==");
-            //                     _this.$store.commit("SET_USERINFO", response.data.user);
-            //                     console.log("=====response.data.user====="+response.data.user.manage+"========")
-
-            //                     if(response.data.user.manage){
-            //                         this.$message({
-            //                             type: 'success',
-            //                             message: "登录成功！",
-            //                             duration: 1000
-            //                         })
-            //                         setTimeout(() => {
-            //                             this.$router.push({path:'/admin/home'});
-            //                         }, 1000);
-            //                     }else {
-            //                         this.$message({
-            //                             type: 'success',
-            //                             message: "登录成功！",
-            //                             duration: 1000
-            //                         })
-            //                         setTimeout(() => {
-            //                             this.$router.push({path:'/user/userCenter'});
-            //                         }, 1000);
-            //                     }
-            //                     // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
-            //                     // this.$router.push({path:'/devHome/appList'});
-            //                 }else {
-            //                     this.$message({
-            //                         type: 'waring',
-            //                         message: "登录失败"
-            //                     })
-            //                 }
-            //             }).catch(() => {
-            //                 // this.$message.error("登录失败")
-            //             })
-            //         } else {
-            //             //数据校验失败，不可以进行提交
-            //             this.$message.error("账号密码不符合要求，登录失败");
-            //         }
-            //     });
-            // },
             login(formName) {
                 // var a = encrypt(formName.password);
                 // var b = decrypt(a);
@@ -184,12 +64,76 @@
                 let _this = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        setTimeout(() => {
-                            this.$router.push({path: '/user/userCenter'});
+                        console.log("=====开始登录=======")
+                        reqLogin({
+                            account: this.ruleForm.account,
+                            password: this.ruleForm.password
+                        }).then((response) => {
+                            console.log("登录后的response："+response.data);
+                            let user  = response.data.user;
+                            console.log("=====user:==="+user+"=========");
+                            const jwt = response.headers['authorization']
+                            console.log("====jwt:=== "+jwt);
+                            if(response.data.code == 200){
+                                console.log("登录成功");
+                                console.log(response);
+                                const jwt = response.headers['authorization']
+                                console.log("====jwt:=== "+jwt);
+                                // //把数据共享出去
+                                _this.$store.commit("SET_TOKEN", jwt)
+                                console.log("===localStorage.getItem(\"token\")==="+localStorage.getItem("token")+"==");
+                                _this.$store.commit("SET_USERINFO", response.data.user);
+                                console.log("=====response.data.user====="+response.data.user+"========");
+                                if(response.data.user.manage){
+                                    this.$message({
+                                        type: 'success',
+                                        message: "登录成功！",
+                                        duration: 1000
+                                    })
+                                    setTimeout(() => {
+                                        this.$router.push({path:'/admin/home'});
+                                    }, 1000);
+                                }else {
+                                    this.$message({
+                                        type: 'success',
+                                        message: "登录成功！",
+                                        duration: 1000
+                                    })
+                                    setTimeout(() => {
+                                        this.$router.push({path:'/user/userCenter'});
+                                    }, 1000);
+                                }
+                                // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
+                                // this.$router.push({path:'/devHome/appList'});
+                            }else {
+                                this.$message({
+                                    type: 'waring',
+                                    message: "登录失败"
+                                })
+                            }
+                        }).catch(() => {
+                            // this.$message.error("登录失败")
                         })
+                    } else {
+                        //数据校验失败，不可以进行提交
+                        this.$message.error("账号密码不符合要求，登录失败");
                     }
-                })
+                });
             },
+            // login(formName) {
+            //     // var a = encrypt(formName.password);
+            //     // var b = decrypt(a);
+            //     // console.error("加密后--->" + a);
+            //     // console.error("解密后--->" + b);
+            //     let _this = this;
+            //     this.$refs[formName].validate((valid) => {
+            //         if (valid) {
+            //             setTimeout(() => {
+            //                 this.$router.push({path: '/user/userCenter'});
+            //             })
+            //         }
+            //     })
+            // },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             }
@@ -198,13 +142,16 @@
 </script>
 
 <style scoped>
+  body{
+    height: 100vh
+  }
   .content{
-    height: 100vh;
+    height: calc(100vh - 81px);
     width: 100%;
-    min-width: 1240px;
+    min-width: 100vw;
     overflow: hidden;
     background-color: #B3C0D1;
-    background-image: url("../../assets/image/15124.jpg");
+    background-image: url("/static/image/CITICBuilding.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     -moz-background-size: 100% 100%;
@@ -212,8 +159,8 @@
   .login_content{
     margin: 130px auto;
     padding: 15px;
-    width: 350px;
-    height: 300px;
+    width: 500px;
+    height: 350px;
     background-color: white;
     border-radius: 10px;
   }

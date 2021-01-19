@@ -4,109 +4,97 @@
     <HeadNav></HeadNav>
     <div class="first_content">
       <div class="content_main">
-        <div style="width: 100%">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="首页" name="first">
-              <div class="content_main_left">
-                <div class="tab">
-                  <div v-if="single==0">
-                    <div v-for="(item,index) in options" :key="index" class="tab_list" @mouseenter="enter(index)" @mouseleave="out(index)">
-                      <div>
-                        <router-link :to="{path: '/search',query:{id:item[0].value,name:item[0].label}}"><span style="color: black">{{item[0].label}}</span></router-link>
-                          <span> | </span>
-                        <router-link :to="{path: '/search',query:{id:item[1].value,name:item[1].label}}"><span style="color: black">{{item[1].label}}</span></router-link>
-                        <transition name="fade">
-                        <div class="tab_page" v-show="seen&&index==current" >
-                          <div v-for="book in item" :key="book.id">
-                            <h3>
-                              <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
-                            </h3>
-                            <div class="tab_page_list">
-                              <el-breadcrumb separator="|">
-                                <!--                            <el-breadcrumb-item :to="{ path: '/' }" exact>首页</el-breadcrumb-item>-->
-                                <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
-                                  {{it.label}}
-                                </el-breadcrumb-item>
-                                <el-breadcrumb-item>
-                                </el-breadcrumb-item>
-                              </el-breadcrumb>
-                            </div>
-                          </div>
+        <div style="width: 100%; margin-bottom: 30px">
+          <div class="content_main_left">
+            <div class="tab">
+              <div v-if="single==0">
+                <div v-for="(item,index) in options" :key="index" class="tab_list" @mouseenter="enter(index)" @mouseleave="out(index)">
+                  <div>
+                    <router-link :to="{path: '/search',query:{id:item[0].value,name:item[0].label}}"><span style="color: black">{{item[0].label}}</span></router-link>
+                      <span> | </span>
+                    <router-link :to="{path: '/search',query:{id:item[1].value,name:item[1].label}}"><span style="color: black">{{item[1].label}}</span></router-link>
+                    <transition name="fade">
+                    <div class="tab_page" v-show="seen&&index==current" >
+                      <div v-for="book in item" :key="book.id">
+                        <h3>
+                          <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
+                        </h3>
+                        <div class="tab_page_list">
+                          <el-breadcrumb separator="|">
+                            <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
+                              {{it.label}}
+                            </el-breadcrumb-item>
+                            <el-breadcrumb-item>
+                            </el-breadcrumb-item>
+                          </el-breadcrumb>
                         </div>
-                        </transition>
-                      </div >
-                    </div>
-                  </div>
-                  <div v-if="single==1">
-                    <div v-for="(item,index) in options" class="tab_list" @mouseenter="enter(index)" @mouseleave="out(index)">
-                      <div v-if="item.length<2">
-<!--                          {{item[0].label}}-->
-                        <router-link :to="{path: '/search',query:{id:item[0].value,name:item[0].label}}"><span style="color: black">{{item[0].label}}</span></router-link>
-                        <transition name="fade">
-                        <div class="tab_page" v-show="seen&&index==current">
-                          <div v-for="book in item">
-                            <h3>
-                              <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
-                            </h3>
-                            <div class="tab_page_list">
-                              <el-breadcrumb separator="|">
-                                <!--                            <el-breadcrumb-item :to="{ path: '/' }" exact>首页</el-breadcrumb-item>-->
-                                <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
-                                  {{it.label}}
-                                </el-breadcrumb-item>
-                                <el-breadcrumb-item>
-                                </el-breadcrumb-item>
-                              </el-breadcrumb>
-                            </div>
-                          </div>
-                        </div>
-                        </transition>
                       </div>
-
-                      <div v-if="item.length==2">
-                        {{item[0].label}}<span> | </span>{{item[1].label}}
-                        <transition name="fade">
-                        <div class="tab_page" v-show="seen&&index==current">
-                          <div v-for="book in item">
-                            <h3>
-                              <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
-                            </h3>
-                            <div class="tab_page_list">
-                              <el-breadcrumb separator="|">
-                                <!--                            <el-breadcrumb-item :to="{ path: '/' }" exact>首页</el-breadcrumb-item>-->
-                                <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
-                                  {{it.label}}
-                                </el-breadcrumb-item>
-                                <el-breadcrumb-item>
-                                </el-breadcrumb-item>
-                              </el-breadcrumb>
-                            </div>
-                          </div>
-                        </div>
-                        </transition>
-                      </div>
-
                     </div>
-                  </div>
-                </div>
-                <div class="communicate">
-                  <i class="el-icon-phone"></i><span>书店客服中心</span><br>
-                  <span>预约电话 010-8430 857</span>
+                    </transition>
+                  </div >
                 </div>
               </div>
-              <div class="content_main_right">
-                <Carousel :imgList="imgS"></Carousel>
-                <!-- <Carousel :imgList="bookTopicList"></Carousel> -->
-                <div class="gallery-book_title">
-                  <span>最新出版</span>
+              <div v-if="single==1">
+                <div v-for="(item,index) in options" :key="index" class="tab_list" @mouseenter="enter(index)" @mouseleave="out(index)">
+                  <div v-if="item.length<2">
+                    <router-link :to="{path: '/search',query:{id:item[0].value,name:item[0].label}}"><span style="color: black">{{item[0].label}}</span></router-link>
+                    <transition name="fade">
+                    <div class="tab_page" v-show="seen&&index==current">
+                      <div v-for="book in item" :key="book.id">
+                        <h3>
+                          <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
+                        </h3>
+                        <div class="tab_page_list">
+                          <el-breadcrumb separator="|">
+                            <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
+                              {{it.label}}
+                            </el-breadcrumb-item>
+                          </el-breadcrumb>
+                        </div>
+                      </div>
+                    </div>
+                    </transition>
+                  </div>
+
+                  <div v-if="item.length==2">
+                    {{item[0].label}}<span> | </span>{{item[1].label}}
+                    <transition name="fade">
+                    <div class="tab_page" v-show="seen&&index==current">
+                      <div v-for="book in item" :key="book">
+                        <h3>
+                          <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
+                        </h3>
+                        <div class="tab_page_list">
+                          <el-breadcrumb separator="|">
+                            <!--                            <el-breadcrumb-item :to="{ path: '/' }" exact>首页</el-breadcrumb-item>-->
+                            <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
+                              {{it.label}}
+                            </el-breadcrumb-item>
+                            <el-breadcrumb-item>
+                            </el-breadcrumb-item>
+                          </el-breadcrumb>
+                        </div>
+                      </div>
+                    </div>
+                    </transition>
+                  </div>
+
                 </div>
-                <GalleryBook></GalleryBook>
-                <SpikeBox></SpikeBox>
               </div>
-            </el-tab-pane>
-            <el-tab-pane label="新书区" name="second">新书区</el-tab-pane>
-            <el-tab-pane label="书单区" name="third">书单区</el-tab-pane>
-          </el-tabs>
+            </div>
+            <div class="communicate">
+              <i class="el-icon-phone"></i><span>书店客服中心</span><br>
+              <span>预约电话 010-7777 777</span>
+            </div>
+          </div>
+          <div class="content_main_right">
+            <Carousel :imgList="imgS"></Carousel>
+            <!-- <Carousel :imgList="bookTopicList"></Carousel> -->
+            <div class="gallery-book_title">
+              <span>最新出版</span>
+            </div>
+            <GalleryBook></GalleryBook>
+          </div>
         </div>
       </div>
     </div>
@@ -161,7 +149,38 @@
                       {cover: "static/image/22.jpg", id: 3},
                       {cover: "static/image/23.jpg", id: 4}],
                 bookSortList:['小说','文学','地理','教科书','生物','科学','地理','教科书','生物','教科书'],
-                options: [],
+                options: [
+                  [
+                    {
+                      label: '小说', value: '1', 
+                      children: [
+                        {label: '武侠小说', value: '11'},
+                        {label: '言情小说', value: '12'},
+                        {label: '科幻小说', value: '13'}
+                      ]
+                    },
+                    {
+                      label: '文学', value: '2', 
+                      children: [
+                        {label: '中国文学', value: '21'},
+                        {label: '英国文学', value: '22'},
+                        {label: '俄国文学', value: '23'}
+                      ]
+                    }
+                  ],
+                  [
+                    {
+                      label: '文学', value: '2', 
+                      children: [
+                        {label: '中国文学', value: '21'},
+                        {label: '英国文学', value: '22'},
+                        {label: '俄国文学', value: '23'}
+                      ]
+                    },
+                    {}
+                  ]
+                  
+                ]
             };
         },
         methods: {
@@ -185,9 +204,9 @@
             GetTopic(page,pageSize){
                 this.loading=false;
                 reqGetTopicList(page,pageSize).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.bookTopicList = [];
-                        let list = response.bookTopicList;
+                        let list = response.data.bookTopicList;
                         for(let i=0;i<list.length;i++){
                             this.bookTopicList.push({cover:list[i].cover,id:list[i].id});
                         }
@@ -204,9 +223,9 @@
             //得到并设置图书分类的联级选择器
             getSortList() {
                 reqGetSortList().then(response => {
-                    if(response.code==200){
+                    if(response.data.code==200){
                         console.log("list:"+response);
-                        let list = response.sortResponseList;
+                        let list = response.data.sortResponseList;
                         this.options = [];
                         if(list.length%2==0){
                             for (let i = 0; i < list.length; i=i+2) {
@@ -286,13 +305,13 @@
 <style scoped>
   .first_content{
      width: 100%;
-     background-color: #f7f7f6;
+     background-color: #ffffff;
    }
   .content_main{
     margin: 0px auto;
     width: 1240px;
-    height: 1450px;
-    background-color: #f7f7f6;
+    height: 700px;
+    background-color: #ffffff;
   }
   .content_main_left{
     width: 17%;
@@ -317,11 +336,13 @@
   .second_content{
     width: 100%;
     background-color: #ffffff;
+     display: block;
   }
   .book_box{
     width: 1240px;
     height: 700px;
     margin: 0px auto;
+    background-color: #ffffff;
   }
   .tab_page a{
     font-size: 19px;
@@ -350,7 +371,9 @@
   }
   .tab{
     width: 100%;
-    height: 420px;
+    padding-left: 20px;
+    min-height: 300px;
+    height: auto;
   }
   .tab_list{
     padding-left: 5px;
@@ -370,7 +393,7 @@
     width: 832px;
     position: absolute;
     left: 209px;
-    top: 0;
+    top: 140px;
     z-index: 24;
     height: 410px;
     border: 1px solid #e0e0e0;
@@ -391,10 +414,11 @@
     clear: both;
     position: relative;
     width: 100%;
-    height: 100px;
+    height: 100%;
     border: 1px #acb4bc solid;
     padding: 2px 5px;
     line-height: 30px;
+    text-align: center;
   }
   /deep/ .el-tabs__item {
     height: 60px;

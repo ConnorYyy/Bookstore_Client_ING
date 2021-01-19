@@ -51,7 +51,7 @@
           label="数量"
           align="center">
           <template slot-scope="scope">
-            <el-input-number v-model="scope.row.num" @change="modifyCart(scope.$index,scope.row)" :min="1" :max="20" label="描述文字"></el-input-number>
+            <el-input-number v-model="scope.row.num" @change="(newVal, oldVal) => modifyCart(newVal,oldVal,scope.row)" :min="1" :max="99"></el-input-number>
           </template>
         </el-table-column>
         <el-table-column
@@ -73,9 +73,9 @@
       </el-table>
     </div>
     <div class="buyBox">
-      <div style="float: left;margin-left: 10px">
+      <router-link style="float: left;margin-left: 10px" to="/">
         继续购物
-      </div>
+      </router-link>
       <div style="float: right">
         <el-button
           class="buyBtn"
@@ -104,7 +104,8 @@
         data(){
             return{
                 account: "",
-                cartList:[{
+                cartList:[
+                  {
                     coverImg: "static/image/bookdefault.jpg",
                     bookName: '平凡的世界',
                     author: '路遥',
@@ -112,57 +113,10 @@
                     price: 180,
                     num:10,
                     sales: 1000
-                },{
-                    coverImg: "static/image/bookdefault.jpg",
-                    bookName: '平凡的世界',
-                    author: '路遥',
-                    marketPrice:200,
-                    price: 180,
-                    num:10,
-                    sales: 1000
-                },{
-                    coverImg: "static/image/bookdefault.jpg",
-                    bookName: '平凡的世界',
-                    author: '路遥',
-                    marketPrice:200,
-                    price: 180,
-                    num:10,
-                    sales: 1000
-                },{
-                    coverImg: "static/image/bookdefault.jpg",
-                    bookName: '平凡的世界',
-                    author: '路遥',
-                    marketPrice:200,
-                    price: 180,
-                    num:10,
-                    sales: 1000
-                },{
-                    coverImg: "static/image/bookdefault.jpg",
-                    bookName: '平凡的世界',
-                    author: '路遥',
-                    marketPrice:200,
-                    price: 180,
-                    num:10,
-                    sales: 1000
-                },{
-                    coverImg: "static/image/bookdefault.jpg",
-                    bookName: '平凡的世界',
-                    author: '路遥',
-                    marketPrice:200,
-                    price: 180,
-                    num:10,
-                    sales: 1000
-                },{
-                    coverImg: "static/image/bookdefault.jpg",
-                    bookName: '平凡的世界',
-                    author: '路遥',
-                    marketPrice:200,
-                    price: 180,
-                    num:10,
-                    sales: 1000
-                },
+                  }
                 ],
-                multipleSelection: []
+                multipleSelection: [],
+                temp_num: ""
             }
         },
         created:function () {
@@ -175,25 +129,27 @@
                 this.multipleSelection = val;
             },
 
-            //处理购物车数量变化 也就是修改购物车图书数量
-            modifyCart(index, row) {
-                reqModCart(this.account,row.id,row.num).then(response=>{
-                    if(response.code==200){
-                        //修改成功，这里不给提示，体验感更好
-                    }else{
-                        this.$message({
-                            message: response.message,
-                            type: "warning"
-                        })
-                    }
-                }).catch(err=>{
-                    this.$message({
-                        message: "修改失败",
-                        type: "warning"
-                    })
-                })
+            //处理购物车数量变化, 处理失败则回撤
+            modifyCart(newVal, oldVal, row) {
+              reqModCart(this.account,row.id,newVal).then(response=>{
+                if(response.data.code==200){
+                  //修改成功，这里不给提示，体验感更好
+                }else{
+                  //修改失败，回撤为原数量
+                  row.num = oldVal;
+                  this.$message({
+                      message: response.data.message,
+                      type: "warning"
+                  })
+                }
+              }).catch(err=>{
+                  row.num = oldVal;
+                  this.$message({
+                      message: "修改失败",
+                      type: "warning"
+                  })
+              })
             },
-
 
             //处理删除函数
             handleDelete(index, row){
@@ -203,15 +159,15 @@
                     type: 'warning'
                 }).then(() => {
                     reqDelCart(this.account,row.id).then(response=>{
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "success"
                             })
                             this.getCartList();
                         }else{
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "warning"
                             })
                         }
@@ -229,11 +185,11 @@
             getCartList(){
                 console.log("====this.account===="+this.account+"========")
                 reqGetCartList(this.account,1,10).then(response=>{
-                    if(response.code==200){
-                        this.cartList = response.cartBookDtoList;
+                    if(response.data.code==200){
+                        this.cartList = response.data.cartBookDtoList;
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }

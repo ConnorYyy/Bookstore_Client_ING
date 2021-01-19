@@ -4,13 +4,16 @@ import {Message} from "element-ui";
 router.beforeEach((to, from, next) => {
   console.log("=======路由跳转需要匹配！！=======")
   console.log(to.matched);
-  // let token = localStorage.getItem("token");
-  // let user = JSON.parse(sessionStorage.getItem("userInfo"));
-  let token = store.state.token;
-  let user = store.state.userInfo;
+  let token = localStorage.getItem("token");
+  let user = JSON.parse(sessionStorage.getItem("userInfo"));
+  // let token = store.state.token;
+  // let user = store.state.userInfo;
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log("=======该页面需要登录！！=======")
-    console.log("是否已经登录 >>>>> " + (token ? "是" : "否"))
+    let token = localStorage.getItem("token");
+    let user = JSON.parse(sessionStorage.getItem("userInfo"));
+    console.log("=======该页面需要登录！！=======");
+    console.log("是否已经登录 >>>>> " + (token ? "是" : "否"));
+    console.log("token>>>>>" + token);
     if (!token) {  // 是否登录
       Message({
         type: 'waring',

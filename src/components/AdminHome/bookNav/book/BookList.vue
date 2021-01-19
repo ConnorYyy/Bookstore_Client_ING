@@ -412,10 +412,10 @@
             GetSort(page,pageSize){
                 this.loading=false;
                 reqGetBookList(page,pageSize).then(response=>{
-                    if(response.code==200){
-                        this.total = response.total;
+                    if(response.data.code==200){
+                        this.total = response.data.total;
                         console.log(this.total);
-                        this.tableData = response.bookList;
+                        this.tableData = response.data.bookList;
                     }
                     console.log(response);
                 }).catch(err=>{
@@ -440,14 +440,14 @@
                 console.log(row.put);
                 reqModifyPut(row.id,row.put).then(response=>{
                     console.log(response);
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         })
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -460,14 +460,14 @@
                 console.log(row.put);
                 reqModifyRec(row.id,row.recommend).then(response=>{
                     console.log(response);
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         })
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -479,14 +479,14 @@
                 console.log(row.put);
                 reqModifyNew(row.id,row.newProduct).then(response=>{
                     console.log(response);
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         })
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -506,14 +506,14 @@
                 }).then(() => {
                     reqDelBook(row.id).then(response=>{
                         console.log(response);
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "success"
                             })
                         }else{
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "warning"
                             })
                         }
@@ -530,7 +530,8 @@
             //得到并设置图书分类的联级选择器
             getSortList() {
                 reqGetSortList().then(response => {
-                    let list = response.sortResponseList;
+                  if(response.data.code==200){
+                    let list = response.data.sortResponseList;
                     this.options = [];
                     for (let i = 0; i < list.length; i++) {
                         let children = [];
@@ -542,13 +543,21 @@
                         console.log(list[i]);
                         this.options.push({label: list[i].upperSort.sortName, value: list[i].upperSort.id, children: children});
                     }
+                  }else{
+                      this.$message({
+                          message: response.data.message,
+                          type: "warning"
+                      })
+                  }
+                }).catch(err=>{
+                  console.log(err);
                 });
             },
             //得到并设置出版的下拉选择器
             getPublishName(){
                 reqGetPublishNames().then(response=>{
                     console.log(response);
-                    this.publishList=response.publishList;
+                    this.publishList=response.data.publishList;
                 }).then(err=>{
                     console.log(err);
                 })

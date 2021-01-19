@@ -259,17 +259,17 @@
             getAddressList(){
                 reqGetAddressList(this.account).then(response=>{
                     console.log(response);
-                    if(response.code==200){
-                        this.OrderInitDto.addressList = response.addressList;
+                    if(response.data.code==200){
+                        this.OrderInitDto.addressList = response.data.addressList;
                         if(this.OrderInitDto.addressList.length>0){
                             console.log(this.OrderInitDto.addressList[0]);
                             this.OrderInitDto.selectAddress = this.OrderInitDto.addressList[0];//设置地址为排序第一的地址
                             this.selectId = this.OrderInitDto.addressList[0].id;//被选中的id
                         }
-                        // console.log("===response.addressList.length==="+response.addressList.length);
+                        // console.log("===response.data.addressList.length==="+response.data.addressList.length);
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -282,16 +282,16 @@
             addAddress(){
                 reqAddAddress(this.address).then(response=>{
                     console.log(response);
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         });
                         this.dialogVisible = false;
                         this.getAddressList();
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -303,16 +303,16 @@
             //修改地址
             modifyAddress(){
                 reqModAddress(this.address).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         });
                         this.dialogVisible = false;
                         this.getAddressList();
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -335,11 +335,11 @@
             //初始化订单
             initOrder(ids,from,account){
                 reqInitOrder(ids,from,this.account).then(response=>{
-                    if(response.code==200){
-                        console.log("=========OrderInitDto==========="+response.orderInitDto+"==============")
-                        this.OrderInitDto.expense = response.orderInitDto.expense;
-                        this.OrderInitDto.bookList = response.orderInitDto.bookList;
-                        this.OrderInitDto.addressList = response.orderInitDto.addressList;
+                    if(response.data.code==200){
+                        console.log("=========OrderInitDto==========="+response.data.orderInitDto+"==============")
+                        this.OrderInitDto.expense = response.data.orderInitDto.expense;
+                        this.OrderInitDto.bookList = response.data.orderInitDto.bookList;
+                        this.OrderInitDto.addressList = response.data.orderInitDto.addressList;
                         if(this.OrderInitDto.addressList.length>0){
                             this.OrderInitDto.address = this.OrderInitDto.addressList[0];//设置地址为排序第一的地址
                             this.selectId = this.OrderInitDto.addressList[0].id;//被选中的id
@@ -347,7 +347,7 @@
                         console.log(response);
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -364,10 +364,10 @@
                 this.OrderInitDto.account = this.$store.getters.getUser.account;
                 console.log("====this.OrderInitDto.account===="+this.OrderInitDto.account+"=====")
                 reqAddOrder(this.OrderInitDto).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
                             type: 'success',
-                            message: response.message,
+                            message: response.data.message,
                             duration: 1000
                         })
                         setTimeout(() => {
@@ -375,7 +375,7 @@
                         }, 1000);
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }

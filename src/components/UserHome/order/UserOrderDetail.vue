@@ -208,9 +208,9 @@
                 let id = this.$route.query.id;
                 this.loading=false;
                 reqAdminGetOrderDetail(id).then(response=>{
-                    if(response.code==200){
-                        console.log(response.orderDto);
-                        this.order = response.orderDto;
+                    if(response.data.code==200){
+                        console.log(response.data.orderDto);
+                        this.order = response.data.orderDto;
                     }else {
                         this.$message({
                             message: "获取订单明细出错了！",

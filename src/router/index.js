@@ -2,42 +2,27 @@ import Vue from 'vue'; //
 import Router from 'vue-router'; //
 import Login from "../pages/Login/Login"; //
 import Index from "../pages/Index/Index"; //
-import AxiosTest from "../components/AxiosTest";
 import UserHome from "../pages/UserHome/UserHome";
 import Book from "../pages/Book/Book"; //
 import Register from "../pages/Register/Register";
 import Spike from "../pages/Spike/Spike"; //
 import Admin from "../pages/AdminHome/Admin";
+import AdminInfo from "../components/AdminHome/adminInfo/AdminInfo";
 import BookTopic from "../pages/BookList/BookTopic"; //
 import BookList from "../components/AdminHome/bookNav/book/BookList"; //
 import AddBook from "../components/AdminHome/bookNav/book/components/BookDetail";
 import OrderList from "../components/AdminHome/orderNav/OrderList";
 import OrderSet from "../components/AdminHome/orderNav/OrderSet";
-import ReturnOrder from "../components/AdminHome/orderNav/ReturnOrder";
-import ReturnReason from "../components/AdminHome/orderNav/ReturnReason";
-import BookRecommend from "../components/AdminHome/market/BookRecommend";
-import Coupon from "../components/AdminHome/market/Coupon";
-import SpikeSet from "../components/AdminHome/market/SpikeSet";
-import MenuList from "../components/AdminHome/authority/MenuList";
 import RolesList from "../components/AdminHome/authority/RolesList";
 import UserList from "../components/AdminHome/authority/UserList";
 import AdminHome from "../components/AdminHome/AdminHome";
 import BookTopicSet from "../components/AdminHome/bookNav/topic/BookTopicSet";
 import Search from "../pages/Search/Search";
-import Upload from "../components/Upload";
-import Upload2 from "../components/Upload2";
-import Upload3 from "../components/Upload3";
 import Cart from "../pages/Cart/Cart";
-import CheckBoxTest from "../components/Test/CheckBoxTest";
-import cascaderTest from "../components/Test/cascaderTest";
-import Blog from "../components/Test/Blog";
 import AddSort from "../components/AdminHome/bookNav/sort/components/SortDetail";
 import Publish from "../components/AdminHome/bookNav/publish/Publish";
-import RouterTest from "../components/Test/RouterTest";
-import TestRouter from "../components/Test/TestRouter";
 import AddPublish from "../components/AdminHome/bookNav/publish/AddPublish";
 import UpdatePublish from "../components/AdminHome/bookNav/publish/UpdatePublish";
-import SwitchTest from "../components/Test/SwitchTest";
 import UpdateFirstSort from "../components/AdminHome/bookNav/sort/UpdateFirstSort";
 import UpdateSecondSort from "../components/AdminHome/bookNav/sort/UpdateSecondSort";
 import FirstSortList from "../components/AdminHome/bookNav/sort/FirstSortList";
@@ -48,15 +33,9 @@ import UpdateBookTopic from "../components/AdminHome/bookNav/topic/UpdateBookTop
 import AddBookTopic from "../components/AdminHome/bookNav/topic/AddBookTopic";
 import SubTopicList from "../components/AdminHome/bookNav/topic/SubTopicList";
 import Address from "../components/UserHome/home/Address";
-import MesNotice from "../components/UserHome/home/MesNotice";
 import UserCenter from "../components/UserHome/home/UserCenter";
 import PwdManage from "../components/UserHome/manage/PwdManage";
-import UserInfo from "../components/UserHome/manage/UserInfo";
-import Evaluate from "../components/UserHome/order/Evaluate";
 import UserOrder from "../components/UserHome/order/UserOrder";
-import ApplyService from "../components/UserHome/service/ApplyService";
-import Record from "../components/UserHome/service/Record";
-import UserCoupon from "../components/UserHome/home/UserCoupon";
 import BuyPage from "../pages/BuyPage/BuyPage";
 import OrderDetail from "../components/AdminHome/orderNav/OrderDetail";
 import Deliver from "../components/AdminHome/orderNav/Deliver";
@@ -144,7 +123,7 @@ export default new Router({
           },
         },
         {
-          path: 'ad dPublish',
+          path: 'addPublish',
           name: 'AddPublish',
           component: AddPublish,
           meta: {
@@ -254,72 +233,12 @@ export default new Router({
           },
         },
         {
-          path: 'returnOrder',
-          name: 'ReturnOrder',
-          component: ReturnOrder,
+          path: 'adminInfo',
+          name: 'AdminInfo',
+          component: AdminInfo,
           meta: {
-            title: '退单页面',
-            url: '/admin/returnOrder',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
-        {
-          path: 'returnReason',
-          name: 'ReturnReason',
-          component: ReturnReason,
-          meta: {
-            title: '退单理由',
-            url: '/admin/returnReason',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
-        {
-          path: 'bookRecommend',
-          name: 'BookRecommend',
-          component: BookRecommend,
-          meta: {
-            title: '图书推荐',
-            url: '/admin/bookRecommend',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
-        {
-          path: 'bookTopicSet',
-          name: 'BookTopicSet',
-          component: BookTopicSet,
-          meta: {
-            title: '图单专题',
-            url: '/admin/bookTopicSet',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
-        {
-          path: 'coupon',
-          name: 'Coupon',
-          component: Coupon,
-          meta: {
-            title: '优惠券',
-            url: '/admin/coupon',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
-        {
-          path: 'spikeSet',
-          name: 'SpikeSet',
-          component: SpikeSet,
-          meta: {
-            title: '秒杀设置',
-            url: '/admin/spikeSet',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
-        {
-          path: 'menuList',
-          name: 'MenuList',
-          component: MenuList,
-          meta: {
-            title: '菜单列表',
-            url: '/admin/menuList',
+            title: '个人信息',
+            url: '/admin/admininfo',
             requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
           },
         },
@@ -389,7 +308,7 @@ export default new Router({
     {
       path: '/user',
       name: 'UserHome',
-      component: UserHome, 
+      component: UserHome,
       meta: {
         title: '应用详情',
         url: '/user/userCenter', //用户登录后直接进入用户中心，可修改
@@ -403,16 +322,6 @@ export default new Router({
           component: Address
         },
         {
-          path: 'coupon',
-          name: "Coupon",
-          component: UserCoupon
-        },
-        {
-          path: 'mesNotice',
-          name: "MesNotice",
-          component: MesNotice
-        },
-        {
           path: 'userCenter',
           name: "UserCenter",
           component: UserCenter
@@ -423,16 +332,6 @@ export default new Router({
           component: PwdManage
         },
         {
-          path: "userInfo",
-          name: "UserInfo",
-          component: UserInfo
-        },
-        {
-          path: "evaluate",
-          name: "Evaluate",
-          component: Evaluate
-        },
-        {
           path: "userOrder",
           name: "UserOrder",
           component: UserOrder
@@ -441,16 +340,6 @@ export default new Router({
           path: "userOrderDetail",
           name: "UserOrderDetail",
           component: UserOrderDetail
-        },
-        {
-          path: "applyService",
-          name: "ApplyService",
-          component: ApplyService
-        },
-        {
-          path: "record",
-          name: "Record",
-          component: Record
         }
       ]
     },
@@ -478,21 +367,7 @@ export default new Router({
 
 
     //下面的是一些测试页面的路由
-    {
-      path: '/upload',
-      name: 'Upload',
-      component: Upload
-    },
-    {
-      path: '/upload2',
-      name: 'Upload2',
-      component: Upload2
-    },
-    {
-      path: '/upload3',
-      name: 'upload3',
-      component: Upload3
-    },
+
     {
       path: '/cart',
       name: 'Cart',
@@ -512,41 +387,6 @@ export default new Router({
         requiresAuth: true, // 添加该字段，表示进入这个路由是需要登录的
         requiresUser: true,
       },
-    },
-    {
-      path: '/check',
-      name: 'CheckBoxTest',
-      component: CheckBoxTest
-    },
-    {
-      path: '/eas',
-      name: 'cascaderTest',
-      component: cascaderTest
-    },
-    {
-      path: '/blog',
-      name: "blog",
-      component: Blog
-    },
-    {
-      path: '/routerTest',
-      name: 'RouterTest',
-      component: RouterTest
-    },
-    {
-      path: '/testRouter',
-      name: 'TestRouter',
-      component: TestRouter
-    },
-    {
-      path: '/switch',
-      name: 'SwitchTest',
-      component: SwitchTest
-    },
-    {
-      path: "/axiosTest",
-      name: "AxiosTest",
-      component: AxiosTest
     }
   ]
 })

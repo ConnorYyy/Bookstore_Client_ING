@@ -18,17 +18,6 @@
                 type: Array,
                 default: null
             }
-        },
-        data(){
-            return{
-                imgS: ["static/image/20.jpg",
-                    "static/image/21.jpg",
-                    "static/image/22.jpg",
-                    "static/image/23.jpg"]
-            }
-        },
-        created() {
-            // console.log("轮播图中this.imgList:"+this.imgList)
         }
     }
 </script>

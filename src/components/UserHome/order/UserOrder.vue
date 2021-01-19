@@ -8,7 +8,7 @@
             <p class="noMesInfo" v-show="true">暂无数据</p>
           </div>
           <div class="tab_box" v-show="total>0">
-            <div class="order_list" v-for="order in orderList">
+            <div class="order_list" v-for="(order,index) in orderList" :key="index">
               <div class="order_summary">
                 <p class="order_status">{{order.orderStatus}}</p>
                 <p class="caption-info">
@@ -30,7 +30,7 @@
                   <br>
                   <button class="plainBtn">申请售后</button>
                   <br>
-                  <button class="plainBtn">联系客服</button>
+                  <button class="plainBtn" @click="getCustomerService()">联系客服</button>
                   <br>
                 </div>
               </div>
@@ -47,7 +47,7 @@
             <p class="noMesInfo" v-show="true">暂无数据</p>
           </div>
           <div class="tab_box" v-show="total>0">
-            <div class="order_list" v-for="order in orderList">
+            <div class="order_list" v-for="(order,index) in orderList" :key="index">
               <div class="order_summary">
                 <p class="order_status">{{order.orderStatus}}</p>
                 <p class="caption-info">
@@ -81,7 +81,7 @@
             <p class="noMesInfo" v-show="true">暂无数据</p>
           </div>
           <div class="tab_box" v-show="total>0">
-            <div class="order_list" v-for="order in orderList">
+            <div class="order_list" v-for="(order,index) in orderList" :key="index">
               <div class="order_summary">
                 <p class="order_status">{{order.orderStatus}}</p>
                 <p class="caption-info">
@@ -101,10 +101,10 @@
                 <div class="book_action">
                   <button class="plainBtn" @click="goToOrderDetail(order.id)">订单详情</button>
                   <br>
-                  <button class="plainBtn">申请售后</button>
+                  <!-- <button class="plainBtn">申请售后</button>
                   <br>
                   <button class="plainBtn">联系客服</button>
-                  <br>
+                  <br> -->
                 </div>
               </div>
             </div>
@@ -249,13 +249,13 @@
             getOrderList(page,pageSize){
                 let account= this.$store.getters.getUser.account;
                 reqUserGetOrderList(account,page,pageSize,this.orderStatus,this.beUserDelete).then(response=>{
-                    if(response.code==200){
-                        this.total = response.total;
+                    if(response.data.code==200){
+                        this.total = response.data.total;
                         console.log(this.total);
-                        this.orderList = response.orderDtoList;
+                        this.orderList = response.data.orderDtoList;
                     }else {
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -266,23 +266,22 @@
                     })
                 })
             },
-
             //进行订单收货
             getOrder(id){
-                this.$confirm('确认收货码?', '提示', {
+                this.$confirm('确认收货吗？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
                     reqModOrderStatus(id,"已收货").then(response=>{
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "success"
                             })
                         }else {
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "warning"
                             })
                         }
@@ -299,6 +298,28 @@
                     })
                 });
             },
+            //客服信息
+            getCustomerService() {
+
+              this.$confirm('', {
+                    title: '客服信息',
+                    message: "手机：17777777777 \n 微信：wx7777777",
+                    showCancelButton: false,
+                    // confirmButtonText: 'abc',
+                    // cancelButtonText: '123'
+                }).then(action => {
+                    if (action == 'confirm') { //确认的回调
+                        return;
+                    }
+                }).catch(err => {
+                    if (err == 'cancel') { //取消的回调
+                      this.$message({
+                        message: "获取客服信息出错",
+                        type: "error"
+                      })
+                    }
+                });
+            }
         }
     }
 </script>

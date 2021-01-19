@@ -1,9 +1,7 @@
 import ajax from "./ajax";
 
-const BASE_URL = 'http://localhost:8082'
-
 //添加地址
-export const reqAddAddress = (address) => ajax(BASE_URL+'/addUserAddress', {
+export const reqAddAddress = (address) => ajax('/addUserAddress', {
   account: address.account,
   name: address.name,
   phone: address.phone,
@@ -12,7 +10,7 @@ export const reqAddAddress = (address) => ajax(BASE_URL+'/addUserAddress', {
 }, 'POST')
 
 //修改地址
-export const reqModAddress = (address) => ajax(BASE_URL+"/modifyUserAddress",{
+export const reqModAddress = (address) => ajax("/modifyUserAddress",{
   id: address.id,
   account: address.account,
   name: address.name,
@@ -22,7 +20,7 @@ export const reqModAddress = (address) => ajax(BASE_URL+"/modifyUserAddress",{
 },'POST')
 
 //删除地址
-export const reqDelAddress = (id) => ajax(BASE_URL+"/delUserAddress",{id})
+export const reqDelAddress = (id) => ajax("/delUserAddress",{id})
 
 //得到某个用户的地址列表
-export const reqGetAddressList = (account) => ajax(BASE_URL+"/getUserAddress",{account})
+export const reqGetAddressList = (account) => ajax("/getUserAddress",{account})

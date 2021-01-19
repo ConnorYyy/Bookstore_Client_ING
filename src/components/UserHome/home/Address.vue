@@ -3,25 +3,25 @@
     <h1>收货地址</h1>
     <div class="box_info">
       <div class="address_list">
-        <div class="add" @click="handleAdd">
+        <div class="add" @click="handleAddShow">
           <i class="el-icon-edit"></i>
           <p style="font-size: 14px">添加新地址</p>
         </div>
       </div>
       <div class="address_list" v-for="address in addressList" :key="address.id">
         <div class="name">{{address.name}}
-          <span style="float: right;font-size: 14px;color: #757575;">{{address.label}}</span>
+            <el-tag type="info" style="float:right;" size="mini">{{address.label}}</el-tag>
         </div>
         <div class="tel">{{address.phone}}</div>
         <div class="detail">{{address.addr}}</div>
         <div class="foot">
-          <span style="float: right" @click="delAddress(address.id)">删除</span>
-          <span style="float: right;margin-right: 10px" @click="handleMod(address)">修改</span>
+          <el-button style="float: right" @click="delAddress(address.id)" size="mini">删除</el-button>
+          <el-button style="float: right; margin-right: 10px" @click="handleMod(address)" size="mini">修改</el-button>
         </div>
       </div>
     </div>
 
-    <!--添加图书的弹出框-->
+    <!--添加地址的弹出框-->
     <el-dialog title="添加收货地址" :visible.sync="dialogVisible" width="30%"  center>
       <el-form ref="form" :model="address" >
         <el-form-item>
@@ -54,7 +54,7 @@
         data() {
             return {
                 dialogVisible: false,
-                isEdit:false,//用来判断是添加地址还是修改地址 false:添加 true:修改
+                isModify:false,//用来判断是添加地址还是修改地址 false:添加 true:修改
                 addressList:[
                     {
                         id: 1,
@@ -92,14 +92,14 @@
         },
         methods: {
             //处理添加操作
-            handleAdd(){
+            handleAddShow(){
                 this.dialogVisible = true;
-                this.isEdit = false;
+                this.isModify = false;
             },
             //处理修改
             handleMod(addr){
                 this.dialogVisible = true;
-                this.isEdit = true;
+                this.isModify = true;
                 this.address.id = addr.id;
                 this.address.account = addr.account;
                 this.address.name = addr.name;
@@ -110,7 +110,7 @@
 
             //提交处理
             onSubmit(formName) {
-                if(this.isEdit){
+                if(this.isModify){
                     this.modifyAddress();
                 }else {
                     this.addAddress();
@@ -119,7 +119,7 @@
                 // this.$refs[formName].validate((valid)=>{
                 //     // console.log(this.publish.isShow);
                 //     if(valid){
-                //         if(this.isEdit){
+                //         if(this.isModify){
                 //             this.modifyAddress();
                 //         }else {
                 //             this.addAddress();
@@ -135,12 +135,12 @@
                 console.log("===获取的地址列表：==="+this.$store.getters.getUser.account+"=====");
                 reqGetAddressList(this.$store.getters.getUser.account).then(response=>{
                     console.log(response);
-                    if(response.code==200){
-                        this.addressList = response.addressList;
-                        console.log("===response.addressList.length==="+response.addressList.length);
+                    if(response.data.code==200){
+                        this.addressList = response.data.addressList;
+                        console.log("===response.data.addressList.length==="+response.data.addressList.length);
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -153,16 +153,16 @@
             addAddress(){
                 reqAddAddress(this.address).then(response=>{
                     console.log(response);
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         });
                         this.dialogVisible = false;
                         this.getAddressList();
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -175,16 +175,16 @@
             modifyAddress(){
                 reqModAddress(this.address).then(response=>{
                     console.log(response);
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         });
                         this.dialogVisible = false;
                         this.getAddressList();
                     }else{
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -201,15 +201,15 @@
                 }).then(() => {
                     reqDelAddress(id).then(response=>{
                         console.log(response);
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "success"
                             });
                             this.getAddressList();
                         }else{
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "warning"
                             })
                         }
@@ -270,7 +270,7 @@
   }
   .foot{
     width: 240px;
-    height: 60px;
+    height: 40px;
     font-size: 14px;
     color: #ff6700;
     line-height: 60px;

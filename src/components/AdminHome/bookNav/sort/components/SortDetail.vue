@@ -7,7 +7,7 @@
             <el-input v-model="bookSort.sortName"></el-input>
           </el-form-item>
           <el-form-item v-show="!isFirst" label="分类上级">
-            <el-select v-model="bookSort.upperName" placeholder="请选择活动区域">
+            <el-select v-model="bookSort.upperName" placeholder="请选择分类上级">
               <el-option
                 v-for="item in publishList"
                 :key="item"
@@ -47,22 +47,6 @@
             }
         },
         data() {
-            let checkRank = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('排序不能为空'));
-                }
-                setTimeout(() => {
-                    if (!Number.isInteger(value)) {
-                        callback(new Error('请输入数字值'));
-                    } else {
-                        if (value < 0) {
-                            callback(new Error('数字值必须大于0'));
-                        } else {
-                            callback();
-                        }
-                    }
-                }, 1000);
-            };
             return {
                 bookSort: {
                     id: 1,
@@ -76,11 +60,12 @@
                         { required: true, message: '分类名不能为空', trigger: 'blur' },
                         { min: 1, max: 10, message: '分类长度在 1 到 15 个字符', trigger: 'blur' }
                     ],
-                    upperName: [
-                        { required: true, message: '上级分类名不能为空', trigger: 'blur' },
-                    ],
+                    // upperName: [
+                    //     { required: true, message: '上级分类名不能为空', trigger: 'blur' },
+                    // ],
                     rank: [
-                        { validator: checkRank, trigger: 'blur' }
+                        { required: true, message: '排序不能为空', trigger: 'blur' },
+                        { type: 'number', message: '排序必须为数字值', trigger: 'blur'},
                     ]
                 },
                 publishList: [],
@@ -127,7 +112,7 @@
                              this.addSort();
                         }
                     }else {
-                        this.$message.error("添加出版社失败");
+                        this.$message.error("添加分类失败");
                     }
                 });
             },
@@ -139,14 +124,14 @@
                 }
                 console.log(this.bookSort.level);
                 reqAddBookSort(this.bookSort).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         })
                     }else {
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: 'warning'
                         })
                     }
@@ -158,14 +143,14 @@
 
             modifySort(){
                 reqModifyBookSort(this.bookSort).then(response=>{
-                    if(response.code==200){
+                    if(response.data.code==200){
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "success"
                         })
                     }else {
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: 'warning'
                         })
                     }
@@ -199,20 +184,20 @@
                 if(!this.isFirst){
                     reqGetUpperName().then(response=>{
                         console.log(response);
-                        this.publishList = response.upperNames;
+                        this.publishList = response.data.upperNames;
                         this.bookSort.upperName = "无";
                     }).catch(err=>{
                         console.log(err);
                     })
                     reqGetBookSort(upperName,sortName).then(response=>{
-                        this.bookSort=response.bookSort;
+                        this.bookSort=response.data.bookSort;
                         console.log(this.bookSort);
                     }).catch(err=>{
                         console.log(err);
                     })
                 }else {
                     reqGetBookSort(upperName,sortName).then(response=>{
-                        this.bookSort=response.bookSort;
+                        this.bookSort=response.data.bookSort;
                         console.log(this.bookSort);
                     }).catch(err=>{
                         console.log(err);
@@ -221,7 +206,7 @@
             }else {
                 reqGetUpperName().then(response=>{
                     console.log(response);
-                    this.publishList = response.upperNames;
+                    this.publishList = response.data.upperNames;
                     this.bookSort.upperName = "无";
                 }).catch(err=>{
                     console.log(err);

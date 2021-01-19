@@ -5,12 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: { //todo
-    token: '1',
-    // token: '',
-    userInfo: {
-      manage: false
-    }
-    // userInfo: JSON.parse(sessionStorage.getItem("userInfo")) 
+    token: '',
+    userInfo: JSON.parse(sessionStorage.getItem("userInfo")) 
+    // token: 'BearereyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjNAMTEuY28iLCJjcmVhdGVkIjoxNjEwOTU5MDQ1MjM4LCJleHAiOjE2MTA5NjA4NDV9.SXLJAltNvm-Un3kOErATzq9_DgFUTRR_0Cz3c1BUGFtLdBRY2FSD8_sK2MIiWm8kfNjOaVbWcYDrD9VcEBV0Lg',
+    // userInfo: {
+    //   userName: 'Connor',
+    //   manage: false
+    // }
   },
   mutations: {
     // set

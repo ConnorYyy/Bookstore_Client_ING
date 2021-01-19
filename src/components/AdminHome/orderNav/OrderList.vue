@@ -30,8 +30,7 @@
                 v-for="item in publishList"
                 :key="item"
                 :label="item"
-                :value="item"
-              >
+                :value="item">
               </el-option>
             </el-select>
           </el-form-item>
@@ -74,7 +73,6 @@
           align="center">
           <template slot-scope="scope">{{ scope.row.orderTime }}</template>
         </el-table-column>
-<!--        h.format("yyyy-MM-dd hh:mm:ss")-->
         <el-table-column
           prop="account"
           label="用户账号"
@@ -128,23 +126,23 @@
       </el-table>
     </div>
     <div style="margin-top: 20px;width: 100%;">
-<!--      <div style="float: left;padding: 0px 0px 10px">-->
-<!--        <el-select v-model="operator" placeholder="批量操作">-->
-<!--          <el-option-->
-<!--            v-for="item in operates"-->
-<!--            :key="item.value"-->
-<!--            :label="item.label"-->
-<!--            :value="item.value">-->
-<!--          </el-option>-->
-<!--        </el-select>-->
-<!--        <el-button-->
-<!--          style="margin-left: 10px"-->
-<!--          @click="operatorBook"-->
-<!--          type="primary"-->
-<!--          size="medium">-->
-<!--          确定-->
-<!--        </el-button>-->
-<!--      </div>-->
+     <div style="float: left;padding: 0px 0px 10px">
+       <el-select v-model="operator" placeholder="批量操作">
+         <el-option
+           v-for="item in operates"
+           :key="item.value"
+           :label="item.label"
+           :value="item.value">
+         </el-option>
+       </el-select>
+       <el-button
+         style="margin-left: 10px"
+         @click="operatorBook"
+         type="primary"
+         size="medium">
+         确定
+       </el-button>
+     </div>
       <div class="block" style="float: right;padding: 0px 0px 10px">
         <el-pagination
           @size-change="handleSizeChange"
@@ -164,7 +162,7 @@
 
 <script>
     import {reqGetPublishNames} from "../../../api/publish";
-    import {reqAdminGetOrderList,reqDelOrder} from "../../../api/order";
+    import {reqAdminGetOrderList,reqDelOrder,reqBatchDel} from "../../../api/order";
     import axios from 'axios';
     export default {
         name: "OrderList",
@@ -288,14 +286,7 @@
                         dataList.push(this.multipleSelection[i].id);
                     }
                     console.log(this.operator);
-                    let formData = new FormData();
-                    formData.append("ids", dataList);
-                    formData.append("operator",this.operator);
-                    axios({
-                        method: 'POST',
-                        url: 'http://localhost:8082/batchDel',
-                        data: formData
-                    }).then((response) => {
+                    reqBatchDel(dataList, this.operator).then((response) => {
                         if(response.data.code==200){
                             this.$message({
                                 message: response.data.message,
@@ -338,14 +329,10 @@
                     }
                 }
             },
-
-
             //获取图书的分类值
             handleChange(bookSort) {
                 console.log("图书的分类是:"+bookSort[0],bookSort[1]);
             },
-
-
             //分页函数
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -362,13 +349,13 @@
             getOrderList(page,pageSize){
                 this.loading=false;
                 reqAdminGetOrderList(page,pageSize).then(response=>{
-                    if(response.code==200){
-                        this.total = response.total;
+                    if(response.data.code==200){
+                        this.total = response.data.total;
                         console.log(this.total);
-                        this.tableData = response.orderDtoList;
+                        this.tableData = response.data.orderDtoList;
                     }else {
                         this.$message({
-                            message: response.message,
+                            message: response.data.message,
                             type: "warning"
                         })
                     }
@@ -376,8 +363,6 @@
                     console.log(err);
                 })
             },
-
-
             //操作表格
             updateBook(index,row){
                 console.log("row.id:"+row.isbn);
@@ -388,7 +373,6 @@
                     }
                 })
             },
-
             //跳转到订单明细页面
             goToOrderDetail(index,row) {
                 this.$router.push({
@@ -417,14 +401,14 @@
                 }).then(() => {
                     reqDelOrder(row.id).then(response=>{
                         console.log(response);
-                        if(response.code==200){
+                        if(response.data.code==200){
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "success"
                             })
                         }else{
                             this.$message({
-                                message: response.message,
+                                message: response.data.message,
                                 type: "warning"
                             })
                         }
@@ -439,13 +423,11 @@
                     })
                 });
             },
-
-
             //得到并设置出版的下拉选择器
             getPublishName(){
                 reqGetPublishNames().then(response=>{
                     console.log(response);
-                    this.publishList=response.publishList;
+                    this.publishList=response.data.publishList;
                 }).then(err=>{
                     console.log(err);
                 })

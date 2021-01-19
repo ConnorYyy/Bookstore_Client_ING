@@ -2,18 +2,18 @@
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require('path')
-
+const path = require('path');
+const TARGET_PATH = "http://169.254.10.26:8082";
+  
 module.exports = {
+  TARGET_PATH: TARGET_PATH,
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        //target: 'http://47.100.236.223:1211/',
-        target: 'http://localhost:8082/',
+        target: TARGET_PATH,
         changeOrigin: true,
         ws: true,
         pathRewrite: {

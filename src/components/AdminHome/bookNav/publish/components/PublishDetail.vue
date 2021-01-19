@@ -76,10 +76,9 @@
             handleEditCreated(){
                 console.log("this.$route.query.id"+this.$route.query.id);
                 if(this.isEdit==true){
-                    console.log("哈哈哈哈");
                     this.editId=this.$route.query.id;
                     reqGetPublish(this.editId).then(response=>{
-                        this.publish = response.publish;
+                        this.publish = response.data.publish;
                         console.log("编辑页面")
                         console.log(response);
                     }).catch(err=>{
