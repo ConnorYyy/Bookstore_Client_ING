@@ -4,7 +4,7 @@
       <div class="user_card">
         <el-avatar shape="square" :size="100" :src="user.imgUrl"></el-avatar>
         <div class="user_card_info">
-          <p style="font-size: 22px;color: #616161">{{user.name}}</p>
+          <p style="font-size: 22px;color: #616161">{{user.name||'未命名'}}</p>
         </div>
       </div>
       <div class="user_action">
@@ -91,13 +91,14 @@
   .user_card{
     width: 540px;
     float: left;
+    height: 100px
   }
 
   .user_card_info{
     margin:  0px;
     width: 200px;
     display: inline-block;
-    line-height: 30px;
+    line-height: 100px;
   }
   .user_action{
     float: left;

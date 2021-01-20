@@ -22,4 +22,7 @@ export const reqGetUserInfo = (account)=>ajax('/getUserInfo',{account})
 export const reqModUserPwd = (account,oldPassword,newPassword)=>ajax('/modifyUserPwd',{account,oldPassword,newPassword})
 
 //用户登出
-export const reqLogout = () => ajax('/logout')
+export const reqLogout = (account) => ajax('/logout',{account})
+
+//用户信息修改 //todo
+export const reqModifyUserInfo = (account,password) => ajax('/user/modifyInfo',{account,password})

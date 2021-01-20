@@ -66,7 +66,7 @@
           <el-form-item label="图书相册">
             <el-upload
               ref="book"
-              action="http://localhost:8082/uploadBookImg"
+              action="http://169.254.10.26:8082/uploadBookImg"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
               :on-success="handleSuccess"

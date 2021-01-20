@@ -2,7 +2,7 @@
   <div class="navClass">
     <div class="content">
       <div class="nav_content">
-        <div class="userName" v-if="store.getters.getUser.account">
+        <div class="userName" v-if="store.getters.getUser">
             Hi，<router-link to="/user/userCenter">{{store.getters.getUser.name || "尊敬的用户"}}</router-link> !
         </div>
         <el-menu
@@ -24,7 +24,7 @@
           <el-menu-item index="/cart">购物车</el-menu-item>
           <el-menu-item index="/user/userOrder">我的订单</el-menu-item>
           <el-menu-item index="/user/userCenter">个人中心</el-menu-item>
-          <el-menu-item @click="logout()">退出</el-menu-item>
+          <el-menu-item @click="logout(store.getters.getUser.account)">退出</el-menu-item>
         </el-menu>
         <el-menu
         v-if="store.getters.getUser.manage"
@@ -65,14 +65,14 @@
             handleSelect(key, keyPath) {
                 // console.log(key, keyPath);
             },
-            logout() {
+            logout(account) {
               this.$confirm("您确认要退出吗?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning",
-              }).then(() => {
+              }).then((account) => {
                 this.REMOVE_INFO();
-                // reqLogout().then(response=>{
+                // reqLogout(account).then(response=>{
                 //   if (response.data.code == 200) {
                 //     this.REMOVE_INFO();
                 //     this.$message({

@@ -66,7 +66,7 @@
             },
             getSortBookList(){
                 console.log("发送了获取分类图书的请求");
-                reqGetSortBookList(117).then(response=>{
+                reqGetSortBookList(1026).then(response=>{
                     if(response.data.code==200){
                         console.log(response);
                         this.bookList = response.data.sortBookResList;

@@ -12,7 +12,7 @@
               <el-option label="出版社" value="3"></el-option>
               <el-option label="ISBN" value="4"></el-option>
             </el-select>
-            <el-button slot="append" icon="el-icon-search" @click="searchBook(select, input)"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="searchBook(input)"></el-button>
           </el-input>
         </el-col>
     </el-row>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import {reqSearchBook} from "../../api/index";
     export default {
         name: "HeadNav",
         data() {
@@ -31,8 +32,10 @@
             }
         },
         methods: {
-          searchBook(select, input) { //TODO
-            console.error(select);
+          searchBook(input) { //TODO
+            reqSearchBook(input).then(response=>{
+              console.log(response)
+            })
             console.error(input);
           }
         }

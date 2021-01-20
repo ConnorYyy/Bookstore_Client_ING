@@ -54,7 +54,7 @@ export const reqAddOrder = (orders) => ajax('/order/add', {orders}, 'POST')
 export const reqGetAllOrder = () => ajax('/order/getall')
 
 // 11、搜索书籍
-export const reqSearchBook = (filter) => ajax('/book/search', {filter})
+export const reqSearchBook = (searchParam) => ajax('/book/searchBook', {searchParam})
 
 // 12、删除上传的书籍图片
 export const reqDeleteImg = (filename) => ajax('/delete', {filename})

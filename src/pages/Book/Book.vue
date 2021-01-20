@@ -47,7 +47,7 @@
       <div class="book_sort">
         <div class="tab">
           <div class="tab_head">分类</div>
-          <div v-for="sort in sortList" class="tab_list">
+          <div v-for="(sort, index) in sortList" class="tab_list" :key="index">
             <router-link :to="{path: '/search',query:{id:sort.upperSort.id,name:sort.upperSort.sortName}}"><div style="color: black;width: 100%">{{sort.upperSort.sortName}}</div></router-link>
           </div>
         </div>
@@ -106,13 +106,13 @@
                 fileList:null,
                 bookId: null,
                 sortList:[
-                      {
-                          upperSort: {
-                              sortName: null,
-                          },
-                          children:null
-                      }
-                    ],
+                    {
+                        upperSort: {
+                            sortName: null,
+                        },
+                        children:null
+                    }
+                ],
                 activeName: 'first'
             }
         },
