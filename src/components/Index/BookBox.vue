@@ -93,7 +93,7 @@
 
 <style scoped>
   .content{
-    width: 1240px;
+    width: 100%;
   }
   .gallery-book_title{
     padding-top: 20px;

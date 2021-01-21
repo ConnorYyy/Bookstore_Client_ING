@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path');
-const TARGET_PATH = "http://169.254.10.26:8082";
+const TARGET_PATH = "http://192.168.96.73:8082"; //TODO
   
 module.exports = {
   TARGET_PATH: TARGET_PATH,

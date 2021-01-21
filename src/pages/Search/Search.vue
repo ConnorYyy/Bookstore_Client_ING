@@ -10,7 +10,9 @@
         <div class="tab">
           <div class="tab_head">分类</div>
           <div v-for="sort in sortList" class="tab_list" :key="sort.upperSort.id">
-            <router-link :to="{path: '/search',query:{id:sort.upperSort.id,name:sort.upperSort.sortName}}"><div style="color: black;width: 100%">{{sort.upperSort.sortName}}</div></router-link>
+            <router-link :to="{path: '/search',query:{id:sort.upperSort.id,name:sort.upperSort.sortName}}">
+              <div style="color: black;width: 100%">{{sort.upperSort.sortName}}</div>
+            </router-link>
           </div>
         </div>
       </div>

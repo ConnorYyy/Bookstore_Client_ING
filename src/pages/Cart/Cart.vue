@@ -104,17 +104,7 @@
         data(){
             return{
                 account: "",
-                cartList:[
-                  {
-                    coverImg: "static/image/bookdefault.jpg",
-                    bookName: '平凡的世界',
-                    author: '路遥',
-                    marketPrice:200,
-                    price: 180,
-                    num:10,
-                    sales: 1000
-                  }
-                ],
+                cartList:[],
                 multipleSelection: [],
                 temp_num: ""
             }

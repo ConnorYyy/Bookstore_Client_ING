@@ -5,7 +5,6 @@ import Index from "../pages/Index/Index"; //
 import UserHome from "../pages/UserHome/UserHome";
 import Book from "../pages/Book/Book"; //
 import Register from "../pages/Register/Register";
-import Spike from "../pages/Spike/Spike"; //
 import Admin from "../pages/AdminHome/Admin";
 import AdminInfo from "../components/AdminHome/adminInfo/AdminInfo";
 import BookTopic from "../pages/BookList/BookTopic"; //
@@ -306,11 +305,6 @@ export default new Router({
       path: '/book',
       name: 'Book',
       component: Book
-    },
-    {
-      path: '/spike',
-      name: 'Spike',
-      component: Spike
     },
     {
       path: '/search',

@@ -66,7 +66,7 @@
           <el-form-item label="图书相册">
             <el-upload
               ref="book"
-              action="http://169.254.10.26:8082/uploadBookImg"
+              :action= uploadImgPath
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
               :on-success="handleSuccess"
@@ -117,6 +117,7 @@
     import {reqGetPublishNames} from "../../../../../api/publish";
     import {reqGetSortList} from "../../../../../api/sort";
     import {reqAddBook,reqGetBookImgPathList,reqGetBook,reqDelBookImg,reqModifyBook} from "../../../../../api/book";
+    import {TARGET_PATH} from "../../../../../../config/index"
     export default {
         name: "BookDetail",
         props:{
@@ -159,6 +160,7 @@
                 }, 1000);
             };
             return {
+                uploadImgPath: TARGET_PATH+"/uploadBookImg",
                 myHeader:{
                     'Authorization':""
                 },

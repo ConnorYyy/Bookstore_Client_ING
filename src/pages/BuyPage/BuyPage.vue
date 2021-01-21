@@ -5,9 +5,8 @@
       <div class="content">
         <div class="title"><h3>收货地址</h3></div>
         <div class="list_box">
-<!--           v-bind:class="{selected_address:address.select}"-->
-          <div class="address_list" v-for="(address,index) in OrderInitDto.addressList"
-               v-bind:class="{selected_address:address.select}"
+          <div v-for="(address,index) in OrderInitDto.addressList"
+               :class="{'selected_address': address.select, 'address_list': true}"
                @click="selectOrderAddress(index,address)"
                :key="address.id">
             <div class="name">{{address.name}}
@@ -28,7 +27,7 @@
         </div>
 
         <div class="title"><h3>商品清单</h3></div>
-        <div class="list_box" v-for="book in OrderInitDto.bookList">
+        <div class="list_box" v-for="(book,index) in OrderInitDto.bookList" :key="index">
           <div class="bookInfo">
             <div class="book_item">
               <el-image class="bookImg" :src="book.coverImg" fit="fill"></el-image>
@@ -45,13 +44,9 @@
           </div>
         </div>
         <div class="title"><h3 style="float: left;width: 100px">配送方式</h3><span class="height_text" style="margin-left: 60px">包邮</span></div>
-        <div class="title"><h3 style="float: left;width: 100px">发票</h3><span class="height_text" style="margin-left: 60px">电子普通发票个人商品明细</span></div>
+        <!-- <div class="title"><h3 style="float: left;width: 100px">发票</h3><span class="height_text" style="margin-left: 60px">电子普通发票个人商品明细</span></div> -->
         <div class="list_box">
           <div class="order_detail">
-<!--            <div class="bill_item">-->
-<!--              <div class="bill_title">商品件数:</div>-->
-<!--              <div class="bill_money height_text">1件</div>-->
-<!--            </div>-->
             <div class="bill_item">
               <div class="bill_title">商品总价:</div>
               <div class="bill_money height_text">{{OrderInitDto.expense.productTotalMoney}}元</div>
@@ -135,7 +130,7 @@
                 //添加修改的地址
                 address:{
                     id: null,
-                    account: "黄小龙",
+                    account: "",
                     name: "",
                     phone: "",
                     addr: "",
@@ -144,31 +139,11 @@
                 OrderInitDto:{
                     account: "",
                     addressList:[
-                        {
-                            id: 1,
-                            account: "黄小龙",
-                            name: "小胖",
-                            phone: "18988798892",
-                            addr: "江西抚州市临川区西大街街道东华理工大学长江学院本部(330006)",
-                            label: "家",
-                            off: false,
-                            select:false,
-                        },
-                        {
-                            id: 2,
-                            account: "黄小龙",
-                            name: "小胖",
-                            phone: "18988798892",
-                            addr: "江西抚州市临川区西大街街道东华理工大学长江学院本部(330006)",
-                            label: "家",
-                            off: false,
-                            select: false
-                        },
                     ],
                     //选中的地址
                     address:{
                         id: null,
-                        account: "黄小龙",
+                        account: "",
                         name: "",
                         phone: "",
                         addr: "",
@@ -322,11 +297,13 @@
             },
 
             //选择订单地址
-            selectOrderAddress(index,address){
+            selectOrderAddress(index,address){ 
+                console.error(index);
+                console.error(this.OrderInitDto.addressList.length);
                 for(let i=0;i<this.OrderInitDto.addressList.length;i++){
-                    this.OrderInitDto.addressList[i].select=false;
+                    this.OrderInitDto.addressList[i].select= (i==index?true:false);
+                    console.error(this.OrderInitDto.addressList[i]);
                 }
-                this.OrderInitDto.addressList[index].select = true;
                 this.OrderInitDto.address = address;
             },
 

@@ -2,7 +2,7 @@
   <div>
     <Nav></Nav>
     <HeadNav></HeadNav>
-    <div class="first_content">
+    <div class="content">
       <div class="content_main">
         <div style="width: 100%; margin-bottom: 30px">
           <div class="content_main_left">
@@ -98,25 +98,25 @@
         </div>
       </div>
     </div>
-    <div class="second_content">
+    <div class="content">
       <div class="book_box">
         <RecBookBox :list-sort="recommend"></RecBookBox>
       </div>
     </div>
-    <div class="first_content">
+    <div class="content">
       <div class="book_box">
         <RecBookBox :list-sort="newProduct"></RecBookBox>
       </div>
     </div>
-    <div class="second_content">
+    <div class="content">
       <div class="book_box">
         <BookBox></BookBox>
       </div>
     </div>
     <Footer></Footer>
-
   </div>
 </template>
+
 
 <script>
     import Nav from "../../components/Common/Nav";
@@ -124,7 +124,6 @@
     import Carousel from "../../components/Index/Carousel";
     import HeadNav from "../../components/Common/HeadNav";
     import GalleryBook from "../../components/Index/GalleryBook";
-    import SpikeBox from "../../components/Index/SpikeBox";
     import BookBox from "../../components/Index/BookBox";
     import RecBookBox from "../../components/Index/RecBookBox";
     import {reqGetSortList} from "../../api/sort";
@@ -132,7 +131,7 @@
 
     export default {
         name: "index",
-        components: {Nav,Footer,Carousel,HeadNav,GalleryBook,SpikeBox,BookBox,RecBookBox},
+        components: {Nav,Footer,Carousel,HeadNav,GalleryBook,BookBox,RecBookBox},
         data() {
             return {
                 recommend:"recommend",
@@ -148,39 +147,7 @@
                       {cover: "static/image/21.jpg", id: 2},
                       {cover: "static/image/22.jpg", id: 3},
                       {cover: "static/image/23.jpg", id: 4}],
-                bookSortList:['小说','文学','地理','教科书','生物','科学','地理','教科书','生物','教科书'],
-                options: [
-                  [
-                    {
-                      label: '小说', value: '1', 
-                      children: [
-                        {label: '武侠小说', value: '11'},
-                        {label: '言情小说', value: '12'},
-                        {label: '科幻小说', value: '13'}
-                      ]
-                    },
-                    {
-                      label: '文学', value: '2', 
-                      children: [
-                        {label: '中国文学', value: '21'},
-                        {label: '英国文学', value: '22'},
-                        {label: '俄国文学', value: '23'}
-                      ]
-                    }
-                  ],
-                  [
-                    {
-                      label: '文学', value: '2', 
-                      children: [
-                        {label: '中国文学', value: '21'},
-                        {label: '英国文学', value: '22'},
-                        {label: '俄国文学', value: '23'}
-                      ]
-                    },
-                    {}
-                  ]
-                  
-                ]
+                options: []
             };
         },
         methods: {
@@ -189,11 +156,8 @@
             },
 
             enter(index){
-                // console.log(this.seen);
                 this.seen = true;
                 this.current = index;
-                // console.log("鼠标进入了！");
-                // console.log("index:"+index)
             },
             out(index){
                 this.seen = false;
@@ -294,22 +258,24 @@
             }
         },
         mounted(){
-            // this.getSortList();
+            this.getSortList();
         },
         created() {
-            // this.GetTopic(1,5);
+            this.GetTopic(1,5);
         },
     }
 </script>
 
 <style scoped>
-  .first_content{
-     width: 100%;
-     background-color: #ffffff;
+  .content{
+    margin: auto;
+    width: 90%;
+    background-color: #ffffff;
+    display: block;
    }
   .content_main{
     margin: 0px auto;
-    width: 1240px;
+    width: 100%;
     height: 700px;
     background-color: #ffffff;
   }
@@ -333,15 +299,10 @@
     padding-bottom: 34px;
     font-size: 22px;
   }
-  .second_content{
-    width: 100%;
-    background-color: #ffffff;
-     display: block;
-  }
   .book_box{
-    width: 1240px;
-    height: 700px;
-    margin: 0px auto;
+    width: auto;
+    height: auto;
+    margin: auto;
     background-color: #ffffff;
   }
   .tab_page a{
@@ -370,14 +331,14 @@
     line-height: 30px;
   }
   .tab{
-    width: 100%;
+    width: 90%;
     padding-left: 20px;
     min-height: 300px;
     height: auto;
   }
   .tab_list{
     padding-left: 5px;
-    width: 100%;
+    width: 90%;
     height: 40px;
     line-height: 40px;
     background-color: #ffffff;
@@ -408,8 +369,6 @@
     margin-bottom: 20px;
     position: relative;
   }
-
-
   .communicate{
     clear: both;
     position: relative;

@@ -16,11 +16,10 @@ function objPrinter(param, key) {
 }
 // 包装的axios ajax请求接口
 export default function ajax (url, data={}, method='GET') {
-
+  url = TARGET_PATH + url;
   return new Promise(function (resolve, reject) {
     let promise;
     console.log("=====开始发送"+method+"请求=====");
-    console.log("请求地址>>>>>"+url);
     if(data){
       console.log("=====请求参数=====");
       objPrinter(data);
@@ -33,12 +32,15 @@ export default function ajax (url, data={}, method='GET') {
       });
       if (dataStr !== '') {
         dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'));
-        url = TARGET_PATH + url + '?' + dataStr;
-        console.log("拼接后的url>>>>>" + url)
+        url = url + '?' + dataStr;
       }
       promise = axios.get(url)
+      console.log("=====GET请求地址=====");
+      console.log(url);
     } else {
-      promise = axios.post(url, data)
+      promise = axios.post(url, data);
+      console.log("=====POST请求地址=====");
+      console.log(url);
     }
     promise.then(function (response) {
       if(response.status=='200') {

@@ -76,7 +76,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="订单回收站" name="four">
+        <el-tab-pane label="已完成" name="four">
           <div class="tab_box" v-show="total<1">
             <p class="noMesInfo" v-show="true">暂无数据</p>
           </div>
@@ -101,10 +101,6 @@
                 <div class="book_action">
                   <button class="plainBtn" @click="goToOrderDetail(order.id)">订单详情</button>
                   <br>
-                  <!-- <button class="plainBtn">申请售后</button>
-                  <br>
-                  <button class="plainBtn">联系客服</button>
-                  <br> -->
                 </div>
               </div>
             </div>
@@ -210,12 +206,16 @@
                         this.orderStatus="";
                         this.beUserDelete=false;
                         break;
+                    case "second":
+                        this.orderStatus="待支付";
+                        this.beUserDelete=false;
+                        break;
                     case "third":
-                        this.orderStatus="已发货";
+                        this.orderStatus="待收货";
                         this.beUserDelete=false;
                         break;
                     case "four":
-                        this.orderStatus="";
+                        this.orderStatus="已完成";
                         this.beUserDelete=true;
                         break;
                 }
@@ -300,13 +300,10 @@
             },
             //客服信息
             getCustomerService() {
-
               this.$confirm('', {
                     title: '客服信息',
                     message: "手机：17777777777 \n 微信：wx7777777",
                     showCancelButton: false,
-                    // confirmButtonText: 'abc',
-                    // cancelButtonText: '123'
                 }).then(action => {
                     if (action == 'confirm') { //确认的回调
                         return;

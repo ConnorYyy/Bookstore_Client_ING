@@ -1,12 +1,11 @@
 <template>
   <div class="navClass">
     <div class="content">
-      <div class="nav_content">
+      <div class="nav_content" v-if="!store.getters.getUser.manage">
         <div class="userName" v-if="store.getters.getUser">
             Hi，<router-link to="/user/userCenter">{{store.getters.getUser.name || "尊敬的用户"}}</router-link> !
         </div>
         <el-menu
-          v-if="!store.getters.getUser.manage"
           :default-active="$route.path" 
           mode="horizontal"
           @select="handleSelect"
@@ -15,8 +14,7 @@
           active-text-color="#FF4950"
           router>
           <el-menu-item index="/">首页</el-menu-item>
-          <!-- <el-submenu index="#" v-if="!store.getters.getUser"> -->
-          <el-submenu index="#">
+          <el-submenu index="#" v-show="!store.getters.getUser.account">
             <template slot="title">登录|注册</template>
             <el-menu-item index="/login">登录</el-menu-item>
             <el-menu-item index="/register">注册</el-menu-item>
@@ -24,10 +22,15 @@
           <el-menu-item index="/cart">购物车</el-menu-item>
           <el-menu-item index="/user/userOrder">我的订单</el-menu-item>
           <el-menu-item index="/user/userCenter">个人中心</el-menu-item>
-          <el-menu-item @click="logout(store.getters.getUser.account)">退出</el-menu-item>
+        <el-menu-item v-show="store.getters.getUser.account" @click="logout(store.getters.getUser)">退出</el-menu-item>
         </el-menu>
+      </div>
+
+      <div class="nav_content" v-if="store.getters.getUser.manage">
+        <div class="userName" v-if="store.getters.getUser">
+            Hi，<router-link to="/user/userCenter">{{store.getters.getUser.name || "尊敬的用户"}}</router-link> !
+        </div>
         <el-menu
-        v-if="store.getters.getUser.manage"
         :default-active="$route.path" 
         mode="horizontal"
         @select="handleSelect"
@@ -36,17 +39,17 @@
         active-text-color="#FF4950"
         router>
         <el-menu-item index="/">首页</el-menu-item>
-        <!-- <el-submenu index="#" v-if="!store.getters.getUser"> -->
-        <el-submenu index="#">
+        <el-submenu index="#" v-show="!store.getters.getUser.account">
+        <!-- <el-submenu index="#"> -->
           <template slot="title">登录|注册</template>
           <el-menu-item index="/login">登录</el-menu-item>
           <el-menu-item index="/register">注册</el-menu-item>
         </el-submenu>
         <el-menu-item index="/admin/home">管理</el-menu-item>
-        <el-menu-item @click="logout()">退出</el-menu-item>
+        <el-menu-item v-show="store.getters.getUser.account" @click="logout(store.getters.getUser)">退出</el-menu-item>
       </el-menu>
       </div>
-      </div>
+    </div>
     </div>
 </template>
 
@@ -71,6 +74,7 @@
                 cancelButtonText: "取消",
                 type: "warning",
               }).then((account) => {
+                this.$router.push({path: "/"});
                 this.REMOVE_INFO();
                 // reqLogout(account).then(response=>{
                 //   if (response.data.code == 200) {
@@ -97,7 +101,12 @@
                 })
             },
             ...mapMutations(['REMOVE_INFO']),
-
+            printAccount() {//todo
+              console.error(store.getters.getUser.account);
+            }
+        },
+        created() {
+          // this.printAccount()
         }
     }
 </script>

@@ -1,6 +1,6 @@
 import ajax from "./ajax";
 
-export const reqGetTopicList = (page,pageSize)=>ajax('/getTopicList',{page, pageSize})
+export const reqGetTopicList = (page,pageSize)=>ajax('/topic/getTopicList',{page, pageSize})
 
 export const reqGetTopic = (id) => ajax("/getTopic",{id})
 

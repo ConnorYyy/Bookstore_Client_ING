@@ -2,7 +2,6 @@
   <div class="content">
     <div class="gallery-book_title">
       <span style="margin-left: 30px">{{this.sortTitle}}</span>
-<!--      <router-link :to="{path: '/search',query:{id:1}}" style="float: right;margin-right: 30px">>更多图书</router-link>-->
     </div>
     <div class="gallery-book_list">
       <div class="gallery-book_card" v-for="(item) in bookList" :key="item.id">
@@ -41,40 +40,34 @@
         data(){
             return {
                 sortTitle:"",
-                bookSortList:[],
-                imgS: ["static/image/bookdefault.jpg",
-                    "static/image/21.jpg",
-                    "static/image/22.jpg",
-                    "static/image/23.jpg"],
-                bookList: [],
+                bookList: [
+                  {
+                    id: 101,
+                    coverImg: "/static/image/bookCover01.jpg",
+                    bookName: "网络是怎样连接的",
+                    author: "户根勤一",
+                    price: 49.00
+                  },
+                  {
+                    id: 102,
+                    coverImg: "/static/image/bookCover01.jpg",
+                    bookName: "网络是怎样连接的",
+                    author: "户根勤一",
+                    price: 49.00
+                  }
+                ]
             }
         },
         methods: {
             getBookList(){
-                switch (this.listSort) {
-                    case "recommend":
-                        this.sortTitle = "精品推荐";
-                        reqGetRecBookList("recommend").then(response=>{
-                            if(response.data.code==200){
-                                this.bookList = response.data.bookList;
-                            }else{
-                                this.$message({
-                                    type: 'warning',
-                                    message: response.data.message
-                                })
-                            }
-                        }).catch(err=>{
-                            this.$message({
-                                type: 'warning',
-                                message: "获取图书列表数据失败"
-                            })
-                        })
-                        break;
+                switch (this.listSort) {                        
                     case "newProduct":
                         this.sortTitle = "新品推荐";
                         reqGetRecBookList("newProduct").then(response=>{
                             if(response.data.code==200){
-                                this.bookList = response.data.bookList;
+                                if(response.data.bookList.length){
+                                    this.bookList = response.data.bookList;
+                                }
                             }else{
                                 this.$message({
                                     type: 'warning',
@@ -89,6 +82,24 @@
                         })
                         break;
                     default:
+                      this.sortTitle = "精品推荐";
+                        reqGetRecBookList("recommend").then(response=>{
+                            if(response.data.code==200){
+                                if(response.data.bookList.length){
+                                    this.bookList = response.data.bookList;
+                                }
+                            }else{
+                                this.$message({
+                                    type: 'warning',
+                                    message: response.data.message
+                                })
+                            }
+                        }).catch(err=>{
+                            this.$message({
+                                type: 'warning',
+                                message: "获取图书列表数据失败"
+                            })
+                        })
                         break;
                 }
             }
@@ -102,7 +113,7 @@
 
 <style scoped>
   .content{
-    width: 1240px;
+    width: 100%;
   }
   .gallery-book_title{
     padding-top: 20px;
