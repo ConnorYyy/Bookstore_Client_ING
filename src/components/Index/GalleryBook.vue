@@ -91,7 +91,7 @@
     margin: 0 auto;
   }
   .gallery-book_author{
-    width: 98px;
+    width: 100%;
     height: 22px;
     overflow: hidden;
     margin: 0;
@@ -99,6 +99,7 @@
     font-size: 12px;
   }
   .gallery-book_price{
+    width: 100%;
     float: left;
     font-style: normal;
     margin-right: 3px;
