@@ -22,7 +22,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit('bookSort')">确认</el-button>
-            <el-button>取消</el-button>
+            <el-button @click="cancel()">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -115,6 +115,9 @@
                         this.$message.error("添加分类失败");
                     }
                 });
+            },
+            cancel(){
+                this.$router.push('/admin/FirstSortList')
             },
             addSort(){
                 if(this.bookSort.upperName=="无"){
