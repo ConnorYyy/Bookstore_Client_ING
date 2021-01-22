@@ -11,7 +11,7 @@
             <el-input type="password" v-model="ruleForm.newPassword" autocomplete="off" placeholder="请输入新密码"></el-input>
           </el-form-item>
           <el-form-item prop="rePassword">
-            <el-input type="password" v-model="ruleForm.rePassword" autocomplete="off" placeholder="密码确认"></el-input>
+            <el-input type="password" v-model="ruleForm.rePassword" autocomplete="off" placeholder="密码确认" @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')" style="width: 40%;margin: 0px auto">修改密码</el-button>
