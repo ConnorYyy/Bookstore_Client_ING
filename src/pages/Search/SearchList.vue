@@ -3,19 +3,10 @@
     <Nav></Nav>
     <HeadNav></HeadNav>
     <div class="box_title" >
-      <p>{{this.total}} 条结果 | <span style="color: #9d232c">{{this.sortName}}</span></p>
+      <!-- <p>{{this.total}} 条结果 | <span style="color: #9d232c">{{this.sortName}}</span></p> -->
+      <p>{{this.total}} 条结果</p>
     </div>
     <div class="box">
-      <div class="book_sort"> 
-        <div class="tab">
-          <div class="tab_head">分类</div>
-          <div v-for="sort in sortList" class="tab_list" :key="sort.upperSort.id">
-            <router-link :to="{path: '/search',query:{id:sort.upperSort.id,name:sort.upperSort.sortName}}">
-              <div style="color: black;width: 100%">{{sort.upperSort.sortName}}</div>
-            </router-link>
-          </div>
-        </div>
-      </div>
       <div class="book_info">
         <div class="book_content" v-for="book in bookList" :key="book.id">
           <router-link :to="{path: '/book',query:{id:book.id}}">
@@ -35,8 +26,9 @@
             <div class="book_list_content">原价: 	{{book.marketPrice}}</div>
             <div class="book_list_content">售价: 	{{book.price}}</div>
             <div>
-              <el-button type="primary" icon="el-icon-shopping-cart-2" class="cartBtn">加入购物车</el-button>
-              <el-button class="plainBtn" plain>立即购买</el-button>
+                <el-button type="primary" icon="el-icon-shopping-cart-2" class="cartBtn" @click="addBookToCart(book.id)">加入购物车</el-button>
+                <el-button class="plainBtn" @click="goBuyPage(book.id)">立即购买</el-button>
+                <el-button class="plainBtn" @click="getInfo(book.id)">查看详情</el-button>
             </div>
           </div>
         </div>
@@ -52,8 +44,8 @@
             :total="total">
           </el-pagination>
         </div>
-        <div v-else style="width:100%;height: 50px;line-height: 50px;padding: 0px 20px">
-          不好意思，此分类暂时还没有图书...
+        <div v-if="!bookList.length" style="width:100%;height: 50px;line-height: 50px;padding: 0px 20px">
+            不好意思，没有找到该书籍...
         </div>
       </div>
     </div>
@@ -65,59 +57,24 @@
     import Nav from "../../components/Common/Nav";
     import HeadNav from "../../components/Common/HeadNav";
     import Footer from "../../components/Common/Footer";
-    import CarouselBtn from "../../components/Index/CarouselBtn";
-    import {reqGetSortList} from "../../api/sort";
-    import {reqGetRecBookList,reqGetBookListBySort} from "../../api/book";
-
-
+    import {reqSearchBook} from "../../api/index";
+    import {reqAddCart} from "../../api/cart";
     export default {
-        name: "Search",
-        components:{CarouselBtn, Nav,HeadNav,Footer,CarouselBtn},
+        name: "SearchList",
+        components:{Nav,HeadNav,Footer},
         data(){
             return{
                 currentPage: 1,
                 page_size: 10,
-                total:100,
-                sortName:"分类名称",
-                sortList:[
-                    {
-                        upperSort: {
-                            sortName: null,
-                        },
-                        children:null
-                    }
-                ],
-                bookList: [],
+                total:0,
                 sortId:null,
+                bookList: ""
             }
         },
         methods: {
             handleClick(tab, event) {
                 console.log(tab, event);
             },
-            getSortList() {
-                reqGetSortList().then(response => {
-                    this.sortList = response.data.sortResponseList;
-                });
-            },
-            //得到图书列表
-            getBookList(sortId,page,pageSize){
-                reqGetBookListBySort(sortId,page,pageSize).then(response=>{
-                    if(response.data.code==200){
-                        this.total = response.data.total;
-                        console.log(this.total);
-                        this.bookList = response.data.bookList;
-                    }else{
-                        this.$message({
-                            message: response.data.message,
-                            type: "warning"
-                        })
-                    }
-                }).catch(err=>{
-                    console.error(err);
-                })
-            },
-
             //分页函数
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
@@ -130,23 +87,63 @@
                 console.log(this.currentPage+":"+this.page_size);
                 this.getBookList(this.sortId,this.currentPage,this.page_size);
             },
-        },
-        created() {
-            this.sortId = this.$route.query.id;
-            this.sortName = this.$route.query.name;
-            this.getSortList();
-            this.getBookList(this.sortId,1,10);
-        },
-        watch: {
-            $route(to, from) {
-                this.sortId = this.$route.query.id;
-                this.sortName = this.$route.query.name;
-                console.log("this.$route.query.name:"+this.$route.query.name);
-                console.log("this.$route.query.id:"+this.$route.query.id);
-                this.getSortList();
-                this.getBookList(this.sortId,1,10);
+            searchBook(input) { //TODO
+                reqSearchBook(input).then(response=>{
+                    console.error(response.data.booklist)
+                // if(response.data.code==200){
+                    this.bookList = response.data.booklist;
+                // }else{
+                //   this.$message({
+                //       message: response.data.message,
+                //       type: "warning"
+                //   })
+                // }
+                }).catch(err=>{
+                    console.error(err);
+                })
+            },
+
+            goBuyPage(id){
+                let arr = [];
+                arr.push(id);
+                arr.push(0);
+                // arr.push(2);
+                let ids = JSON.stringify(arr);
+                this.$router.push({
+                    path: "/buyPage",
+                    query: {
+                        ids: ids
+                    }
+                })
+            },
+
+            addBookToCart(bookId){
+                reqAddCart(this.$store.getters.getUser.account,bookId,1).then(response=>{
+                    if(response.data.code==200){
+                        this.$message({
+                            message: response.data.message,
+                            type: "success",
+                            duration: 1000
+                        });
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning",
+                            duration: 1000
+                        })
+                    }
+                }).catch(err=>{
+                    console.error(err)
+                })
+            },
+            getInfo(bookId){
+                this.$router.push({path: '/book',query:{id:bookId}});
             }
         },
+        created(){
+            console.error(this.$route)
+            this.searchBook(this.$route.params.filterParam);
+        }
     }
 </script>
 
@@ -163,18 +160,11 @@
   }
   .box{
     margin: 10px auto;
-    width: 1240px;
+    width: 100%;
   }
-  .book_sort{
-    margin: 10px 10px;
-    width: 200px;
-    float: left;
-    border-right: 1px #f3f0e9 solid;
-  }
-
   .book_info{
     margin: 10px 10px;
-    width: 1000px;
+    width: 100%;
     padding: 10px;
     min-height: calc(100vh - 230px);
     float: right;
@@ -207,7 +197,7 @@
     border: 1px #f3f0e9 solid;
     padding: 5px;
     margin: 10px auto;
-    width: 940px;
+    width: 80%;
     height: 190px;
     max-height: 240px;
     line-height: 35px;

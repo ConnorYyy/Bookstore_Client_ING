@@ -207,10 +207,14 @@
                     if(response.data.code==200){
                         this.total = response.data.total;
                         this.tableData = response.data.publishList;
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
                     }
-                    console.log(response);
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -240,7 +244,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -266,7 +270,7 @@
                         }
                         this.GetPublish(this.currentPage,this.page_size);
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }).catch(()=>{
                     console.log("取消删除了");

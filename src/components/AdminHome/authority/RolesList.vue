@@ -121,6 +121,7 @@
 <script>
 import { reqGetPublishNames } from "../../../api/publish";
 import { reqGetSortList } from "../../../api/sort";
+import { reqBatchDel } from "../../../api/order"
 import {
   reqGetBookList,
   reqDelBook,
@@ -221,36 +222,7 @@ export default {
           message: "请至少选择一项进行操作",
         });
       } else {
-        let dataList = [];
-        for (let i = 0; i < this.multipleSelection.length; i++) {
-          dataList.push(this.multipleSelection[i].id);
-        }
-        console.log(this.operator);
-        let formData = new FormData();
-        formData.append("ids", dataList);
-        formData.append("operator", this.operator);
-        axios({
-          method: "POST",
-          url: "http://localhost:8082/batchDel",
-          data: formData,
-        })
-          .then((response) => {
-            if (response.data.code == 200) {
-              this.$message({
-                message: response.data.message,
-                type: "success",
-              });
-            } else {
-              this.$message({
-                message: response.data.message,
-                type: "warning",
-              });
-            }
-            this.GetSort(this.currentPage, this.page_size);
-          })
-          .catch((err) => {
-            console.log("出错了！");
-          });
+        
         switch (this.operator) {
           case "del":
             console.log(this.operator);
@@ -276,12 +248,32 @@ export default {
           default:
             console.log("至少需要选择一项");
         }
-      }
-    },
 
-    //获取图书的分类值
-    handleChange(bookSort) {
-      console.log("图书的分类是:" + bookSort[0], bookSort[1]);
+        let dataList = [];
+        for (let i = 0; i < this.multipleSelection.length; i++) {
+          dataList.push(this.multipleSelection[i].id);
+        }
+        console.log(this.operator);
+        let formData = new FormData();
+        formData.append("ids", dataList);
+        formData.append("operator", this.operator);
+        reqBatchDel(dataList, this.operator).then((response) => {
+          if (response.data.code == 200) {
+              this.$message({
+                message: response.data.message,
+                type: "success",
+              });
+              this.GetSort(this.currentPage, this.page_size);
+          } else {
+            this.$message({
+              message: response.data.message,
+              type: "warning",
+            });
+          }
+        }).catch((err) => {
+          console.log("出错了！");
+        });
+      }
     },
 
     //分页函数
@@ -296,20 +288,22 @@ export default {
       console.log(this.currentPage + ":" + this.page_size);
       this.GetSort(this.currentPage, this.page_size);
     },
+
     //得到图书列表
     GetSort(page, pageSize) {
       this.loading = false;
-      reqGetBookList(page, pageSize)
-        .then((response) => {
+      reqGetBookList(page, pageSize).then((response) => {
           if (response.data.code == 200) {
             this.total = response.data.total;
-            console.log(this.total);
             this.tableData = response.data.bookList;
+          } else {
+            this.$message({
+              message: response.data.message,
+              type: "warning",
+            });
           }
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
+        }).catch((err) => {
+          console.error(err);
         });
     },
 
@@ -326,10 +320,7 @@ export default {
 
     //处理是否显示滑块的改变
     handlePut(e, row, index) {
-      console.log(row.put);
-      reqModifyPut(row.id, row.put)
-        .then((response) => {
-          console.log(response);
+      reqModifyPut(row.id, row.put).then((response) => {
           if (response.data.code == 200) {
             this.$message({
               message: response.data.message,
@@ -341,17 +332,14 @@ export default {
               type: "warning",
             });
           }
-        })
-        .catch((err) => {
-          console.log(err);
+        }).catch((err) => {
+          console.error(err);
         });
     },
 
     handleRec(e, row, index) {
       console.log(row.put);
-      reqModifyRec(row.id, row.recommend)
-        .then((response) => {
-          console.log(response);
+      reqModifyRec(row.id, row.recommend).then((response) => {
           if (response.data.code == 200) {
             this.$message({
               message: response.data.message,
@@ -365,29 +353,25 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     },
     handleNew(e, row, index) {
-      console.log(row.put);
-      reqModifyNew(row.id, row.newProduct)
-        .then((response) => {
-          console.log(response);
-          if (response.data.code == 200) {
-            this.$message({
-              message: response.data.message,
-              type: "success",
-            });
-          } else {
-            this.$message({
-              message: response.data.message,
-              type: "warning",
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      reqModifyNew(row.id, row.newProduct).then((response) => {
+        if (response.data.code == 200) {
+          this.$message({
+            message: response.data.message,
+            type: "success",
+          });
+        } else {
+          this.$message({
+            message: response.data.message,
+            type: "warning",
+          });
+        }
+      }).catch((err) => {
+          console.error(err);
+      });
     },
 
     //处理删除函数
@@ -396,26 +380,23 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
-      })
-        .then(() => {
-          reqDelBook(row.id)
-            .then((response) => {
-              console.log(response);
+      }).then(() => {
+          reqDelBook(row.id).then((response) => {
               if (response.data.code == 200) {
                 this.$message({
                   message: response.data.message,
                   type: "success",
                 });
+                this.GetSort(this.currentPage, this.page_size);
               } else {
                 this.$message({
                   message: response.data.message,
                   type: "warning",
                 });
               }
-              this.GetSort(this.currentPage, this.page_size);
             })
             .catch((err) => {
-              console.log(err);
+              console.error(err);
             });
         })
         .catch(() => {
@@ -453,18 +434,17 @@ export default {
             })
         }
       }).catch(err=>{
-        console.log(err);
+        console.error(err);
       });
     },
     //得到并设置出版的下拉选择器
     getPublishName() {
       reqGetPublishNames()
         .then((response) => {
-          console.log(response);
           this.publishList = response.data.publishList;
         })
         .then((err) => {
-          console.log(err);
+          console.error(err);
         });
     },
   },

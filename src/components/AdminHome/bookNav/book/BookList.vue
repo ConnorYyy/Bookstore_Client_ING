@@ -205,6 +205,7 @@
 <script>
     import {reqGetPublishNames} from "../../../../api/publish";
     import {reqGetSortList} from "../../../../api/sort";
+    import {reqBatchDel} from "../../../../api/order"
     import {reqGetBookList,reqDelBook,reqModifyPut,reqModifyRec,reqModifyNew} from "../../../../api/book";
     import axios from 'axios';
     import qs from 'qs';
@@ -246,39 +247,6 @@
                 },
                 publishList: [],//出版社下拉选择器
                 options: [],//图书分类的联机选择器
-                // options: [{
-                //     value: 'zhinan',
-                //     label: '指南',
-                //     children: [{
-                //         value: 'shejiyuanze',
-                //         label: '设计原则',
-                //     }, {
-                //         value: 'daohang',
-                //         label: '导航',
-                //     }]
-                // }, {
-                //     value: 'zujian',
-                //     label: '组件',
-                //     children: [{
-                //         value: 'basic',
-                //         label: 'Basic',
-                //     }, {
-                //         value: 'form',
-                //         label: 'Form',
-                //     }, {
-                //         value: 'data',
-                //         label: 'Data',
-                //     }, {
-                //         value: 'notice',
-                //         label: 'Notice',
-                //     }, {
-                //         value: 'navigation',
-                //         label: 'Navigation',
-                //     }, {
-                //         value: 'others',
-                //         label: 'Others',
-                //     }]
-                // }],
 
                 operator: null,
                 //批量操作
@@ -341,11 +309,7 @@
                     let formData = new FormData();
                     formData.append("ids", dataList);
                     formData.append("operator",this.operator);
-                    axios({
-                        method: 'POST',
-                        url: 'http://localhost:8082/batchDel',
-                        data: formData
-                    }).then((response) => {
+                    reqBatchDel(dataList, this.operator).then((response) => {
                         if(response.data.code==200){
                             this.$message({
                                 message: response.data.message,
@@ -361,31 +325,6 @@
                     }).catch(err=>{
                         console.log("出错了！")
                     })
-                    switch (this.operator) {
-                        case "del":
-                            console.log(this.operator);
-                            break;
-                        case "put":
-                            console.log(this.operator);
-                            break;
-                        case "putOff":
-                            console.log(this.operator);
-                            break;
-                        case "recommend":
-                            console.log(this.operator);
-                            break;
-                        case "recommendOff":
-                            console.log(this.operator);
-                            break;
-                        case "newProduct":
-                            console.log(this.operator);
-                            break;
-                        case "newProductOff":
-                            console.log(this.operator);
-                            break;
-                        default:
-                            console.log("至少需要选择一项");
-                    }
                 }
             },
 
@@ -419,7 +358,7 @@
                     }
                     console.log(response);
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -452,7 +391,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -472,7 +411,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
             handleNew(e,row,index){
@@ -491,7 +430,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -505,7 +444,6 @@
                     type: 'warning'
                 }).then(() => {
                     reqDelBook(row.id).then(response=>{
-                        console.log(response);
                         if(response.data.code==200){
                             this.$message({
                                 message: response.data.message,
@@ -519,7 +457,7 @@
                         }
                         this.GetSort(this.currentPage,this.page_size);
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }).catch(()=>{
                     console.log("取消删除了");
@@ -550,17 +488,23 @@
                       })
                   }
                 }).catch(err=>{
-                  console.log(err);
+                  console.error(err);
                 });
             },
             //得到并设置出版的下拉选择器
             getPublishName(){
                 reqGetPublishNames().then(response=>{
-                    console.log(response);
-                    this.publishList=response.data.publishList;
-                }).then(err=>{
-                    console.log(err);
-                })
+                    if(response.data.code==200){
+                        this.publishList=response.data.publishList;
+                    }else{
+                      this.$message({
+                          message: response.data.message,
+                          type: "warning"
+                      })
+                    }
+                }).catch(err=>{
+                  console.error(err);
+                });
             }
         }
 

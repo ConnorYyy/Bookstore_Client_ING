@@ -101,11 +101,16 @@
                     console.log("哈哈哈哈");
                     this.editId=this.$route.query.id;
                     reqGetPublish(this.editId).then(response=>{
-                        this.publish = response.data.publish;
-                        console.log("编辑页面")
-                        console.log(response);
+                        if(response.data.code==200){
+                           this.publish = response.data.publish;
+                        }else{
+                            this.$message({
+                                message: response.data.message,
+                                type: "warning"
+                            })
+                        }
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }
             },
@@ -128,12 +133,17 @@
             addPublish(){
                 console.log("提交的值为："+this.publish.showPublish);
                 reqAddPublish(this.publish).then(response=>{
-                    console.log(this.publish);
-                    console.log("成功提交");
-                    console.log(response);
-                    this.$message.info("添加出版社成功");
+                    if(response.data.code==200){
+                      console.log("成功提交");
+                      this.$message.info("添加出版社成功");
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
+                    }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                     this.$message.error("添加出版社失败");
                 })
             },
@@ -141,12 +151,17 @@
             modifyPublish(){
                 console.log("值为："+this.publish.show);
                 reqModifyPublish(this.publish).then(response=>{
-                    console.log(this.publish);
-                    console.log("成功提交");
-                    console.log(response);
-                    this.$message.info("修改出版社成功");
+                    if(response.data.code==200){
+                        console.log("成功提交");
+                        this.$message.info("修改出版社成功");
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
+                    }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                     this.$message.error("修改出版社出错");
                 })
             },

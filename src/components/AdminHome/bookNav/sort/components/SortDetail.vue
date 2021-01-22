@@ -136,7 +136,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                     this.$message.error("添加分类名失败");
                 })
             },
@@ -155,7 +155,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                     this.$message.error("修改分类名失败");
                 })
             },
@@ -183,33 +183,58 @@
                 console.log(upperName+sortName);
                 if(!this.isFirst){
                     reqGetUpperName().then(response=>{
-                        console.log(response);
-                        this.publishList = response.data.upperNames;
-                        this.bookSort.upperName = "无";
+                        if(response.data.code==200){
+                            this.publishList = response.data.upperNames;
+                            this.bookSort.upperName = "无";
+                        }else{
+                            this.$message({
+                                message: response.data.message,
+                                type: 'warning'
+                            })
+                        }
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                     reqGetBookSort(upperName,sortName).then(response=>{
-                        this.bookSort=response.data.bookSort;
-                        console.log(this.bookSort);
+                        if(response.data.code==200){
+                           this.bookSort=response.data.bookSort;
+                        }else{
+                            this.$message({
+                                message: response.data.message,
+                                type: 'warning'
+                            })
+                        }
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }else {
                     reqGetBookSort(upperName,sortName).then(response=>{
-                        this.bookSort=response.data.bookSort;
-                        console.log(this.bookSort);
+                        if(response.data.code==200){
+                            this.bookSort=response.data.bookSort;
+                            console.log(this.bookSort);
+                        }else{
+                            this.$message({
+                                message: response.data.message,
+                                type: 'warning'
+                            })
+                        }
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }
             }else {
                 reqGetUpperName().then(response=>{
-                    console.log(response);
-                    this.publishList = response.data.upperNames;
-                    this.bookSort.upperName = "无";
+                    if(response.data.code==200){
+                        this.publishList = response.data.upperNames;
+                        this.bookSort.upperName = "无";
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: 'warning'
+                        })
+                    }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             }
 

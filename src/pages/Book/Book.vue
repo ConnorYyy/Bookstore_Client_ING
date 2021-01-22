@@ -13,7 +13,7 @@
           <div class="book_list_content">作者: 	{{book.author}}</div>
           <div class="book_list_content">ISBN: 	{{book.isbn}}</div>
           <div class="book_list_content">出版社: 	{{book.publish}}</div>
-          <div class="book_list_content">出版时间: 	{{book.birthday}}</div>
+          <div class="book_list_content">出版时间: 	{{book.birthday.slice(0,10)}}</div>
         </div>
         <div class="book_content book_buy_price">
           <div class="book_buy_info">
@@ -43,27 +43,12 @@
         </div>
       </div>
     </div>
-    <div class="box">
-      <div class="book_sort">
-        <div class="tab">
-          <div class="tab_head">分类</div>
-          <div v-for="(sort, index) in sortList" class="tab_list" :key="index">
-            <router-link :to="{path: '/search',query:{id:sort.upperSort.id,name:sort.upperSort.sortName}}"><div style="color: black;width: 100%">{{sort.upperSort.sortName}}</div></router-link>
-          </div>
+    
+    <div class="book_info">
+        <h2 class="infoTitle">书籍概要</h2>
+        <div class="infoBox">
+          <div class="info" v-html="book.description"></div>
         </div>
-      </div>
-      <div class="book_info">
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-          <el-tab-pane label="商品详情" name="first">
-            <div class="product">
-              <div class="markdown-body" v-html="book.description"></div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="店铺评价" name="second">
-            <div class="evaluation"></div>
-          </el-tab-pane>
-        </el-tabs>
-      </div>
     </div>
     <Footer></Footer>
   </div>
@@ -117,31 +102,40 @@
             }
         },
         methods: {
-            handleClick(tab, event) {
-                // console.log(tab, event);
-            },
 
             getSortList() {
                 reqGetSortList().then(response => {
                     if(response.data.code==200){
                         this.sortList = response.data.sortResponseList;
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
                     }
-                    // console.log(this.sortList);
-                    // console.log("response.data.sortResponseList"+response.data.sortResponseList);
-                });
+                }).catch(err=>{
+                    console.error(err);
+                })
             },
 
             getBook(bookId){
                 reqGetBook(bookId).then(response=>{
+                  if(response.data.code==200){
                     // console.log(response.data.book);
-                    this.book = response.data.book;
-                    // console.log("this.book.imgSrc:"+response.data.book.imgSrc);
-                    let MarkdownIt = require("markdown-it");
-                    let md = new MarkdownIt();
-                    let result = md.render(this.book.description);
-                    this.book.description = result;
+                      this.book = response.data.book;
+                      // console.log("this.book.imgSrc:"+response.data.book.imgSrc);
+                      let MarkdownIt = require("markdown-it");
+                      let md = new MarkdownIt();
+                      let result = md.render(this.book.description);
+                      this.book.description = result;
+                  }else{
+                      this.$message({
+                          message: response.data.message,
+                        type: "warning"
+                    })
+                  }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -161,8 +155,7 @@
 
             //添加图书到购物车
             addBookToCart(){
-                // console.log("=======this.book.id:===="+this.book.id+"=================")
-                reqAddCart(this.$store.getters.getUser.account,this.book.id,1).then(response=>{
+                reqAddCart(this.$store.getters.getUser.account,this.bookId,1).then(response=>{
                     if(response.data.code==200){
                         this.$message({
                             message: response.data.message,
@@ -177,17 +170,14 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err)
+                    console.error(err)
                 })
             }
         },
         created() {
             this.bookId = this.$route.query.id;
-            // console.log("this.bookId"+this.bookId);
             this.getBook(this.bookId);
             this.getSortList();
-            // let account = this.$store.getters.getUser.account;
-            // console.log("====account==="+account+"==============")
         }
     }
 </script>
@@ -198,20 +188,20 @@
   }
   .box{
     margin: 10px auto;
-    width: 1240px;
+    width: 85vw;
   }
   .book_box{
     height: 500px;
   }
   .book_img{
     margin: 10px;
-    width: 450px;
+    width: 1/3;
     height: 480px;
     float: left;
   }
   .book_buy{
     margin: 10px;
-    width: 750px;
+    width: 2/3;
     height: 480px;
     float: right;
     padding: 1px;
@@ -288,42 +278,23 @@
   }
 
   .book_info{
-    margin: 10px 10px;
-    width: 1000px;
-    /*height: 780px;*/
-    float: right;
+    margin: auto;
+    width: 85vw;
     background-color: #f7f7f6;
+    padding: 15px;
+    min-height: 300px;
+    margin-bottom: 20px;
   }
-  .tab{
-    width: 100%;
-    /*height: 420px;*/
+  .infoTitle{
+    padding: 10px;
   }
-  .tab_head{
-    padding-left: 5px;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    background-color: #f3f0e9;
-    margin: 1px 0px;
+  .infoBox{
+    border: 2px solid #cacaca;
+    min-height: 250px;
+    margin: auto;
+    padding: 10px;
+    vertical-align: top;
   }
-  .tab_list{
-    padding-left: 5px;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    background-color: #ffffff;
-    margin: 1px 0px;
-  }
-  .tab_list:hover{
-    background-color: #a0a9b1;
-  }
-  .product{
-    width: 100%;
-    padding: 0px 15px;
-    height: 800px;
-  }
-  .evaluation{
-    width:100%;
-    height: 2500px;
+  .info{
   }
 </style>

@@ -288,6 +288,8 @@
                                 message: response.data.message
                             })
                         }
+                    }).catch(err=>{
+                        console.error(err)
                     })
                 }else {
                     reqModifyBook(this.book).then(response=>{
@@ -374,30 +376,42 @@
                       })
                   }
                 }).catch(err=>{
-                  console.log(err);
+                  console.error(err);
                 });
             },
             //得到并设置出版的下拉选择器
             getPublishName(){
                 reqGetPublishNames().then(response=>{
-                    console.log(response);
-                    this.publishList=response.data.publishList;
-                    this.book.publish=this.publishList[0];
-                }).then(err=>{
-                    console.log(err);
+                    if(response.data.code==200){
+                        this.publishList=response.data.publishList;
+                        this.book.publish=this.publishList[0];
+                    }else{
+                      this.$message({
+                          message: response.data.message,
+                          type: "warning"
+                      })
+                  }
+                }).catch(err=>{
+                  console.error(err);
                 })
             },
 
             //得到图书的相册集
             getBookImgPathList(){
                 reqGetBookImgPathList("1345222").then(response=>{
-                    let list = response.data.imgPaths;
-                    for (let i = 0; i < list.length; i++) {
-                        this.fileList.push({name: list[i], url: list[i]});
+                    if(response.data.code==200) {
+                        let list = response.data.imgPaths;
+                        for (let i = 0; i < list.length; i++) {
+                            this.fileList.push({name: list[i], url: list[i]});
+                        }
+                    }else{
+                        this.$message({
+                          message: response.data.message,
+                          type: "warning"
+                        })
                     }
-                    console.log(response);
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -429,7 +443,7 @@
                         });
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             }
         },

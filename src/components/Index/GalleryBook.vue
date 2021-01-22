@@ -35,21 +35,7 @@
                     "static/image/21.jpg",
                     "static/image/22.jpg",
                     "static/image/23.jpg"],
-                bookList: [
-                    {
-                        id: 11,
-                        bookName: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23,
-                        coverImg: "statics/image/20.jpg"
-                    },
-                    {
-                        id: 12,
-                        bookName: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）",
-                        author: "黄子平 著",
-                        price: 123.23
-                    }
-                ]
+                bookList: []
             };
         },
         methods: {
@@ -119,6 +105,7 @@
   }
   .gallery-book{
     width: 100%;
+    display: inline-block;
     font-family: 微软雅黑;
   }
   a{

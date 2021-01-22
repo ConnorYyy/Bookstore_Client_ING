@@ -5,7 +5,7 @@
       <div class="modify_box">
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm" size="medium">
           <el-form-item prop="oldPassword">
-            <el-input type="text" v-model="ruleForm.oldPassword" autocomplete="off" placeholder="请输入旧密码"></el-input>
+            <el-input type="password" v-model="ruleForm.oldPassword" autocomplete="off" placeholder="请输入旧密码"></el-input>
           </el-form-item>
           <el-form-item prop="newPassword">
             <el-input type="password" v-model="ruleForm.newPassword" autocomplete="off" placeholder="请输入新密码"></el-input>

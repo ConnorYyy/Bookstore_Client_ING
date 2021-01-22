@@ -3,6 +3,7 @@ import Router from 'vue-router'; //
 import Login from "../pages/Login/Login"; //
 import Index from "../pages/Index/Index"; //
 import UserHome from "../pages/UserHome/UserHome";
+import SearchList from "../pages/Search/SearchList";
 import Book from "../pages/Book/Book"; //
 import Register from "../pages/Register/Register";
 import Admin from "../pages/AdminHome/Admin";
@@ -36,6 +37,11 @@ import Deliver from "../components/AdminHome/orderNav/Deliver";
 import UserOrderDetail from "../components/UserHome/order/UserOrderDetail";
 
 Vue.use(Router)
+
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error=> error)
+}
 
 export default new Router({
   mode: 'history',
@@ -310,6 +316,14 @@ export default new Router({
       path: '/search',
       name: 'Search',
       component: Search
+    },    
+    {
+      path: '/searchList',
+      name: 'SearchList',
+      component: SearchList,
+      meta: {
+        title: "搜索列表"
+      }
     },
     //下面的是一些测试页面的路由
 

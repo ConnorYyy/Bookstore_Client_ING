@@ -219,10 +219,14 @@
                             this.total = response.data.total;
                             console.log(this.total);
                             this.tableData = response.data.bookSortList;
+                        }else{
+                            this.$message({
+                                message: response.data.message,
+                                type: "warning"
+                            })
                         }
-                        console.log(response);
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }else{
                     let upperName = this.$route.query.upperName;
@@ -233,10 +237,14 @@
                             this.total = response.data.total;
                             console.log(this.total);
                             this.tableData = response.data.bookSortList;
+                        }else{
+                            this.$message({
+                                message: response.data.message,
+                                type: "warning"
+                            })
                         }
-                        console.log(response);
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }
             },
@@ -302,7 +310,7 @@
                             }
                             this.GetSort(this.currentPage,this.page_size);
                         }).catch(err=>{
-                            console.log(err);
+                            console.error(err);
                         })
                     }else {
                         console.log("删除二级分类");
@@ -321,7 +329,7 @@
                             }
                             this.GetSort(this.currentPage,this.page_size);
                         }).catch(err=>{
-                            console.log(err);
+                            console.error(err);
                         })
                     }
 

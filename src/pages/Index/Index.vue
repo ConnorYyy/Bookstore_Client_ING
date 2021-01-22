@@ -15,13 +15,13 @@
                     <router-link :to="{path: '/search',query:{id:item[1].value,name:item[1].label}}"><span style="color: black">{{item[1].label}}</span></router-link>
                     <transition name="fade">
                     <div class="tab_page" v-show="seen&&index==current" >
-                      <div v-for="book in item" :key="book.id">
+                      <div v-for="(book,index) in item" :key="index">
                         <h3>
                           <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
                         </h3>
                         <div class="tab_page_list">
                           <el-breadcrumb separator="|">
-                            <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
+                            <el-breadcrumb-item v-for="(it,index) in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="index">
                               {{it.label}}
                             </el-breadcrumb-item>
                             <el-breadcrumb-item>
@@ -40,13 +40,13 @@
                     <router-link :to="{path: '/search',query:{id:item[0].value,name:item[0].label}}"><span style="color: black">{{item[0].label}}</span></router-link>
                     <transition name="fade">
                     <div class="tab_page" v-show="seen&&index==current">
-                      <div v-for="book in item" :key="book.id">
+                      <div v-for="(book,index) in item" :key="index">
                         <h3>
                           <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
                         </h3>
                         <div class="tab_page_list">
                           <el-breadcrumb separator="|">
-                            <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
+                            <el-breadcrumb-item v-for="(it,index) in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="index">
                               {{it.label}}
                             </el-breadcrumb-item>
                           </el-breadcrumb>
@@ -60,14 +60,14 @@
                     {{item[0].label}}<span> | </span>{{item[1].label}}
                     <transition name="fade">
                     <div class="tab_page" v-show="seen&&index==current">
-                      <div v-for="book in item" :key="book">
+                      <div v-for="(book,index) in item" :key="index">
                         <h3>
                           <router-link :to="{path: '/search',query:{id:book.value,name:book.label}}">>{{book.label}}</router-link>
                         </h3>
                         <div class="tab_page_list">
                           <el-breadcrumb separator="|">
                             <!--                            <el-breadcrumb-item :to="{ path: '/' }" exact>首页</el-breadcrumb-item>-->
-                            <el-breadcrumb-item v-for="it in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="it.value">
+                            <el-breadcrumb-item v-for="(it,index) in book.children" :to="{path: '/search',query:{id:it.value,name:getName(book.label,it.label)}}" :key="index">
                               {{it.label}}
                             </el-breadcrumb-item>
                             <el-breadcrumb-item>
@@ -174,9 +174,14 @@
                         for(let i=0;i<list.length;i++){
                             this.bookTopicList.push({cover:list[i].cover,id:list[i].id});
                         }
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -241,8 +246,15 @@
                             this.options.push([{label: list[list.length-1].upperSort.sortName, value: list[list.length-1].upperSort.id, seen: false, children: children2}])
                             this.single=1;
                         }
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
                     }
-                });
+                }).catch(err=>{
+                    console.error(err);
+                })
             },
 
         },
@@ -271,12 +283,12 @@
     margin: auto;
     width: 90%;
     background-color: #ffffff;
-    display: block;
+    display:table
    }
   .content_main{
     margin: 0px auto;
     width: 100%;
-    height: 700px;
+    min-height: 700px;
     background-color: #ffffff;
   }
   .content_main_left{
@@ -303,6 +315,7 @@
     width: auto;
     height: auto;
     margin: auto;
+    margin-bottom: 40px;
     background-color: #ffffff;
   }
   .tab_page a{

@@ -292,13 +292,13 @@
                                 message: response.data.message,
                                 type: "success"
                             })
+                            this.GetSort(this.currentPage,this.page_size);
                         }else{
                             this.$message({
                                 message: response.data.message,
                                 type: "warning"
                             })
                         }
-                        this.GetSort(this.currentPage,this.page_size);
                     }).catch(err=>{
                         console.log("出错了！")
                     })
@@ -360,7 +360,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
             //操作表格
@@ -406,15 +406,15 @@
                                 message: response.data.message,
                                 type: "success"
                             })
+                            this.getOrderList(this.currentPage,this.page_size);
                         }else{
                             this.$message({
                                 message: response.data.message,
                                 type: "warning"
                             })
                         }
-                        this.getOrderList(this.currentPage,this.page_size);
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }).catch(()=>{
                     this.$message({
@@ -426,10 +426,16 @@
             //得到并设置出版的下拉选择器
             getPublishName(){
                 reqGetPublishNames().then(response=>{
-                    console.log(response);
-                    this.publishList=response.data.publishList;
-                }).then(err=>{
-                    console.log(err);
+                    if(response.data.code==200){
+                      this.publishList=response.data.publishList;
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
+                    }
+                }).catch(err=>{
+                    console.error(err);
                 })
             }
         }

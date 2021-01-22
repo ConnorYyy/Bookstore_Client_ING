@@ -145,7 +145,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -167,7 +167,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
 
@@ -189,7 +189,7 @@
                         })
                     }
                 }).catch(err=>{
-                    console.log(err);
+                    console.error(err);
                 })
             },
             //处理删除地址
@@ -214,7 +214,7 @@
                             })
                         }
                     }).catch(err=>{
-                        console.log(err);
+                        console.error(err);
                     })
                 }).catch(()=>{
                     console.log("取消删除了");

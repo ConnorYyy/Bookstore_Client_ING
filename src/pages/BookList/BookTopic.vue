@@ -60,10 +60,14 @@
                     if (response.data.code == 200) {
                         this.TopicBookList = response.data.TopicBookList;
                         this.bookTopic = response.data.bookTopic;
+                    }else{
+                        this.$message({
+                            message: response.data.message,
+                            type: "warning"
+                        })
                     }
-                    // console.log(response);
-                }).catch(err => {
-                    console.log(err);
+                }).catch(err=>{
+                    console.error(err);
                 })
             },
 
