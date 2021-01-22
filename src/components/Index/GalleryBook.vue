@@ -70,7 +70,7 @@
   }
   .gallery-book_card{
     width:18%;
-    margin: 3px 1%;
+    margin: 9px 1%;
     height: 290px;
     border: 1px solid #e4e4e4;
     display: inline-block;
