@@ -15,7 +15,7 @@
               <div class="box-bd">
                 <ul class="uc-nav-list">
                   <router-link to="/user/userCenter"><li>我的个人中心</li></router-link>
-                  <router-link to="/cart" target="_blank"><li>购物车</li></router-link>
+                  <router-link to="/cart" ><li>购物车</li></router-link>
                 </ul>
               </div>
             </div>
