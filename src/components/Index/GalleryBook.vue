@@ -71,7 +71,7 @@
   }
   .gallery-book_card{
     width:18%;
-    margin: 3px 1%;
+    margin: 9px 1%;
     height: 290px;
     border: 1px solid #e4e4e4;
     display: inline-block;
@@ -87,22 +87,26 @@
     color: #333;
     word-break: break-all;
     max-height: 40px;
-    line-height: 20px;
+    line-height: 40px;
     overflow: hidden;
     margin: 0 auto;
+    text-align:center
   }
   .gallery-book_author{
-    width: 98px;
+    width: 100%;
     height: 22px;
     overflow: hidden;
     margin: 0;
     color: #999;
     font-size: 12px;
+    text-align:center
   }
   .gallery-book_price{
+    width: 100%;
     float: left;
     font-style: normal;
     margin-right: 3px;
+    text-align:center
   }
   .gallery-book{
     width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="content">
-      <p>© 2021 中信银行软件开发中心公司银行域-第七学习小组 版权所有</p>
+      <p>© 2020 第七学习小组 版权所有</p>
     </div>
   </div>
 </template>

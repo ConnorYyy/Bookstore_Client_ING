@@ -153,19 +153,23 @@
     line-height: 20px;
     overflow: hidden;
     margin: 0 auto;
+    text-align: center;
   }
   .gallery-book_author{
-    width: 98px;
+     width: 100%;
     height: 22px;
     overflow: hidden;
     margin: 0;
     color: #999;
     font-size: 12px;
+    text-align: center;
   }
   .gallery-book_price{
+    width: 100%;  
     float: left;
     font-style: normal;
     margin-right: 3px;
+    text-align: center;
   }
   .gallery-book{
     width: 100%;
