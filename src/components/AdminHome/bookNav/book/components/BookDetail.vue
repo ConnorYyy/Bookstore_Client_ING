@@ -71,7 +71,7 @@
               :on-preview="handlePictureCardPreview"
               :on-success="handleSuccess"
               :on-remove="handleRemove"
-              :limit="5"
+              :limit="1"
               :data="book"
               :file-list="fileList"
               :headers="myHeader"
@@ -277,11 +277,13 @@
                     console.log(this.fileList);
                     // this.$refs.book.submit();
                     reqAddBook(this.book).then(response=>{
+                        this.active++;
                         if(response.data.code==200){
                             this.$message({
                                 type: 'success',
                                 message: response.data.message
                             })
+                            this.$router.push({path: "/admin/bookList"});
                         }else{
                             this.$message({
                                 type: 'warning',
@@ -349,7 +351,6 @@
                 this.dialogVisible = true;
             },
             handleSuccess(response, file, fileList){
-                console.log(response);
             },
 
 

@@ -7,6 +7,7 @@
           style="width: 82%; height: 190px;margin:5px 9%"
           :src="item.coverImg"
           fit="fill"></el-image>
+          
         <div style="width: 86%;margin: 0px 7%">
           <a href="#" class="gallery-book_text">
             {{item.bookName}}

@@ -52,7 +52,6 @@
                     if(response.data.code==200){
                         this.user = response.data.user;
                         this.user.imgUrl = this.user.imgUrl || '/static/image/head.jpg';
-                        console.error(this.user.gender)
                     }else{
                         this.$message({
                             message: response.data.message,

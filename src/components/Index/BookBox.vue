@@ -1,14 +1,14 @@
 <template>
-  <div class="content">
+  <div class="content" v-if="flag">
     <div class="gallery-book_title">
-      <router-link :to="{path: '/search',query:{id:1}}" v-for="(item,index) in bookList" :key="index">
+      <router-link :to="{path: '/search',query:{id:item.sortId}}" v-for="(item,index) in bookList" :key="index">
         <span v-if="index==0" @mouseenter="enter(index)" style="margin-right: 20px;margin-left: 30px;font-size: 24px">{{item.sortName}}</span>
         <span v-else @mouseenter="enter(index)" style="margin-right: 20px;">{{item.sortName}}</span>
       </router-link>
-      <router-link :to="{path: '/search',query:{id:bookList[0].sortId,name:bookList[0].sortName}}" style="float: right;margin-right: 30px">>更多图书</router-link>
+      <!-- <router-link :to="{path: '/search',query:{id:bookList[0].sortId,name:bookList[0].sortName}}" style="float: right;margin-right: 30px">>更多图书</router-link> -->
     </div>
     <div class="gallery-book_list" v-for="(book,index) in bookList" v-show="current==index" :key="index">
-      <div class="gallery-book_card" v-for="(item) in book.bookList" :key="item.id">
+      <div class="gallery-book_card" v-for="(item, index) in book.bookList" :key="index">
         <router-link :to="{path: '/book',query:{id:item.id}}">
         <el-image
           style="width: 82%; height: 190px;margin:5px 9%"
@@ -43,45 +43,33 @@
 
         data(){
             return {
-                current: 0,//当前显示哪一个卡片
-                bookSortList:[],
-                imgS: ["static/image/bookdefault.jpg",
-                    "static/image/21.jpg",
-                    "static/image/22.jpg",
-                    "static/image/23.jpg"],
-                bookList:[ {
-                    sortId: 1,
-                    sortName: "灰阑中的叙述（增订本）灰阑中的叙述（增订本）灰阑中的叙述（增订本）"
-                    }],
+              flag: true,
+              current: 0,//当前显示哪一个卡片
+              bookSortList:[],
+              bookList:[]
             };
         },
         methods: {
             enter(index){
                 this.current = index;
-                // console.log("鼠标进入了！");
-                // console.log("index:"+this.current);
-                // for(let i=0;i<this.bookList.length;i++){
-                //     console.log(this.bookList[i]);
-                // }
             },
             getSortBookList(){
-                console.log("发送了获取分类图书的请求");
-                reqGetSortBookList(1026).then(response=>{
+                reqGetSortBookList(1027).then(response=>{
                     if(response.data.code==200){
-                        console.log(response);
                         this.bookList = response.data.sortBookResList;
-                        console.log(this.bookList);
                     }else{
                         this.$message({
                             type: 'warning',
                             message: response.data.message
                         })
+                        this.flag = false;
                     }
                 }).catch(err=>{
                     this.$message({
                         type: 'warning',
                         message: "获取图书列表数据失败"
-                    })
+                    });
+                    this.flag = false;
                 })
             }
         },

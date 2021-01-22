@@ -101,12 +101,6 @@
                 })
             },
             ...mapMutations(['REMOVE_INFO']),
-            printAccount() {//todo
-              console.error(store.getters.getUser.account);
-            }
-        },
-        created() {
-          // this.printAccount()
         }
     }
 </script>

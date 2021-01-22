@@ -449,13 +449,13 @@
                                 message: response.data.message,
                                 type: "success"
                             })
+                        this.GetSort(this.currentPage,this.page_size);
                         }else{
                             this.$message({
                                 message: response.data.message,
                                 type: "warning"
                             })
                         }
-                        this.GetSort(this.currentPage,this.page_size);
                     }).catch(err=>{
                         console.error(err);
                     })

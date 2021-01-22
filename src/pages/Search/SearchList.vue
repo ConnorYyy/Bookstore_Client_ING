@@ -44,7 +44,7 @@
             :total="total">
           </el-pagination>
         </div>
-        <div v-if="!bookList.length" style="width:100%;height: 50px;line-height: 50px;padding: 0px 20px">
+        <div v-if="!bookList.length" class="book_content">
             不好意思，没有找到该书籍...
         </div>
       </div>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+    import Vue from "vue";
     import Nav from "../../components/Common/Nav";
     import HeadNav from "../../components/Common/HeadNav";
     import Footer from "../../components/Common/Footer";
@@ -68,7 +69,7 @@
                 page_size: 10,
                 total:0,
                 sortId:null,
-                bookList: ""
+                bookList: []
             }
         },
         methods: {
@@ -87,21 +88,21 @@
                 console.log(this.currentPage+":"+this.page_size);
                 this.getBookList(this.sortId,this.currentPage,this.page_size);
             },
-            searchBook(input) { //TODO
-                reqSearchBook(input).then(response=>{
-                    console.error(response.data.booklist)
-                // if(response.data.code==200){
-                    this.bookList = response.data.booklist;
-                // }else{
-                //   this.$message({
-                //       message: response.data.message,
-                //       type: "warning"
-                //   })
-                // }
-                }).catch(err=>{
-                    console.error(err);
-                })
-            },
+            // searchBook(input) { //TODO
+            //     reqSearchBook(input).then(response=>{
+            //         // console.error(response.data.booklist)
+            //     // if(response.data.code==200){
+            //         this.bookList = response.data.booklist;
+            //     // }else{
+            //     //   this.$message({
+            //     //       message: response.data.message,
+            //     //       type: "warning"
+            //     //   })
+            //     // }
+            //     }).catch(err=>{
+            //         console.error(err);
+            //     })
+            // },
 
             goBuyPage(id){
                 let arr = [];
@@ -140,9 +141,8 @@
                 this.$router.push({path: '/book',query:{id:bookId}});
             }
         },
-        created(){
-            console.error(this.$route)
-            this.searchBook(this.$route.params.filterParam);
+        mounted(){
+          this.bookList = this.$route.params.bookList;
         }
     }
 </script>

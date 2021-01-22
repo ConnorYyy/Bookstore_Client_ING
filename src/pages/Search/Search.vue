@@ -52,7 +52,7 @@
             :total="total">
           </el-pagination>
         </div>
-        <div v-else style="width:100%;height: 50px;line-height: 50px;padding: 0px 20px">
+        <div v-if="!bookList.length" style="width:100%;height: 50px;line-height: 50px;padding: 0px 20px">
           不好意思，此分类暂时还没有图书...
         </div>
       </div>
@@ -167,6 +167,7 @@
   }
   .book_sort{
     margin: 10px 10px;
+    margin-bottom: 30px;
     width: 200px;
     float: left;
     border-right: 1px #f3f0e9 solid;

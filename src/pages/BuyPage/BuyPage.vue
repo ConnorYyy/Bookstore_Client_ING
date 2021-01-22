@@ -298,11 +298,8 @@
 
             //选择订单地址
             selectOrderAddress(index,address){ 
-                console.error(index);
-                console.error(this.OrderInitDto.addressList.length);
                 for(let i=0;i<this.OrderInitDto.addressList.length;i++){
                     this.OrderInitDto.addressList[i].select= (i==index?true:false);
-                    console.error(this.OrderInitDto.addressList[i]);
                 }
                 this.OrderInitDto.address = address;
             },

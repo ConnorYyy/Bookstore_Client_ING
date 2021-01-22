@@ -4,10 +4,10 @@
     <div class="box_info">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="全部有效订单" name="first">
-          <div class="tab_box" v-show="total<1">
+          <div class="tab_box" v-if="total<1">
             <p class="noMesInfo" v-show="true">暂无数据</p>
           </div>
-          <div class="tab_box" v-show="total>0">
+          <div class="tab_box" v-else>
             <div class="order_list" v-for="(order,index) in orderList" :key="index">
               <div class="order_summary">
                 <p class="order_status">{{order.orderStatus}}</p>
@@ -37,15 +37,77 @@
             </div>
           </div>
         </el-tab-pane>
+
         <el-tab-pane label="待支付" name="second">
-          <div class="tab_box">
+          <div class="tab_box" v-if="total<1">
             <p class="noMesInfo" v-show="true">暂无数据</p>
+          </div>
+          <div class="tab_box" v-else>
+            <div class="order_list" v-for="(order,index) in orderList" :key="index">
+              <div class="order_summary">
+                <p class="order_status">{{order.orderStatus}}</p>
+                <p class="caption-info">
+                  {{order.orderTime}}
+                  <span>|</span>
+                  {{order.address.name}}
+                  <span>|</span>
+                  订单号：{{order.orderId}}
+
+                  <span style="float: right">实付金额： <span class="money">{{order.expense.finallyPrice}} </span>元</span>
+                </p>
+              </div>
+              <div class="bookInfo">
+                <div class="book_item">
+                  <el-image class="bookImg" v-for="(img,index) in order.coverImgList" :src="img" :key="index" fit="fill"></el-image>
+                </div>
+                <div class="book_action">
+                  <button class="plainBtn" @click="goToOrderDetail(order.id)">订单详情</button>
+                  <br>
+                  <button class="plainBtn">申请售后</button>
+                  <br>
+                  <button class="plainBtn" @click="getCustomerService()">联系客服</button>
+                  <br>
+                </div>
+              </div>
+            </div>
           </div>
         </el-tab-pane>
+
+        
         <el-tab-pane label="待收货" name="third">
-          <div class="tab_box" v-show="total<1">
+          <div class="tab_box" v-if="total<1">
             <p class="noMesInfo" v-show="true">暂无数据</p>
           </div>
+          <div class="tab_box" v-else>
+            <div class="order_list" v-for="(order,index) in orderList" :key="index">
+              <div class="order_summary">
+                <p class="order_status">{{order.orderStatus}}</p>
+                <p class="caption-info">
+                  {{order.orderTime}}
+                  <span>|</span>
+                  {{order.address.name}}
+                  <span>|</span>
+                  订单号：{{order.orderId}}
+
+                  <span style="float: right">实付金额： <span class="money">{{order.expense.finallyPrice}} </span>元</span>
+                </p>
+              </div>
+              <div class="bookInfo">
+                <div class="book_item">
+                  <el-image class="bookImg" v-for="(img,index) in order.coverImgList" :src="img" :key="index" fit="fill"></el-image>
+                </div>
+                <div class="book_action">
+                  <button class="plainBtn" @click="goToOrderDetail(order.id)">订单详情</button>
+                  <br>
+                  <button class="plainBtn">申请售后</button>
+                  <br>
+                  <button class="plainBtn" @click="getCustomerService()">联系客服</button>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="tab_box" v-show="total>0">
             <div class="order_list" v-for="(order,index) in orderList" :key="index">
               <div class="order_summary">
@@ -76,6 +138,8 @@
             </div>
           </div>
         </el-tab-pane>
+
+
         <el-tab-pane label="已完成" name="four">
           <div class="tab_box" v-show="total<1">
             <p class="noMesInfo" v-show="true">暂无数据</p>
@@ -108,7 +172,8 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <div style="margin: 10px 0px 20px;width: 100%" v-show="total>0">
+
+    <div style="margin: 10px 0px 20px;width: 100%" v-show="total>5">
       <div class="block" style="float: right">
         <el-pagination
           @size-change="handleSizeChange"
@@ -135,7 +200,7 @@
                 activeName: 'first',
                 currentPage: 1,
                 page_size: 5,
-                total:20,
+                total:0,
                 orderList:[
                     {
                         id:null,
@@ -203,7 +268,7 @@
                 console.log("=====this.activeName===="+this.activeName+"=======");
                 switch (this.activeName) {
                     case "first":
-                        this.orderStatus="";
+                        this.orderStatus="全部订单";
                         this.beUserDelete=false;
                         break;
                     case "second":
@@ -251,7 +316,6 @@
                 reqUserGetOrderList(account,page,pageSize,this.orderStatus,this.beUserDelete).then(response=>{
                     if(response.data.code==200){
                         this.total = response.data.total;
-                        console.log(this.total);
                         this.orderList = response.data.orderDtoList;
                     }else {
                         this.$message({
@@ -328,6 +392,7 @@
     width:1000px;
     background-color: white;
     padding: 30px 20px;
+    padding-bottom: 0;
   }
   h1{
     color: #757575;

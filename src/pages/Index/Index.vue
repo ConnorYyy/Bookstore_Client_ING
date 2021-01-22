@@ -8,7 +8,7 @@
           <div class="content_main_left">
             <div class="tab">
               <div v-if="single==0">
-                <div v-for="(item,index) in options" :key="index" class="tab_list" @mouseenter="enter(index)" @mouseleave="out(index)">
+                <div v-for="(item,index) in options" :key="index" class="tab_list" @mouseenter="enter(index)" @mouseleave="out(index)"> 
                   <div>
                     <router-link :to="{path: '/search',query:{id:item[0].value,name:item[0].label}}"><span style="color: black">{{item[0].label}}</span></router-link>
                       <span> | </span>

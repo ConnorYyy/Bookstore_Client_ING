@@ -108,6 +108,8 @@
                                     message: "注册失败",
                                     duration: 1000
                                 })
+                            }).finally(()=>{
+                                this.ruleForm = {};
                             })
                         } else {
                             this.$message.error("请阅读并同意用户协议！");

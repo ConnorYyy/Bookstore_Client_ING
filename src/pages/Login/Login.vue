@@ -17,7 +17,6 @@
           <el-button type="primary" @click="login('ruleForm')" style="width: 100%; margin-bottom:22px">登录</el-button>
           <div style="font-size: 15px">
               <span style="float:left;">没有账号？<a href="/register">去注册</a></span>
-              <span style="float: right">忘记密码</span>
           </div>
         </div>
       </div>
@@ -32,7 +31,8 @@
     import Nav from "../../components/Common/Nav";
     import Footer from "../../components/Common/Footer";
     import axios from 'axios';
-    import {encrypt, decrypt} from '../../cryptoJS';
+
+    import CryptoJS from "crypto-js";
 
     export default {
         name: "Login",
@@ -65,6 +65,12 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         console.log("=====开始登录=======")
+                        var cipherText = CryptoJS.AES.encrypt(
+                            this.ruleForm.password,
+                            "secretkey123"
+                        ).toString();
+                        console.error(cipherText);
+                        console.error(CryptoJS.AES.decrypt(cipherText, "secretkey123").toString(CryptoJS.enc.Utf8));
                         reqLogin({
                             account: this.ruleForm.account,
                             password: this.ruleForm.password
@@ -109,13 +115,14 @@
                                 this.$message({
                                     type: 'waring',
                                     message: "登录失败"
-                                })
+                                });
                             }
                         }).catch(() => {
-                            // this.$message.error("登录失败")
+                            this.$message.error("登录失败")
+                        }).finally(()=>{
+                            this.ruleForm = {};
                         })
                     } else {
-                        //数据校验失败，不可以进行提交
                         this.$message.error("账号密码不符合要求，登录失败");
                     }
                 });
