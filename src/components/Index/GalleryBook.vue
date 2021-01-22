@@ -89,6 +89,7 @@
     line-height: 40px;
     overflow: hidden;
     margin: 0 auto;
+    text-align:center
   }
   .gallery-book_author{
     width: 100%;
