@@ -97,12 +97,14 @@
     margin: 0;
     color: #999;
     font-size: 12px;
+    text-align:center
   }
   .gallery-book_price{
     width: 100%;
     float: left;
     font-style: normal;
     margin-right: 3px;
+    text-align:center
   }
   .gallery-book{
     width: 100%;
