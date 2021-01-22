@@ -89,21 +89,21 @@
       <el-dialog title="添加收货地址" :visible.sync="dialogVisible" width="30%"  center>
         <el-form ref="form" :model="address" >
           <el-form-item>
-            <el-input placeholder="姓名" v-model="address.name"></el-input>
+            <el-input placeholder="姓名" v-model="address.name" label="name"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input placeholder="手机号" v-model="address.phone"></el-input>
+            <el-input placeholder="手机号" v-model="address.phone" label="phone"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input type="textarea" placeholder="详细地址" v-model="address.addr"></el-input>
+            <el-input type="textarea" placeholder="详细地址" v-model="address.addr" label="address"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input placeholder="地址标签" v-model="address.label"></el-input>
+            <el-input placeholder="地址标签" v-model="address.label" label="addressLabel"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
+        <el-button type="primary" @click="onSubmit(address)">确 定</el-button>
       </span>
       </el-dialog>
 
@@ -211,25 +211,17 @@
 
             //提交处理
             onSubmit(formName) {
-                if(this.isEdit){
-                    this.modifyAddress();
+                if(formName){
+                    if(this.isEdit){
+                          this.modifyAddress();
+                    }else {
+                          this.addAddress();
+                    }
                 }else {
-                    this.addAddress();
+                    this.$message.error("添加分类失败");
                 }
-
-                // this.$refs[formName].validate((valid)=>{
-                //     // console.log(this.publish.isShow);
-                //     if(valid){
-                //         if(this.isEdit){
-                //             this.modifyAddress();
-                //         }else {
-                //             this.addAddress();
-                //         }
-                //     }else {
-                //         this.$message.error("地址信息不符合要求，请重试");
-                //     }
-                // });
             },
+
             //得到用户地址列表
             getAddressList(){
                 reqGetAddressList(this.account).then(response=>{
@@ -241,7 +233,6 @@
                             this.OrderInitDto.selectAddress = this.OrderInitDto.addressList[0];//设置地址为排序第一的地址
                             this.selectId = this.OrderInitDto.addressList[0].id;//被选中的id
                         }
-                        // console.log("===response.data.addressList.length==="+response.data.addressList.length);
                     }else{
                         this.$message({
                             message: response.data.message,

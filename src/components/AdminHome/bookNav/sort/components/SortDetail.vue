@@ -60,9 +60,6 @@
                         { required: true, message: '分类名不能为空', trigger: 'blur' },
                         { min: 1, max: 10, message: '分类长度在 1 到 15 个字符', trigger: 'blur' }
                     ],
-                    // upperName: [
-                    //     { required: true, message: '上级分类名不能为空', trigger: 'blur' },
-                    // ],
                     rank: [
                         { required: true, message: '排序不能为空', trigger: 'blur' },
                         { type: 'number', message: '排序必须为数字值', trigger: 'blur'},
@@ -117,7 +114,7 @@
                 });
             },
             cancel(){
-                this.$router.push('/admin/FirstSortList')
+                this.$router.go(-1)
             },
             addSort(){
                 if(this.bookSort.upperName=="无"){

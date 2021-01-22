@@ -82,14 +82,9 @@
                 </div>
               </div>
             </div>
-            <div class="communicate">
-              <i class="el-icon-phone"></i><span>书店客服中心</span><br>
-              <span>预约电话 010-7777 777</span>
-            </div>
           </div>
           <div class="content_main_right">
             <Carousel :imgList="imgS"></Carousel>
-            <!-- <Carousel :imgList="bookTopicList"></Carousel> -->
             <div class="gallery-book_title">
               <span>最新出版</span>
             </div>
@@ -143,18 +138,14 @@
                 seen: false, //显示和隐藏
 
                 activeName: 'first',
-                imgS: [{cover: "static/image/20.jpg", id: 1},
-                      {cover: "static/image/21.jpg", id: 2},
-                      {cover: "static/image/22.jpg", id: 3},
-                      {cover: "static/image/23.jpg", id: 4}],
+                imgS: [{cover: "static/image/20.jpg", id: 1121},
+                      {cover: "static/image/21.jpg", id: 2221},
+                      {cover: "static/image/22.jpg", id: 3221},
+                      {cover: "static/image/23.jpg", id: 4221}],
                 options: []
             };
         },
         methods: {
-            handleClick(tab, event) {
-                console.log(tab, event);
-            },
-
             enter(index){
                 this.seen = true;
                 this.current = index;
@@ -348,6 +339,9 @@
     padding-left: 20px;
     min-height: 300px;
     height: auto;
+    background-color: #ffffff;
+
+    border-radius:50px;
   }
   .tab_list{
     padding-left: 5px;

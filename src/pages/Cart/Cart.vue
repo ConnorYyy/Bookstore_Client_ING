@@ -94,11 +94,11 @@
     import Nav from "../../components/Common/Nav";
     import HeadNav from "../../components/Common/HeadNav";
     import Footer from "../../components/Common/Footer";
-    import {reqGetCartList,reqBatchDelCart,reqModCart,reqDelCart} from "../../api/cart";
+    import {reqGetCartList,reqModCart,reqDelCart} from "../../api/cart";
 
 
     export default {
-        name: "BookTopic",
+        name: "Cart",
         components:{Nav,HeadNav,Footer},
 
         data(){

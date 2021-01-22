@@ -92,9 +92,6 @@
             }
         },
         methods: {
-            handleClick(tab, event) {
-                console.log(tab, event);
-            },
             getSortList() {
                 reqGetSortList().then(response => {
                     this.sortList = response.data.sortResponseList;
@@ -105,7 +102,6 @@
                 reqGetBookListBySort(sortId,page,pageSize).then(response=>{
                     if(response.data.code==200){
                         this.total = response.data.total;
-                        console.log(this.total);
                         this.bookList = response.data.bookList;
                     }else{
                         this.$message({
@@ -120,14 +116,11 @@
 
             //分页函数
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
                 this.page_size = val;
                 this.getBookList(this.sortId,1,this.page_size);
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
                 this.currentPage = val;
-                console.log(this.currentPage+":"+this.page_size);
                 this.getBookList(this.sortId,this.currentPage,this.page_size);
             },
         },
@@ -141,8 +134,6 @@
             $route(to, from) {
                 this.sortId = this.$route.query.id;
                 this.sortName = this.$route.query.name;
-                console.log("this.$route.query.name:"+this.$route.query.name);
-                console.log("this.$route.query.id:"+this.$route.query.id);
                 this.getSortList();
                 this.getBookList(this.sortId,1,10);
             }

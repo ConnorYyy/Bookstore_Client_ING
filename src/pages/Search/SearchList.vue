@@ -73,42 +73,19 @@
             }
         },
         methods: {
-            handleClick(tab, event) {
-                console.log(tab, event);
-            },
             //分页函数
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
                 this.page_size = val;
                 this.getBookList(this.sortId,1,this.page_size);
             },
             handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
                 this.currentPage = val;
-                console.log(this.currentPage+":"+this.page_size);
                 this.getBookList(this.sortId,this.currentPage,this.page_size);
             },
-            // searchBook(input) { //TODO
-            //     reqSearchBook(input).then(response=>{
-            //         // console.error(response.data.booklist)
-            //     // if(response.data.code==200){
-            //         this.bookList = response.data.booklist;
-            //     // }else{
-            //     //   this.$message({
-            //     //       message: response.data.message,
-            //     //       type: "warning"
-            //     //   })
-            //     // }
-            //     }).catch(err=>{
-            //         console.error(err);
-            //     })
-            // },
-
             goBuyPage(id){
                 let arr = [];
                 arr.push(id);
                 arr.push(0);
-                // arr.push(2);
                 let ids = JSON.stringify(arr);
                 this.$router.push({
                     path: "/buyPage",

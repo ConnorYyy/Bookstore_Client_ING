@@ -1,4 +1,4 @@
-import ajax from "./ajax";
+import ajax from "./ajax.js";
 
 //初始化订单
 export const reqInitOrder = (ids,from,account) => ajax("/initOrder",{ids,from,account})
@@ -31,6 +31,3 @@ export const reqUserGetOrderList = (account,page,pageSize,orderStatus,beUserDele
 
 //修改订单状态modifyOrderStatus
 export const reqModOrderStatus = (id,orderStatus) => ajax("/modifyOrderStatus",{id,orderStatus})
-
-//得到时间筛选后的订单统计信息
-export const reqGetOrderStatistic = (beginDate,endDate) => ajax("/order/date",{beginDate,endDate})

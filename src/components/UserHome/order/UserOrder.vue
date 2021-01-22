@@ -246,18 +246,11 @@
                             finallyPrice:null,//最终实付总额
                         },
                         address:{
-                           // id: 1,
-                          //  account: "黄小龙",
-                           // name: "小胖",
-                           // phone: "18988798892",
-                           // addr: "江西抚州市临川区西大街街道东华理工大学长江学院本部(330006)",
-                           // label: "家",
-                           // off: false,
                         }
                     },
                 ],
                 orderStatus: "",
-                beUserDelete: false
+                beUserDelete: 0
             };
         },
         created(){
@@ -265,11 +258,10 @@
         },
         methods: {
             handleClick(tab, event) {
-                console.log("=====this.activeName===="+this.activeName+"=======");
                 switch (this.activeName) {
                     case "first":
-                        this.orderStatus="全部订单";
-                        this.beUserDelete=false;
+                        this.orderStatus="aaa";
+                        this.beUserDelete=0;
                         break;
                     case "second":
                         this.orderStatus="待支付";
@@ -284,7 +276,6 @@
                         this.beUserDelete=true;
                         break;
                 }
-                console.log("=====this.orderStatus====="+this.orderStatus+"======")
                 this.getOrderList(1,5);
             },
 
@@ -315,6 +306,7 @@
                 let account= this.$store.getters.getUser.account;
                 reqUserGetOrderList(account,page,pageSize,this.orderStatus,this.beUserDelete).then(response=>{
                     if(response.data.code==200){
+                      console.error(response)
                         this.total = response.data.total;
                         this.orderList = response.data.orderDtoList;
                     }else {

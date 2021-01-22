@@ -13,9 +13,7 @@ import BookList from "../components/AdminHome/bookNav/book/BookList"; //
 import AddBook from "../components/AdminHome/bookNav/book/components/BookDetail";
 import OrderList from "../components/AdminHome/orderNav/OrderList";
 import OrderSet from "../components/AdminHome/orderNav/OrderSet";
-import RolesList from "../components/AdminHome/authority/RolesList";
 import UserList from "../components/AdminHome/authority/UserList";
-import AdminHome from "../components/AdminHome/AdminHome";
 import Search from "../pages/Search/Search";
 import Cart from "../pages/Cart/Cart";
 import AddSort from "../components/AdminHome/bookNav/sort/components/SortDetail";
@@ -72,16 +70,6 @@ export default new Router({
         requiresManage: true,
       },
       children:[
-        {
-          path: 'home',
-          name: 'home',
-          component: AdminHome,
-          meta: {
-            title: '统计页面',
-            url: '/admin/home',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
         {
           path: 'bookList',
           name: 'BookList',
@@ -239,16 +227,6 @@ export default new Router({
           meta: {
             title: '个人信息',
             url: '/admin/admininfo',
-            requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-        },
-        {
-          path: 'rolesList',
-          name: 'RolesList',
-          component: RolesList,
-          meta: {
-            title: '角色列表',
-            url: '/admin/rolesList',
             requiresAuth: true // 添加该字段，表示进入这个路由是需要登录的
           },
         },

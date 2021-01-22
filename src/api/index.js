@@ -1,4 +1,4 @@
-import ajax from './ajax'
+import ajax from './ajax.js'
 
 // 1、登录
 export const reqLogin = ({account, password}) => ajax('/login', {account, password}, "POST")
@@ -14,20 +14,6 @@ export const reqGetUserState = () => ajax('/user/states')
 
 // 5、获取所有书籍
 export const reqGetAllBook = () => ajax('/book/get')
-
-// 6、添加书籍
-export const reqAddBook = (book) => ajax('/book/add', {
-    name: book.name,
-    author: book.author,
-    isbn: book.isbn,
-    outline: book.outline,
-    price: book.price,
-    stock: book.stock,
-    cover: book.cover,
-    press: book.press,
-    year: book.year,
-    pages: book.pages,
-}, 'POST')
 
 // 7、修改书籍
 export const reqModifyBook = (book,newisbn,cover) => ajax('/book/modify', {
@@ -46,9 +32,6 @@ export const reqModifyBook = (book,newisbn,cover) => ajax('/book/modify', {
 
 // 8、获得相应用户订单
 export const reqGetOrder = (account) => ajax('/order/get',{account}, 'POST')
-
-// 9、添加订单
-export const reqAddOrder = (orders) => ajax('/order/add', {orders}, 'POST')
 
 // 10、获得所有订单
 export const reqGetAllOrder = () => ajax('/order/getall')

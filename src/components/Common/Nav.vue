@@ -45,7 +45,7 @@
           <el-menu-item index="/login">登录</el-menu-item>
           <el-menu-item index="/register">注册</el-menu-item>
         </el-submenu>
-        <el-menu-item index="/admin/home">管理</el-menu-item>
+        <el-menu-item index="/admin/admininfo">管理</el-menu-item>
         <el-menu-item v-show="store.getters.getUser.account" @click="logout(store.getters.getUser)">退出</el-menu-item>
       </el-menu>
       </div>

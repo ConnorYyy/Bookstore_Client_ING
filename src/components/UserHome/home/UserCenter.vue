@@ -27,10 +27,6 @@
         components: {Address},
         data () {
             return {
-                imgS1: require('../../../assets/image/icon1.png'),
-                imgS2: require('../../../assets/image/icon2.png'),
-                imgS3: require('../../../assets/image/icon3.png'),
-                imgS4: require('../../../assets/image/icon4.png'),
                 user:{
                     id: '未定义',
                     account: '未定义',

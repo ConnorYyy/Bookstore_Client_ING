@@ -32,7 +32,7 @@ import {reqSearchBook} from "../../api/index";
             }
         },
         methods: {
-          searchBook(input) { //TODO
+          searchBook(input) { 
               reqSearchBook(input).then(response=>{
                 if(response.data.code==200){
                     this.bookList = response.data.booklist;

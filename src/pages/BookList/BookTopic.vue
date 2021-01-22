@@ -50,7 +50,6 @@
         },
         created() {
             this.topicId = this.$route.query.id;
-            // console.log("this.topicId:"+this.topicId);
             this.GetTopicBookList(this.topicId);
         },
         methods: {
@@ -86,7 +85,6 @@
     width: 100%;
     height: 500px;
     background-color: #333333;
-    /*background-image: url("../../assets/image/21.jpg");*/
     background-repeat: no-repeat;
     background-size: 100% 100%;
     -moz-background-size: 100% 100%;

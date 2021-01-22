@@ -64,32 +64,17 @@
                 let _this = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        console.log("=====开始登录=======")
-                        var cipherText = CryptoJS.AES.encrypt(
-                            this.ruleForm.password,
-                            "secretkey123"
-                        ).toString();
-                        console.error(cipherText);
-                        console.error(CryptoJS.AES.decrypt(cipherText, "secretkey123").toString(CryptoJS.enc.Utf8));
                         reqLogin({
                             account: this.ruleForm.account,
                             password: this.ruleForm.password
                         }).then((response) => {
-                            console.log("登录后的response："+response.data);
                             let user  = response.data.user;
-                            console.log("=====user:==="+user+"=========");
                             const jwt = response.headers['authorization']
-                            console.log("====jwt:=== "+jwt);
                             if(response.data.code == 200){
-                                console.log("登录成功");
-                                console.log(response);
                                 const jwt = response.headers['authorization']
-                                console.log("====jwt:=== "+jwt);
                                 // //把数据共享出去
                                 _this.$store.commit("SET_TOKEN", jwt)
-                                console.log("===localStorage.getItem(\"token\")==="+localStorage.getItem("token")+"==");
                                 _this.$store.commit("SET_USERINFO", response.data.user);
-                                console.log("=====response.data.user====="+response.data.user+"========");
                                 if(response.data.user.manage){
                                     this.$message({
                                         type: 'success',
@@ -97,7 +82,7 @@
                                         duration: 1000
                                     })
                                     setTimeout(() => {
-                                        this.$router.push({path:'/admin/home'});
+                                        this.$router.push({path:'/admin/adminInfo'});
                                     }, 1000);
                                 }else {
                                     this.$message({
@@ -109,8 +94,6 @@
                                         this.$router.push({path:'/user/userCenter'});
                                     }, 1000);
                                 }
-                                // console.log("返回来的SET_USERINFO:"+response.data.userInfo)
-                                // this.$router.push({path:'/devHome/appList'});
                             }else {
                                 this.$message({
                                     type: 'waring',

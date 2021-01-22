@@ -47,13 +47,6 @@
                     bookName: "网络是怎样连接的",
                     author: "户根勤一",
                     price: 49.00
-                  },
-                  {
-                    id: 102,
-                    coverImg: "/static/image/bookCover01.jpg",
-                    bookName: "网络是怎样连接的",
-                    author: "户根勤一",
-                    price: 49.00
                   }
                 ]
             }

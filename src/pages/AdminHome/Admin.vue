@@ -19,6 +19,11 @@
             <span slot="title">首页</span>
           </el-menu-item>
 
+          <el-menu-item index="/admin/admininfo">
+            <i class="el-icon-user-solid"></i>
+            <span>个人信息</span>
+          </el-menu-item>
+
           <el-submenu index="#1">
             <template slot="title">
               <i class="el-icon-tickets"></i>
@@ -37,23 +42,15 @@
             <span slot="title">订单管理</span>
           </el-menu-item>
           
-          <el-menu-item index="/admin/admininfo">
-            <i class="el-icon-user-solid"></i>
-            <span>个人信息</span>
-          </el-menu-item>
 
-          <el-submenu index="#2">
-            <template slot="title">
-              <i class="el-icon-lock"></i>
-              <span slot="title">权限</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/admin/userList">用户列表</el-menu-item>
-             <el-menu-item index="/admin/rolesList">角色列表</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+
+          <el-menu-item index="/admin/userList">
+            <i class="el-icon-lock"></i>
+            <span >权限</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
+
       <el-container>
         <el-header style="text-align: right; font-size: 14px">
           <div @click="isClossTabFun" style="background-color: white;height: 40px;text-align: center;float: left;font-size: 25px">
@@ -65,14 +62,14 @@
               <el-breadcrumb-item
                 v-for="(item,index) in breadList"
                 :key="index"
-                :to="{ path: item.path }"
+                :to="{ path: item.path}"
               >
                 <span style="font-size: 16px;line-height: 60px">{{item.meta.title}}</span>
               </el-breadcrumb-item>
             </el-breadcrumb>
           </div>
 
-          <span>{{this.getUser.user || '亲爱的管理员'}}</span>
+          <span>{{'亲爱的' + (this.getUser.user || '管理员')}}</span>
         </el-header>
 
         <el-main>
@@ -86,7 +83,7 @@
 </template>
 
 <script>
-    import {mapState,mapMutations,mapGetters} from 'vuex';
+    import {mapMutations,mapGetters} from 'vuex';
     import {reqLogout} from "../../api/user";
 
     export default {
