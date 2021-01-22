@@ -250,13 +250,13 @@
                         finallyPrice:null,//最终实付总额
                     },
                     address:{
-                        id: 1,
-                        account: "黄小龙",
-                        name: "小胖",
-                        phone: "18988798892",
-                        addr: "江西抚州市临川区西大街街道东华理工大学长江学院本部(330006)",
-                        label: "家",
-                        off: false,
+                       // id: 1,
+                       // account: "黄小龙",
+                        //name: "小胖",
+                        //phone: "18988798892",
+                        //addr: "江西抚州市临川区西大街街道东华理工大学长江学院本部(330006)",
+                        //label: "家",
+                       // off: false,
                     }
                 }
             }
