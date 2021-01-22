@@ -61,7 +61,8 @@
       <el-button
         class="btn-add"
         style="float: right"
-        size="mini">
+        size="mini"
+         @click="add()">
         添加
       </el-button>
     </el-card>
@@ -326,6 +327,11 @@
                         console.log("出错了！")
                     })
                 }
+            },
+
+            //添加图书
+            add(){
+              this.$router.push('/admin/addbook')
             },
 
 

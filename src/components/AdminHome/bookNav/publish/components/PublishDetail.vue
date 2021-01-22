@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit('publish')">确认</el-button>
-            <el-button>取消</el-button>
+            <el-button  @click="cancel()">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -105,6 +105,10 @@
                         return false;
                     }
                 });
+            },
+            //点击取消  返回上一个页面
+            cancel(){
+            this.$router.push('/admin/publish')
             },
 
             addPublish(){

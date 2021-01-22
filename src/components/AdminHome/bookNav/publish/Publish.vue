@@ -60,19 +60,6 @@
             <el-switch v-model="scope.row.showPublish" @change="handleShowChange($event,scope.row,scope.$index)"></el-switch>
           </template>
         </el-table-column>
-
-        <el-table-column
-          label="相关"
-          width="160"
-          align="center">
-          <div>
-              <el-button
-                size="mini"
-              >查看图书
-              </el-button>
-          </div>
-        </el-table-column>
-
         <el-table-column
           label="操作"
           width="180"
