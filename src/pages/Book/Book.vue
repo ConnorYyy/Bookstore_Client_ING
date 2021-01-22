@@ -5,7 +5,7 @@
     <HeadNav></HeadNav>
     <div class="box book_box">
       <div class="book_img">
-        <CarouselBtn :imgList="book.imgSrc"></CarouselBtn>
+        <CarouselBtn v-bind:imgList="book.imgSrc"></CarouselBtn>
       </div>
       <div class="book_buy">
         <div class="book_name">{{book.bookName}}</div>
@@ -121,13 +121,13 @@
             getBook(bookId){
                 reqGetBook(bookId).then(response=>{
                   if(response.data.code==200){
-                    // console.log(response.data.book);
                       this.book = response.data.book;
                       // console.log("this.book.imgSrc:"+response.data.book.imgSrc);
                       let MarkdownIt = require("markdown-it");
                       let md = new MarkdownIt();
                       let result = md.render(this.book.description);
                       this.book.description = result;
+                      console.error(this.book);
                   }else{
                       this.$message({
                           message: response.data.message,
@@ -195,13 +195,13 @@
   }
   .book_img{
     margin: 10px;
-    width: 1/3;
+    width: 30%;
     height: 480px;
     float: left;
   }
   .book_buy{
     margin: 10px;
-    width: 2/3;
+    width: 60%;
     height: 480px;
     float: right;
     padding: 1px;

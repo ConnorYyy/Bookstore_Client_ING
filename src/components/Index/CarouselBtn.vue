@@ -1,45 +1,37 @@
 <template>
-  <div class="content">
-    <el-carousel :interval="5000" arrow="always" height="430px" indicator-position="outside">
-      <el-carousel-item v-for="item in imgList" :key="item">
-        <div style="padding: 5px 75px;height: 100%;width: 100%">
-          <img v-bind:src="item" alt="图片">
-        </div>
+  <div class="block">
+    <el-carousel>
+      <el-carousel-item v-for="(item,index) in imgList" :key="index">
+          <el-image :src="item" alt="图片"  style="padding: 5px 75px; height: 100%;width: 100%"></el-image>
       </el-carousel-item>
     </el-carousel>
   </div>
+
 </template>
 
 <script>
     export default {
         name: "CarouselBtn",
-        props:{
-            imgList: {
-                type: Array,
-                default: null
-            }
-        },
-        data(){
-            return{
-                imgS: ["static/image/20.jpg",
-                    "static/image/21.jpg",
-                    "static/image/22.jpg",
-                    "static/image/23.jpg"]
-            }
-        },
-        created() {
-            console.log("this.imgList:"+this.imgList);
-        }
+        props: ['imgList']
     }
 </script>
 
 <style scoped>
-  .content{
-    width: 100%;
+  .block{
+    height: 200px
   }
-
+  .el-carousel__item{
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 480px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+     background-color: #d3dce6;
+  }
   img{
-    width: 100%;
-    height: inherit;
+    height: 480px
   }
 </style>

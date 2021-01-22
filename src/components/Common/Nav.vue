@@ -54,10 +54,8 @@
 </template>
 
 <script>
-    import $route from "element-ui/packages/cascader-panel/src/node";
     import store from "../../store/store";
-    import {reqLogout} from "../../api/user";
-    import {mapState,mapMutations,mapGetters} from 'vuex';
+    import {mapMutations} from 'vuex';
 
     export default {
         name: "Nav",

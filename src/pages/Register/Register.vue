@@ -18,7 +18,7 @@
             </el-form-item>
           </el-form>
             <el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%; margin-bottom: 22px">注册</el-button>
-            <center><el-checkbox v-model="checked">已阅读并同意：中信书店用户协议</el-checkbox></center>
+            <center><el-checkbox v-model="checked">已阅读并同意：第七书店用户协议</el-checkbox></center>
         </div>
       </div>
     </div>

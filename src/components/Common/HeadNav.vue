@@ -52,27 +52,6 @@ import {reqSearchBook} from "../../api/index";
                 }).catch(err=>{
                     console.error(err);
                 })
-          // searchBook(input) { //TODO
-            // reqSearchBook(input).then(response=>{
-            //   console.error(response.data.booklist)
-            //   // if(response.data.code==200){
-              // console.error(this.input)
-              // this.$router.push({
-              //   path: "/searchList",
-              //   name: "SearchList",
-              //   params: {
-              //     filterParam: this.input
-              //   }
-              // })
-              // }else{
-              //   this.$message({
-              //       message: response.data.message,
-              //       type: "warning"
-              //   })
-              // }
-          // }).catch(err=>{
-          //     console.error(err);
-          // })
           }
         }
     }

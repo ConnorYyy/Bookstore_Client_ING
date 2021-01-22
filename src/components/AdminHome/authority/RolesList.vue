@@ -222,7 +222,6 @@ export default {
           message: "请至少选择一项进行操作",
         });
       } else {
-        
         switch (this.operator) {
           case "del":
             console.log(this.operator);

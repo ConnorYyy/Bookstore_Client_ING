@@ -7,13 +7,13 @@
       </div>
       <div style="margin-top: 25px">
         <el-form :inline="true" :model="search" size="small" label-width="140px">
-          <el-form-item label="用户名/账号">
-            <el-input v-model="search.account"></el-input>
+          <el-form-item label="用户账号" prop="search">
+            <el-input v-model="search.account" @keyup.enter.native="getUserInfo(search.account)"></el-input>
           </el-form-item>
         <el-button style="float: right;" type="primary" size="small" @click="getUserList(1,5)">全部</el-button>
         <el-button style="float: right;  margin:0 15px 0 0" type="primary" size="small" @click="getUserInfo(search.account)">查询</el-button>
         <el-button style="float: right; margin-right: 15px" size="small" @click="clearSearch()">重置</el-button>
-        </el-form>
+      </el-form>
       </div>
     </el-card>
 
@@ -35,17 +35,6 @@
       </div>
       <div style="margin-top: 20px;width: 100%;">
         <div class="block" style="float: right;padding: 0px 0px 10px">
-          <!-- <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :hide-on-single-page="true"
-            :current-page="currentPage"
-            :page-sizes="[5, 10, 20, 50]"
-            :page-size="page_size"
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="total">
-          </el-pagination> -->
         </div>
       </div>
     </div>
@@ -70,9 +59,6 @@
                 userList:[
                 ]
             }
-        },
-        created:function () {
-            // this.getUserList(1,5);
         },
         methods: {
             //处理选项框的操作，获取表格中哪些选项被选中
