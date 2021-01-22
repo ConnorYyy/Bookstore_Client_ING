@@ -86,7 +86,7 @@
     color: #333;
     word-break: break-all;
     max-height: 40px;
-    line-height: 20px;
+    line-height: 40px;
     overflow: hidden;
     margin: 0 auto;
   }
